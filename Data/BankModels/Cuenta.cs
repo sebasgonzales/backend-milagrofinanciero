@@ -7,15 +7,15 @@ public partial class Cuenta
 {
     public int Id { get; set; }
 
-    public long[] NumeroCuenta { get; set; } = null!;
+    public long NumeroCuenta { get; set; }
 
-    public long[] Cbu { get; set; } = null!;
+    public long Cbu { get; set; }
 
-    public virtual ClienteXCuenta? ClienteXcuentum { get; set; }
+    public virtual ClienteXCuenta? ClienteXCuenta{ get; set; }
 
-    public virtual TipoCuenta Id1 { get; set; } = null!;
+    public virtual TipoCuenta? TipoCuenta { get; set; } 
 
-    public virtual Banco IdNavigation { get; set; } = null!;
+    public virtual Banco? Banco { get; set; }
 
     public virtual Transaccion? Transaccion { get; set; }
 }

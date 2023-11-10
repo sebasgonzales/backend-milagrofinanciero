@@ -7,7 +7,7 @@ public partial class TipoCuenta
 {
     public int Id { get; set; }
 
-    public string[] Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
     public DateOnly? Alta { get; set; }
 

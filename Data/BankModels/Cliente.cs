@@ -7,19 +7,19 @@ public partial class Cliente
 {
     public int Id { get; set; }
 
-    public string[] RazonSocial { get; set; } = null!;
+    public string RazonSocial { get; set; } = null!;
 
-    public string[] CuitCuil { get; set; } = null!;
+    public string CuitCuil { get; set; } = null!;
 
     public DateOnly? Alta { get; set; }
 
-    public string[]? Calle { get; set; }
+    public string? Calle { get; set; }
 
-    public string[]? Departamento { get; set; }
+    public string? Departamento { get; set; }
 
-    public string[]? Numero { get; set; }
+    public string? Numero { get; set; }
 
-    public virtual ClienteXCuenta? ClienteXcuentum { get; set; }
+    public virtual ClienteXCuenta? ClienteXCuenta { get; set; }
 
-    public virtual Localidad IdNavigation { get; set; } = null!;
+    public virtual Localidad Localidad { get; set; } = null!;
 }

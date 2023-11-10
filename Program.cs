@@ -19,7 +19,7 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection")));
 var app = builder.Build();
 
 // Service Layer
-//builder.Services.AddScoped<CuentaService>();
+builder.Services.AddScoped<CuentaService>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

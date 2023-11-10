@@ -7,7 +7,7 @@ public partial class Banco
 {
     public int Id { get; set; }
 
-    public string[] Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
-    public virtual Cuenta? Cuentum { get; set; }
+    public virtual Cuenta? Cuenta { get; set; }
 }

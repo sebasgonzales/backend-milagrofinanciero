@@ -1,5 +1,7 @@
 ﻿using backend_milagrofinanciero.Data;
 using backend_milagrofinanciero.Data.BankModels;
+using backend_milagrofinanciero.Data.DTOS.response;
+using backend_milagrofinanciero.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend_milagrofinanciero.Controllers;
@@ -8,26 +10,25 @@ namespace backend_milagrofinanciero.Controllers;
 [Route("[controller]")]
 public class CuentaController : ControllerBase
 {
-    private readonly MilagrofinancieroG1Context _context;
-
-    public CuentaController(MilagrofinancieroG1Context context)
+    private readonly CuentaService _service;
+    public CuentaController(CuentaService cuenta)
     {
-        _context = context;
+        _service = cuenta;
     }
+
     [HttpGet]
-    public IEnumerable<Cuenta> Get()
+    public async Task<IEnumerable<CuentaDtoOut>> GetAll()
     {
-        return _context.Cuenta.ToList();
+        return await _service.GetAll();
     }
 
     [HttpGet("{id}")] 
     public ActionResult<Cuenta> GetById(int id)
     {
-        var cuenta = _context.Cuenta.Find(id);
+        var cuenta = _service.GetById(id);
 
         if (cuenta == null)
-        {
-            return NotFound();
+                return NotFound();
         }
         return cuenta;
     }
