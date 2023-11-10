@@ -1,4 +1,5 @@
 using backend_milagrofinanciero.Data;
+using backend_milagrofinanciero.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -12,12 +13,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // DBContext
-
 builder.Services.AddDbContext<MilagrofinancieroG1Context>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection")));
 
 var app = builder.Build();
 
+// Service Layer
+//builder.Services.AddScoped<CuentaService>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
