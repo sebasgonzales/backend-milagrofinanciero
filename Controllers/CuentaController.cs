@@ -28,7 +28,7 @@ public class CuentaController : ControllerBase
     {
         var cuenta = await _service.GetById(id);
 
-        if (cuenta == null)
+        if (cuenta is null)
             return NotFound(id);
         return cuenta;
     }
@@ -36,8 +36,9 @@ public class CuentaController : ControllerBase
     public async Task<IActionResult> Create(CuentaDtoIn cuenta)
     {
         var newCuenta = await _service.Create(cuenta);
-        return CreatedAtAction(nameof(GetById),new {id = cuenta.idCuenta}, newCuenta);
+        return CreatedAtAction(nameof(GetById),new {id = cuenta.id}, newCuenta);
     }
+    
 
 }
 

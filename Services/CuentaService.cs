@@ -47,10 +47,11 @@ namespace backend_milagrofinanciero.Services
         public async Task<Cuenta> Create(CuentaDtoIn newCuentaDto)
         {
             var newCuenta = new Cuenta();
+
             newCuenta.NumeroCuenta = newCuentaDto.numeroCuenta;
             newCuenta.Cbu = newCuentaDto.cbu;
-            //newCuenta.TipoCuenta = newCuentaDto.TipoCuenta;
-            //newCuenta.Banco = newCuentaDto.Banco;
+            newCuenta.TipoCuenta = newCuentaDto.TipoCuenta;
+            newCuenta.Banco = newCuentaDto.Banco;
 
             _context.Cuenta.Add(newCuenta);
             await _context.SaveChangesAsync();
