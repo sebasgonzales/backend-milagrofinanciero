@@ -19,7 +19,15 @@ public partial class Transaccion
 
     public string? Referencia { get; set; }
 
-    public virtual TipoTransaccion TipoTransaccion { get; set; } = null!;
+    public int CuentaOrigenId { get; set; }
 
-    public virtual Cuenta Cuenta { get; set; } = null!;
+    public int CuentaDestinoId { get; set; }
+
+    public int TipoTransaccionId { get; set; }
+
+    public virtual Cuenta CuentaDestino { get; set; } = null!;
+
+    public virtual Cuenta CuentaOrigen { get; set; } = null!;
+
+    public virtual TipoTransaccion TipoTransaccion { get; set; } = null!;
 }

@@ -9,5 +9,5 @@ public partial class Pais
 
     public string Nombre { get; set; } = null!;
 
-    public virtual Provincia? Provincia { get; set; }
+    public virtual ICollection<Provincia> Provincia { get; set; } = new List<Provincia>();
 }

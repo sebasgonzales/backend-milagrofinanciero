@@ -11,7 +11,11 @@ public partial class ClienteXCuenta
 
     public DateOnly? Alta { get; set; }
 
-    public virtual Cuenta Cuenta { get; set; } = null!;
+    public int ClienteId { get; set; }
+
+    public int CuentaId { get; set; }
 
     public virtual Cliente Cliente { get; set; } = null!;
+
+    public virtual Cuenta Cuenta { get; set; } = null!;
 }

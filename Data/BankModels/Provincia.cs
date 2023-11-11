@@ -9,9 +9,9 @@ public partial class Provincia
 
     public string Nombre { get; set; } = null!;
 
-    public virtual Pais Pais { get; set; }
+    public int PaisId { get; set; }
 
-    public virtual Localidad? Localidad { get; set; }
+    public virtual ICollection<Localidad> Localidades { get; set; } = new List<Localidad>();
 
-    public virtual Sucursal? Sucursal { get; set; }
+    public virtual Pais Pais { get; set; } = null!;
 }

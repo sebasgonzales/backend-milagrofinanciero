@@ -9,5 +9,5 @@ public partial class Banco
 
     public string Nombre { get; set; } = null!;
 
-    public virtual Cuenta? Cuenta { get; set; }
+    public virtual ICollection<Cuenta> Cuenta { get; set; } = new List<Cuenta>();
 }

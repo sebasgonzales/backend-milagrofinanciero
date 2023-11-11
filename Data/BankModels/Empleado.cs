@@ -9,9 +9,11 @@ public partial class Empleado
 
     public string Nombre { get; set; } = null!;
 
-    public string? CuitCuil { get; set; } 
+    public string CuitCuil { get; set; } = null!;
 
     public int Legajo { get; set; }
 
-    public virtual Sucursal Sucursal { get; set; } = null!;
+    public int? SucursalId { get; set; }
+
+    public virtual Sucursal? Sucursal { get; set; }
 }

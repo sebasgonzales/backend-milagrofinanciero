@@ -19,7 +19,9 @@ public partial class Cliente
 
     public string? Numero { get; set; }
 
-    public virtual ClienteXCuenta? ClienteXCuenta { get; set; }
+    public int LocalidadId { get; set; }
+
+    public virtual ICollection<ClienteXCuenta> ClienteXCuenta { get; set; } = new List<ClienteXCuenta>();
 
     public virtual Localidad Localidad { get; set; } = null!;
 }

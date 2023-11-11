@@ -9,5 +9,5 @@ public partial class TipoTransaccion
 
     public string Nombre { get; set; } = null!;
 
-    public virtual Transaccion? Transaccion { get; set; }
+    public virtual ICollection<Transaccion> Transacciones { get; set; } = new List<Transaccion>();
 }

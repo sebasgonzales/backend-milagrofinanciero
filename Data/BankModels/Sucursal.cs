@@ -11,7 +11,19 @@ public partial class Sucursal
 
     public string Cp { get; set; } = null!;
 
-    public virtual Empleado? Empleado { get; set; }
+    public string Calle { get; set; } = null!;
 
-    public virtual Provincia Provincia { get; set; } = null!;
+    public string? Departamento { get; set; }
+
+    public string Numero { get; set; } = null!;
+
+    public int? CuentaId { get; set; }
+
+    public int? LocalidadId { get; set; }
+
+    public virtual Cuenta? Cuenta { get; set; }
+
+    public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
+
+    public virtual Localidad? Localidad { get; set; }
 }

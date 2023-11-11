@@ -11,11 +11,19 @@ public partial class Cuenta
 
     public long Cbu { get; set; }
 
-    public virtual ClienteXCuenta? ClienteXCuenta{ get; set; }
+    public int TipoCuentaId { get; set; }
 
-    public virtual TipoCuenta? TipoCuenta { get; set; } 
+    public int BancoId { get; set; }
 
-    public virtual Banco? Banco { get; set; }
+    public virtual Banco Banco { get; set; } = null!;
 
-    public virtual Transaccion? Transaccion { get; set; }
+    public virtual ICollection<ClienteXCuenta> ClienteXCuenta { get; set; } = new List<ClienteXCuenta>();
+
+    public virtual ICollection<Sucursal> Sucursales { get; set; } = new List<Sucursal>();
+
+    public virtual TipoCuenta TipoCuenta { get; set; } = null!;
+
+    public virtual ICollection<Transaccion> TransaccionCuentaDestinos { get; set; } = new List<Transaccion>();
+
+    public virtual ICollection<Transaccion> TransaccionCuentaOrigens { get; set; } = new List<Transaccion>();
 }
