@@ -15,11 +15,11 @@ public partial class Transaccion
 
     public DateOnly? Realizacion { get; set; }
 
-    public string[] Motivo { get; set; } = null!;
+    public string Motivo { get; set; } = null!;
 
-    public string[]? Referencia { get; set; }
+    public string? Referencia { get; set; }
 
-    public virtual TipoTransaccion Id1 { get; set; } = null!;
+    public virtual TipoTransaccion TipoTransaccion { get; set; } = null!;
 
-    public virtual Cuenta IdNavigation { get; set; } = null!;
+    public virtual Cuenta Cuenta { get; set; } = null!;
 }

@@ -30,9 +30,17 @@ namespace backend_milagrofinanciero.Services
 
         }
 
-        public Task<CuentaDtoOut> GetById(int id)
+        public async Task<CuentaDtoOut> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Cuenta
+                .Where(c => c.Id == id)
+                .Select(c => new CuentaDtoOut
+                {
+                    NumeroCuenta = c.NumeroCuenta,
+                    Cbu = c.Cbu,
+                    TipoCuenta = c.TipoCuenta.Nombre,
+                    Banco = c.Banco.Nombre
+                }).SingleOrDefaultAsync();
         }
     }
 }

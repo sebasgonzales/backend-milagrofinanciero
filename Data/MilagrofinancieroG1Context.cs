@@ -54,7 +54,7 @@ public partial class MilagrofinancieroG1Context : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Nombre)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("nombre");
         });
 
@@ -69,22 +69,22 @@ public partial class MilagrofinancieroG1Context : DbContext
                 .HasColumnName("ID");
             entity.Property(e => e.Alta).HasColumnName("alta");
             entity.Property(e => e.Calle)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("calle");
             entity.Property(e => e.CuitCuil)
-                .HasColumnType("character varying(10)[]")
+                .HasColumnType("character varying(10)")
                 .HasColumnName("cuit_cuil");
             entity.Property(e => e.Departamento)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("departamento");
             entity.Property(e => e.Numero)
-                .HasColumnType("character varying(5)[]")
+                .HasColumnType("character varying(5)")
                 .HasColumnName("numero");
             entity.Property(e => e.RazonSocial)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("razon_social");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Cliente)
+            entity.HasOne(d => d.Localidad).WithOne(p => p.Cliente)
                 .HasForeignKey<Cliente>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Localidad_ID");
@@ -101,15 +101,15 @@ public partial class MilagrofinancieroG1Context : DbContext
                 .HasColumnName("ID");
             entity.Property(e => e.Alta).HasColumnName("alta");
             entity.Property(e => e.Rol)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("rol");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.ClienteXcuentum)
+            entity.HasOne(d => d.Cliente).WithOne(p => p.ClienteXCuenta)
                 .HasForeignKey<ClienteXCuenta>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Cliente_ID");
 
-            entity.HasOne(d => d.Id1).WithOne(p => p.ClienteXcuentum)
+            entity.HasOne(d => d.Cuenta).WithOne(p => p.ClienteXCuenta)
                 .HasForeignKey<ClienteXCuenta>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Cuenta_ID");
@@ -125,12 +125,12 @@ public partial class MilagrofinancieroG1Context : DbContext
             entity.Property(e => e.Cbu).HasColumnName("cbu");
             entity.Property(e => e.NumeroCuenta).HasColumnName("numero_cuenta");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Cuentum)
+            entity.HasOne(d => d.Banco).WithOne(p => p.Cuenta)
                 .HasForeignKey<Cuenta>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Banco_ID");
 
-            entity.HasOne(d => d.Id1).WithOne(p => p.Cuentum)
+            entity.HasOne(d => d.TipoCuenta).WithOne(p => p.Cuenta)
                 .HasForeignKey<Cuenta>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("TipoCuenta_ID");
@@ -148,10 +148,10 @@ public partial class MilagrofinancieroG1Context : DbContext
             entity.Property(e => e.CuitCuil).HasColumnName("cuit_cuil");
             entity.Property(e => e.Legajo).HasColumnName("legajo");
             entity.Property(e => e.Nombre)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("nombre");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Empleado)
+            entity.HasOne(d => d.Sucursal).WithOne(p => p.Empleado)
                 .HasForeignKey<Empleado>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Sucursal_ID");
@@ -170,7 +170,7 @@ public partial class MilagrofinancieroG1Context : DbContext
                 .HasColumnType("character varying(10)[]")
                 .HasColumnName("cp");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Localidad)
+            entity.HasOne(d => d.Provincia).WithOne(p => p.Localidad)
                 .HasForeignKey<Localidad>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Provincia_ID");
@@ -182,7 +182,7 @@ public partial class MilagrofinancieroG1Context : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Nombre)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("nombre");
         });
 
@@ -194,10 +194,10 @@ public partial class MilagrofinancieroG1Context : DbContext
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ID");
             entity.Property(e => e.Nombre)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("nombre");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Provincium)
+            entity.HasOne(d => d.Pais).WithOne(p => p.Provincia)
                 .HasForeignKey<Provincia>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Pais_ID");
@@ -213,13 +213,13 @@ public partial class MilagrofinancieroG1Context : DbContext
                 .ValueGeneratedOnAdd()
                 .HasColumnName("ID");
             entity.Property(e => e.Cp)
-                .HasColumnType("character varying(15)[]")
+                .HasColumnType("character varying(15)")
                 .HasColumnName("cp");
             entity.Property(e => e.Nombre)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("nombre");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Sucursal)
+            entity.HasOne(d => d.Provincia).WithOne(p => p.Sucursal)
                 .HasForeignKey<Sucursal>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Provincia_ID");
@@ -244,7 +244,7 @@ public partial class MilagrofinancieroG1Context : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Nombre)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("nombre");
         });
 
@@ -260,22 +260,22 @@ public partial class MilagrofinancieroG1Context : DbContext
             entity.Property(e => e.Acreditacion).HasColumnName("acreditacion");
             entity.Property(e => e.Monto).HasColumnName("monto");
             entity.Property(e => e.Motivo)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("motivo");
             entity.Property(e => e.NumeroOperacion)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("numero_operacion");
             entity.Property(e => e.Realizacion).HasColumnName("realizacion");
             entity.Property(e => e.Referencia)
-                .HasColumnType("character varying(45)[]")
+                .HasColumnType("character varying(45)")
                 .HasColumnName("referencia");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Transaccion)
+            entity.HasOne(d => d.Cuenta).WithOne(p => p.Transaccion)
                 .HasForeignKey<Transaccion>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("CuentaDestino_ID");
 
-            entity.HasOne(d => d.Id1).WithOne(p => p.Transaccion)
+            entity.HasOne(d => d.TipoTransaccion).WithOne(p => p.Transaccion)
                 .HasForeignKey<Transaccion>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("TipoTransaccion_ID");

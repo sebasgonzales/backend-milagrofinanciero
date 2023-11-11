@@ -7,9 +7,9 @@ public partial class Localidad
 {
     public int Id { get; set; }
 
-    public string[] Cp { get; set; } = null!;
+    public string Cp { get; set; } = null!;
 
     public virtual Cliente? Cliente { get; set; }
 
-    public virtual Provincia IdNavigation { get; set; } = null!;
+    public virtual Provincia Provincia { get; set; } = null!;
 }

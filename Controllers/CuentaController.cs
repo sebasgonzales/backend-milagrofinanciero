@@ -23,13 +23,12 @@ public class CuentaController : ControllerBase
     }
 
     [HttpGet("{id}")] 
-    public ActionResult<Cuenta> GetById(int id)
+    public async Task<ActionResult<CuentaDtoOut>> GetById(int id)
     {
-        var cuenta = _service.GetById(id);
+        var cuenta = await _service.GetById(id);
 
         if (cuenta == null)
-                return NotFound();
-        }
+            return NotFound(id);
         return cuenta;
     }
 
