@@ -7,15 +7,23 @@ public partial class Cuenta
 {
     public int Id { get; set; }
 
-    public long[] NumeroCuenta { get; set; } = null!;
+    public long NumeroCuenta { get; set; }
 
-    public long[] Cbu { get; set; } = null!;
+    public long Cbu { get; set; }
 
-    public virtual ClienteXCuenta? ClienteXcuentum { get; set; }
+    public int TipoCuentaId { get; set; }
 
-    public virtual TipoCuenta Id1 { get; set; } = null!;
+    public int BancoId { get; set; }
 
-    public virtual Banco IdNavigation { get; set; } = null!;
+    public virtual Banco Banco { get; set; } = null!;
 
-    public virtual Transaccion? Transaccion { get; set; }
+    public virtual ICollection<ClienteXCuenta> ClienteXCuenta { get; set; } = new List<ClienteXCuenta>();
+
+    public virtual ICollection<Sucursal> Sucursales { get; set; } = new List<Sucursal>();
+
+    public virtual TipoCuenta TipoCuenta { get; set; } = null!;
+
+    public virtual ICollection<Transaccion> TransaccionCuentaDestinos { get; set; } = new List<Transaccion>();
+
+    public virtual ICollection<Transaccion> TransaccionCuentaOrigens { get; set; } = new List<Transaccion>();
 }

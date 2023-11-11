@@ -7,11 +7,13 @@ public partial class Empleado
 {
     public int Id { get; set; }
 
-    public string[] Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
-    public long[] CuitCuil { get; set; } = null!;
+    public string CuitCuil { get; set; } = null!;
 
     public int Legajo { get; set; }
 
-    public virtual Sucursal IdNavigation { get; set; } = null!;
+    public int? SucursalId { get; set; }
+
+    public virtual Sucursal? Sucursal { get; set; }
 }
