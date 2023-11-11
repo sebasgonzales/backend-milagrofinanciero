@@ -1,5 +1,6 @@
 ﻿using backend_milagrofinanciero.Data;
 using backend_milagrofinanciero.Data.BankModels;
+using backend_milagrofinanciero.Data.DTOS.request;
 using backend_milagrofinanciero.Data.DTOS.response;
 using backend_milagrofinanciero.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,12 @@ public class CuentaController : ControllerBase
         if (cuenta == null)
             return NotFound(id);
         return cuenta;
+    }
+    [HttpPost]
+    public async Task<IActionResult> Create(CuentaDtoIn cuenta)
+    {
+        var newCuenta = await _service.Create(cuenta);
+        return CreatedAtAction(nameof(GetById),new {id = cuenta.idCuenta}, newCuenta);
     }
 
 }

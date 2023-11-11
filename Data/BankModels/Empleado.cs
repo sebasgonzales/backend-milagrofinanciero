@@ -9,7 +9,7 @@ public partial class Empleado
 
     public string Nombre { get; set; } = null!;
 
-    public string CuitCuil { get; set; } 
+    public string? CuitCuil { get; set; } 
 
     public int Legajo { get; set; }
 

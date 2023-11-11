@@ -1,5 +1,6 @@
 ﻿using backend_milagrofinanciero.Data;
 using backend_milagrofinanciero.Data.BankModels;
+using backend_milagrofinanciero.Data.DTOS.request;
 using backend_milagrofinanciero.Data.DTOS.response;
 using backend_milagrofinanciero.Services.impl;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ namespace backend_milagrofinanciero.Services
                     TipoCuenta = c.TipoCuenta.Nombre,
                     Banco = c.Banco.Nombre
                 }).ToListAsync();
-                
+
 
         }
 
@@ -41,6 +42,20 @@ namespace backend_milagrofinanciero.Services
                     TipoCuenta = c.TipoCuenta.Nombre,
                     Banco = c.Banco.Nombre
                 }).SingleOrDefaultAsync();
+        }
+
+        public async Task<Cuenta> Create(CuentaDtoIn newCuentaDto)
+        {
+            var newCuenta = new Cuenta();
+            newCuenta.NumeroCuenta = newCuentaDto.numeroCuenta;
+            newCuenta.Cbu = newCuentaDto.cbu;
+            //newCuenta.TipoCuenta = newCuentaDto.TipoCuenta;
+            //newCuenta.Banco = newCuentaDto.Banco;
+
+            _context.Cuenta.Add(newCuenta);
+            await _context.SaveChangesAsync();
+
+            return newCuenta;
         }
     }
 }
