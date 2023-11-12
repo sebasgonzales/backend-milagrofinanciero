@@ -1,6 +1,7 @@
 ﻿using backend_milagrofinanciero.Data;
 using backend_milagrofinanciero.Data.BankModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend_milagrofinanciero.Services
 {
@@ -13,27 +14,27 @@ namespace backend_milagrofinanciero.Services
             _context = context;
         }
 
-        public IEnumerable<Transaccion> GetAll()
+        public async Task<IEnumerable<Transaccion>> GetAll()
         {
-            return _context.Transaccions.ToList();
+            return await _context.Transaccions.ToListAsync();
         }
 
-        public Transaccion? GetById(int id)
+        public async Task<Transaccion?> GetById(int id)
         {
-            return _context.Transaccions.Find(id);
+            return await _context.Transaccions.FindAsync(id);
         }
 
-        public Transaccion Create(Transaccion newTransaccion)
+        public async Task<Transaccion> Create(Transaccion newTransaccion)
         {
             _context.Transaccions.Add(newTransaccion);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return newTransaccion;
         }
 
-        public void Update(int id, Transaccion transaccion)
+        public async Task Update(int id, Transaccion transaccion)
         {
-            var existingTransaccion = GetById(transaccion.Id);
+            var existingTransaccion = await GetById(transaccion.Id);
 
             if (existingTransaccion is not null)
             {
@@ -47,18 +48,18 @@ namespace backend_milagrofinanciero.Services
                 existingTransaccion.CuentaDestinoId = transaccion.CuentaDestinoId;
                 existingTransaccion.TipoTransaccionId = transaccion.TipoTransaccionId;
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var transaccionToDelete = GetById(id);
+            var transaccionToDelete = await GetById(id);
             if (transaccionToDelete is not null)
             { 
             _context.Transaccions.Remove(transaccionToDelete);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             }
         }
     }
