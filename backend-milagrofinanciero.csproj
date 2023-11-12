@@ -24,10 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Data\DTOS\response\" />
     <Folder Include="Data\DTOS\request\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
