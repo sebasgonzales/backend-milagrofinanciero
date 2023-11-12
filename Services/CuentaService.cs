@@ -31,7 +31,7 @@ namespace backend_milagrofinanciero.Services
 
         }
 
-        public async Task<CuentaDtoOut> GetById(int id)
+        public async Task<CuentaDtoOut?> GetByIdDto(int id)
         {
             return await _context.Cuenta
                 .Where(c => c.Id == id)
@@ -42,6 +42,13 @@ namespace backend_milagrofinanciero.Services
                     TipoCuenta = c.TipoCuenta.Nombre,
                     Banco = c.Banco.Nombre
                 }).SingleOrDefaultAsync();
+        }
+
+        public async Task<Cuenta?> GetById(int id)
+        {
+            return await _context.Cuenta
+                .Where(c => c.Id == id)
+                .SingleOrDefaultAsync();
         }
 
         public async Task<Cuenta> Create(CuentaDtoIn newCuentaDto)
@@ -58,5 +65,30 @@ namespace backend_milagrofinanciero.Services
 
             return newCuenta;
         }
+
+        public async Task Update(int id, CuentaDtoIn cuenta)
+        {
+            var cuentaExistente = await GetById(id);
+            if (cuentaExistente is null) 
+            {
+                cuentaExistente.NumeroCuenta = cuenta.numeroCuenta;
+                cuentaExistente.Cbu = cuenta.cbu;
+                cuentaExistente.TipoCuenta = cuenta.TipoCuenta;
+                cuentaExistente.Banco = cuenta.Banco;
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task Delete(int id)
+        {
+            var cuentaParaEliminar = await GetById(id);
+            if (cuentaParaEliminar is not null)
+            {
+                _context.Cuenta.Remove(cuentaParaEliminar);
+                await _context.SaveChangesAsync();
+            }
+        }
+
     }
 }

@@ -24,9 +24,9 @@ public class CuentaController : ControllerBase
     }
 
     [HttpGet("{id}")] 
-    public async Task<ActionResult<CuentaDtoOut>> GetById(int id)
+    public async Task<ActionResult<CuentaDtoOut>> GetByIdDto(int id)
     {
-        var cuenta = await _service.GetById(id);
+        var cuenta = await _service.GetByIdDto(id);
 
         if (cuenta is null)
             return NotFound(id);
@@ -36,9 +36,42 @@ public class CuentaController : ControllerBase
     public async Task<IActionResult> Create(CuentaDtoIn cuenta)
     {
         var newCuenta = await _service.Create(cuenta);
-        return CreatedAtAction(nameof(GetById),new {id = cuenta.id}, newCuenta);
+        return CreatedAtAction(nameof(GetByIdDto),new {id = cuenta.id}, newCuenta);
     }
-    
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, CuentaDtoIn cuenta)
+    {
+        if (id != cuenta.id) return BadRequest(new { message = $"El ID ({id}) de la URL no coincide con el ID ({cuenta.id}) del cuerpo de la solicitud." });
+
+        var cuentaParaActualizar = await _service.GetById(id);
+
+        if (cuentaParaActualizar is not null)
+        {
+            await _service.Update(id, cuenta);
+            return NoContent();
+        }
+        else
+        {
+            return NotFound(id);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task <IActionResult> Delete (int id)
+    {
+        var cuentaParaEliminar = await _service.GetById(id);
+
+        if (cuentaParaEliminar is not null)
+        {
+            await _service.Delete(id);
+            return Ok();
+        }
+        else
+        {
+            return NotFound(id);
+        }
+    }
 
 }
 
