@@ -27,7 +27,7 @@ namespace backend_milagrofinanciero.Controllers
             var clienteXCuenta = await _service.GetById(id);
 
             if (clienteXCuenta is null)
-                return NotFound();
+                return ClienteXCuentaNotFound(id);
 
             return clienteXCuenta;
         }
@@ -57,7 +57,7 @@ namespace backend_milagrofinanciero.Controllers
             }
             else
             {
-                return NotFound();
+                return ClienteXCuentaNotFound(id);
             }
 
         }
@@ -74,10 +74,15 @@ namespace backend_milagrofinanciero.Controllers
             }
             else
             {
-                return NotFound();
+                return ClienteXCuentaNotFound(id);
             }
         }
 
-       
+        [NonAction]
+        public NotFoundObjectResult ClienteXCuentaNotFound(int id)
+        {
+            return NotFound(new { message = $"el ClienteXCuenta con ID = {id} no existe. " });
+        }
+
     }
 }
