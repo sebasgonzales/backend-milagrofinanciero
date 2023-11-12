@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using backend_milagrofinanciero.Data;
+using backend_milagrofinanciero.Services;
 using backend_milagrofinanciero.Data.BankModels;
 
 namespace backend_milagrofinanciero.Controllers
@@ -12,11 +12,11 @@ namespace backend_milagrofinanciero.Controllers
 
     public class BancoController : ControllerBase
     {
-        private readonly MilagrofinancieroG1Context _context;
+        private readonly BancoService _service;
 
-        public BancoController(MilagrofinancieroG1Context context)
+        public BancoController(BancoService banco)
         {
-            _context = context;
+            _service = banco;
 
         }
 
@@ -24,7 +24,7 @@ namespace backend_milagrofinanciero.Controllers
         [HttpGet]
         public IEnumerable<Banco> Get()
         {
-            return _context.Bancos.ToList();
+            return _service.GetAll();
 
         }
 
@@ -32,7 +32,7 @@ namespace backend_milagrofinanciero.Controllers
         [HttpGet("{id}")]
         public ActionResult<Banco> GetById(int id)
         {
-            var banco = _context.Bancos.Find(id);
+            var banco = _service.GetById(id);
 
             if (banco is null)
                 return NotFound();
@@ -44,42 +44,53 @@ namespace backend_milagrofinanciero.Controllers
 
         public IActionResult Create(Banco banco)
         {
-            _context.Bancos.Add(banco);
-            _context.SaveChanges();
+            var newBanco = _service.Create(banco);
 
-            return CreatedAtAction(nameof(GetById), new { id = banco.Id}, banco);
+
+            return CreatedAtAction(nameof(GetById), new { id = newBanco.Id}, newBanco);
         
         }
 
         [HttpPut("{id}")]
-        public IActionResult Uptade(int id, Banco banco)
+        public IActionResult Update(int id, Banco banco)
         {
             if (id != banco.Id)
                 return BadRequest();
 
-            var existingBanco = _context.Bancos.Find(id);
-            if (existingBanco is null)
+            var bancoToUpdate = _service.GetById(id);
+
+            if (bancoToUpdate is not null) 
+            {
+                _service.Update(id, banco);
+                return NoContent();
+            
+            }else
+            {
                 return NotFound();
-            existingBanco.Nombre = banco.Nombre;
 
-            _context.SaveChanges();
-
-            return NoContent();
+            }
+           
         }
+
 
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var existingBanco = _context.Bancos.Find(id);
-            if (existingBanco is null)
+
+            var bancoToDelete = _service.GetById(id);
+
+            if (bancoToDelete is not null)
+            {
+                _service.Delete(id);
+                return Ok();
+
+            }
+            else
+            {
                 return NotFound();
 
-            _context.Bancos.Remove(existingBanco);
-            _context.SaveChanges();
-
-            return Ok();
-
+            }
 
         }
 
