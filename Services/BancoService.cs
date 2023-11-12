@@ -1,6 +1,7 @@
-﻿using backend_milagrofinanciero.Data;
+﻿
+using backend_milagrofinanciero.Data;
 using backend_milagrofinanciero.Data.BankModels;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace backend_milagrofinanciero.Services
 {
@@ -14,48 +15,48 @@ namespace backend_milagrofinanciero.Services
 
         }
 
-        public IEnumerable<Banco> GetAll()
+        public async Task<IEnumerable<Banco>>GetAll()
         {
-            return _context.Bancos.ToList();
+            return await _context.Bancos.ToListAsync();
 
         }
 
-        public Banco? GetById(int id)
+        public async Task<Banco?>GetById(int id)
         {
-            return _context.Bancos.Find(id);
+            return await  _context.Bancos.FindAsync(id);
         }
 
-        public Banco Create(Banco newbanco)
+        public async Task<Banco>Create(Banco newbanco)
         {
             _context.Bancos.Add(newbanco);
-            _context.SaveChanges();
+           await _context.SaveChangesAsync(); 
 
             return newbanco;
 
         }
 
-        public void Update(int id, Banco banco)
+        public async Task Update(int id, Banco banco)
         {
-            var existingBanco = GetById(id);
+            var existingBanco = await GetById(id);
 
             if (existingBanco is not null)
             {
                
                 existingBanco.Nombre = banco.Nombre;
-                _context.SaveChanges();
+               await  _context.SaveChangesAsync();
             }
           
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var bancoToDelete = GetById(id);
+            var bancoToDelete = await GetById(id);
 
             if (bancoToDelete is not null)
             {
 
                 _context.Bancos.Remove(bancoToDelete);
-                _context.SaveChanges();
+               await _context.SaveChangesAsync();
             }
 
         }

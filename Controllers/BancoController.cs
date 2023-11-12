@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using backend_milagrofinanciero.Services;
 using backend_milagrofinanciero.Data.BankModels;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 namespace backend_milagrofinanciero.Controllers
 
@@ -22,29 +23,30 @@ namespace backend_milagrofinanciero.Controllers
 
 
         [HttpGet]
-        public IEnumerable<Banco> Get()
+        public async Task<IEnumerable<Banco>> Get()
         {
-            return _service.GetAll();
+            return await _service.GetAll();
 
         }
 
 
         [HttpGet("{id}")]
-        public ActionResult<Banco> GetById(int id)
+        public async Task<ActionResult<Banco>>GetById(int id)
         {
-            var banco = _service.GetById(id);
+            var banco = await _service.GetById(id);
 
             if (banco is null)
-                return NotFound();
+                return BancoNotFound(id);
+
             return banco;
         }
 
 
+        //AGREGAR
         [HttpPost]
-
-        public IActionResult Create(Banco banco)
+        public async Task<IActionResult> Create(Banco banco)
         {
-            var newBanco = _service.Create(banco);
+            var newBanco = await _service.Create(banco);
 
 
             return CreatedAtAction(nameof(GetById), new { id = newBanco.Id}, newBanco);
@@ -52,21 +54,21 @@ namespace backend_milagrofinanciero.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, Banco banco)
+        public async Task<IActionResult> Update(int id, Banco banco)
         {
             if (id != banco.Id)
-                return BadRequest();
+                return BadRequest(new { message = $"El ID = {id} de la URL no coincide con el ID({banco.Id}) del cuerpo de la solicitud." });
 
-            var bancoToUpdate = _service.GetById(id);
+            var bancoToUpdate = await _service.GetById(id);
 
             if (bancoToUpdate is not null) 
             {
-                _service.Update(id, banco);
+               await _service.Update(id, banco);
                 return NoContent();
             
             }else
             {
-                return NotFound();
+                return BancoNotFound(id);
 
             }
            
@@ -75,26 +77,36 @@ namespace backend_milagrofinanciero.Controllers
 
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult>Delete(int id)
         {
 
-            var bancoToDelete = _service.GetById(id);
+            var bancoToDelete = await _service.GetById(id);
 
             if (bancoToDelete is not null)
             {
-                _service.Delete(id);
+                await _service.Delete(id);
                 return Ok();
 
             }
             else
             {
-                return NotFound();
+                return BancoNotFound(id);
 
             }
 
         }
 
+        public NotFoundObjectResult BancoNotFound(int id)
+        {
+            return NotFound(new { message = $"El banco con ID = {id} no existe." });
+        }
 
 
     }
+
+ 
+
+
+
+
 }
