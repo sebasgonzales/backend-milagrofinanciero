@@ -16,17 +16,17 @@ namespace backend_milagrofinanciero.Services
 
         public async Task<IEnumerable<Transaccion>> GetAll()
         {
-            return await _context.Transaccions.ToListAsync();
+            return await _context.Transaccion.ToListAsync();
         }
 
         public async Task<Transaccion?> GetById(int id)
         {
-            return await _context.Transaccions.FindAsync(id);
+            return await _context.Transaccion.FindAsync(id);
         }
 
         public async Task<Transaccion> Create(Transaccion newTransaccion)
         {
-            _context.Transaccions.Add(newTransaccion);
+            _context.Transaccion.Add(newTransaccion);
             await _context.SaveChangesAsync();
 
             return newTransaccion;
@@ -58,7 +58,7 @@ namespace backend_milagrofinanciero.Services
             var transaccionToDelete = await GetById(id);
             if (transaccionToDelete is not null)
             { 
-            _context.Transaccions.Remove(transaccionToDelete);
+            _context.Transaccion.Remove(transaccionToDelete);
             await _context.SaveChangesAsync();
             }
         }
