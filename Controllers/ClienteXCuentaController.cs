@@ -2,6 +2,8 @@
 using backend_milagrofinanciero.Services;
 using backend_milagrofinanciero.Data.BankModels;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using backend_milagrofinanciero.Data.DTOS.request;
+using backend_milagrofinanciero.Data.DTOS.response;
 
 namespace backend_milagrofinanciero.Controllers
 {
@@ -16,15 +18,15 @@ namespace backend_milagrofinanciero.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ClienteXCuenta>> Get()
+        public async Task<IEnumerable<ClienteXCuentaDtoOut>> Get()
         {
             return await _service.GetAll();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ClienteXCuenta>> GetById(int id)
+        public async Task<ActionResult<ClienteXCuentaDtoOut>> GetById(int id)
         {
-            var clienteXCuenta = await _service.GetById(id);
+            var clienteXCuenta = await _service.GetDtoById(id);
 
             if (clienteXCuenta is null)
                 return ClienteXCuentaNotFound(id);
@@ -33,8 +35,9 @@ namespace backend_milagrofinanciero.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ClienteXCuenta clienteXCuenta)
+        public async Task<IActionResult> Create(ClienteXCuentaDtoIn clienteXCuenta)
         {
+
             var newClienteXCuenta = await _service.Create(clienteXCuenta);
 
             return CreatedAtAction(nameof(GetById), new { id = newClienteXCuenta.Id }, newClienteXCuenta);
@@ -42,7 +45,7 @@ namespace backend_milagrofinanciero.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> Update(int id, ClienteXCuenta clienteXCuenta)
+        public async Task<IActionResult> Update(int id, ClienteXCuentaDtoIn clienteXCuenta)
         {
 
             if (id != clienteXCuenta.Id)

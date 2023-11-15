@@ -1,5 +1,7 @@
 ﻿using backend_milagrofinanciero.Data;
 using backend_milagrofinanciero.Data.BankModels;
+using backend_milagrofinanciero.Data.DTOS.request;
+using backend_milagrofinanciero.Data.DTOS.response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +16,30 @@ namespace backend_milagrofinanciero.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<ClienteXCuenta>> GetAll()
+        public async Task<IEnumerable<ClienteXCuentaDtoOut>> GetAll()
         {
-            return await _context.ClienteXCuenta.ToListAsync();
+            return await _context.ClienteXCuenta
+                
+                .Select(c => new ClienteXCuentaDtoOut
+                {
+                    Rol = c.Rol,
+                    Alta = c.Alta,
+                    Cliente = c.Cliente.RazonSocial,
+                    Cuenta = c.Cuenta.NumeroCuenta
+                }).ToListAsync();
+        }
+
+        public async Task<ClienteXCuentaDtoOut?> GetDtoById(int id)
+        {
+            return await _context.ClienteXCuenta
+                .Where(c => c.Id == id)
+                .Select(c => new ClienteXCuentaDtoOut
+                {
+                    Rol = c.Rol,
+                    Alta = c.Alta,
+                    Cliente = c.Cliente.RazonSocial,
+                    Cuenta = c.Cuenta.NumeroCuenta
+                }).SingleOrDefaultAsync();
         }
 
         public async Task<ClienteXCuenta?> GetById(int id)
@@ -24,15 +47,24 @@ namespace backend_milagrofinanciero.Services
             return await _context.ClienteXCuenta.FindAsync(id);
         }
 
-        public async Task<ClienteXCuenta> Create(ClienteXCuenta newClienteXCuenta)
+        public async Task<ClienteXCuenta> Create(ClienteXCuentaDtoIn newClienteXCuentaDTO)
         {
+            var newClienteXCuenta = new ClienteXCuenta();
+
+            newClienteXCuenta.Rol = newClienteXCuentaDTO.Rol;
+            newClienteXCuenta.Alta = newClienteXCuentaDTO.Alta;
+            newClienteXCuenta.ClienteId = newClienteXCuentaDTO.ClienteId;
+            newClienteXCuenta.CuentaId = newClienteXCuentaDTO.CuentaId;
+            
+
+
             _context.ClienteXCuenta.Add(newClienteXCuenta);
             await _context.SaveChangesAsync();
 
             return newClienteXCuenta;
         }
 
-        public async Task Update(int id, ClienteXCuenta clienteXCuenta)
+        public async Task Update(int id, ClienteXCuentaDtoIn clienteXCuenta)
         {
             var existingClienteXCuenta = await GetById(clienteXCuenta.Id);
 
