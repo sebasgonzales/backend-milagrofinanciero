@@ -43,9 +43,9 @@ public class LocalidadController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id,LocalidadDtoIn localidad)
     {
-        var localidadParaActualizar = await _service.GetById(id);
+        var localidadToUpdate = await _service.GetById(id);
 
-        if(localidadParaActualizar is not null)
+        if(localidadToUpdate is not null)
         {
             await _service.Update(id, localidad);
             return NoContent();
@@ -59,8 +59,8 @@ public class LocalidadController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete (int id)
     {
-        var localidadParaEliminar = await _service.GetById(id);
-        if (localidadParaEliminar is not null)
+        var localidadToDelete = await _service.GetById(id);
+        if (localidadToDelete is not null)
         {
             await _service.Delete(id);
             return Ok();
