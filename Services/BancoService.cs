@@ -1,6 +1,8 @@
 ﻿
 using backend_milagrofinanciero.Data;
 using backend_milagrofinanciero.Data.BankModels;
+using backend_milagrofinanciero.Data.DTOS.request;
+using backend_milagrofinanciero.Data.DTOS.response;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend_milagrofinanciero.Services
@@ -15,9 +17,23 @@ namespace backend_milagrofinanciero.Services
 
         }
 
-        public async Task<IEnumerable<Banco>>GetAll()
+        public async Task<IEnumerable<BancoDtoOut>>GetAll()
         {
-            return await _context.Bancos.ToListAsync();
+            return await _context.Bancos.Select(b => new BancoDtoOut
+            {
+                Nombre = b.Nombre
+            }).ToListAsync();
+
+        }
+
+        public async Task<BancoDtoOut?> GetDtoById(int id)
+        {
+            return await _context.Bancos
+                .Where(b => b.Id == id)
+                .Select(b => new BancoDtoOut
+            {
+                Nombre = b.Nombre
+            }).SingleOrDefaultAsync();
 
         }
 
@@ -26,16 +42,19 @@ namespace backend_milagrofinanciero.Services
             return await  _context.Bancos.FindAsync(id);
         }
 
-        public async Task<Banco>Create(Banco newbanco)
+        public async Task<Banco>Create(BancoDtoIn newBancoDTO)
         {
-            _context.Bancos.Add(newbanco);
+            var newBanco = new Banco();
+            newBanco.Nombre = newBancoDTO.Nombre;
+
+            _context.Bancos.Add(newBanco);
            await _context.SaveChangesAsync(); 
 
-            return newbanco;
+            return newBanco;
 
         }
 
-        public async Task Update(int id, Banco banco)
+        public async Task Update(int id, BancoDtoIn banco)
         {
             var existingBanco = await GetById(id);
 
