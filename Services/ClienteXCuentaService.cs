@@ -72,7 +72,9 @@ namespace backend_milagrofinanciero.Services
             {
                 existingClienteXCuenta.Rol = clienteXCuenta.Rol;
                 existingClienteXCuenta.Alta = clienteXCuenta.Alta;
-                
+                existingClienteXCuenta.ClienteId = clienteXCuenta.ClienteId;
+                existingClienteXCuenta.CuentaId = clienteXCuenta.CuentaId;
+
 
                 await _context.SaveChangesAsync();
             }
