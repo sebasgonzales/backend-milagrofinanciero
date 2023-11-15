@@ -55,8 +55,8 @@ namespace backend_milagrofinanciero.Services
         {
             var newCuenta = new Cuenta();
 
-            newCuenta.NumeroCuenta = newCuentaDto.numeroCuenta;
-            newCuenta.Cbu = newCuentaDto.cbu;
+            newCuenta.NumeroCuenta = newCuentaDto.NumeroCuenta;
+            newCuenta.Cbu = newCuentaDto.Cbu;
             newCuenta.TipoCuenta = newCuentaDto.TipoCuenta;
             newCuenta.Banco = newCuentaDto.Banco;
 
@@ -71,8 +71,8 @@ namespace backend_milagrofinanciero.Services
             var cuentaExistente = await GetById(id);
             if (cuentaExistente is null) 
             {
-                cuentaExistente.NumeroCuenta = cuenta.numeroCuenta;
-                cuentaExistente.Cbu = cuenta.cbu;
+                cuentaExistente.NumeroCuenta = cuenta.NumeroCuenta;
+                cuentaExistente.Cbu = cuenta.Cbu;
                 cuentaExistente.TipoCuenta = cuenta.TipoCuenta;
                 cuentaExistente.Banco = cuenta.Banco;
 

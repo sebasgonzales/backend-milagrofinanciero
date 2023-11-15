@@ -1,6 +1,4 @@
-﻿using backend_milagrofinanciero.Data;
-using backend_milagrofinanciero.Data.BankModels;
-using backend_milagrofinanciero.Data.DTOS.request;
+﻿using backend_milagrofinanciero.Data.DTOS.request;
 using backend_milagrofinanciero.Data.DTOS.response;
 using backend_milagrofinanciero.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -44,9 +42,9 @@ public class CuentaController : ControllerBase
     {
         if (id != cuenta.id) return BadRequest(new { message = $"El ID ({id}) de la URL no coincide con el ID ({cuenta.id}) del cuerpo de la solicitud." });
 
-        var cuentaParaActualizar = await _service.GetById(id);
+        var cuentaToUpdate = await _service.GetById(id);
 
-        if (cuentaParaActualizar is not null)
+        if (cuentaToUpdate is not null)
         {
             await _service.Update(id, cuenta);
             return NoContent();
@@ -60,9 +58,9 @@ public class CuentaController : ControllerBase
     [HttpDelete("{id}")]
     public async Task <IActionResult> Delete (int id)
     {
-        var cuentaParaEliminar = await _service.GetById(id);
+        var cuentaToDelete = await _service.GetById(id);
 
-        if (cuentaParaEliminar is not null)
+        if (cuentaToDelete is not null)
         {
             await _service.Delete(id);
             return Ok();
