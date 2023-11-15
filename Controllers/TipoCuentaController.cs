@@ -1,8 +1,10 @@
 ﻿
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using backend_milagrofinanciero.Services;
 using backend_milagrofinanciero.Data.BankModels;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using backend_milagrofinanciero.Data.DTOS.request;
+using backend_milagrofinanciero.Data.DTOS.response;
 
 namespace backend_milagrofinanciero.Controllers
 
@@ -24,20 +26,20 @@ namespace backend_milagrofinanciero.Controllers
 
 
         [HttpGet]
-        public async Task<IEnumerable<TipoCuenta>> Get()
-        {
+        public async Task<IEnumerable<TipoCuentaDtoOut>> Get()
+        { 
             return await _service.GetAll();
 
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TipoCuenta>> GetById(int id)
+        public async Task<ActionResult<TipoCuentaDtoOut>> GetById(int id)
         {
-            var tipocuenta = await _service.GetById(id);
+            var tipocuenta = await _service.GetDtoById(id);
 
             if (tipocuenta is null)
-                return NotFound();
+                return TipoCuentaNotFound(id);
 
             return tipocuenta;
         }
@@ -45,7 +47,7 @@ namespace backend_milagrofinanciero.Controllers
 
         //AGREGAR
         [HttpPost]
-        public async Task<IActionResult> Create(TipoCuenta tipocuenta)
+        public async Task<IActionResult> Create(TipoCuentaDtoIn tipocuenta)
         {
             var newTipoCuenta = await _service.Create(tipocuenta);
 
@@ -55,7 +57,7 @@ namespace backend_milagrofinanciero.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, TipoCuenta tipoCuenta)
+        public async Task<IActionResult> Update(int id, TipoCuentaDtoIn tipoCuenta)
         {
             if (id != tipoCuenta.Id)
                 return BadRequest(new { message = $"El ID = {id} de la URL no coincide con el ID({tipoCuenta.Id}) del cuerpo de la solicitud." });
@@ -70,7 +72,7 @@ namespace backend_milagrofinanciero.Controllers
             }
             else
             {
-                return NotFound();
+                return TipoCuentaNotFound(id);
 
             }
 
@@ -92,16 +94,17 @@ namespace backend_milagrofinanciero.Controllers
             }
             else
             {
-                return NotFound(new { message = $"El tipo cuenta con ID = {id} no existe." });
+                return TipoCuentaNotFound(id);
 
             }
 
         }
 
-        //public NotFoundObjectResult TipoCuentaNotFound(int id)
-        //{
-        //    return NotFound( });
-        //}
+        [NonAction]
+        public NotFoundObjectResult TipoCuentaNotFound(int id)
+        {
+           return NotFound(new { message = $"El tipo cuenta con ID = {id} no existe." });
+        }
 
 
     }
