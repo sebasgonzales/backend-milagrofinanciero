@@ -62,11 +62,11 @@ namespace backend_milagrofinanciero.Services
         // Update 
         public async Task Update(int id, LocalidadDtoIn updateLocalidad)
         {
-            var localidadExistente = await GetById(id);
+            var existingLocalidad = await GetById(id);
 
-            if (localidadExistente is not null)
+            if (existingLocalidad is not null)
             {
-                localidadExistente.Cp = updateLocalidad.CodigoPostal;
+                existingLocalidad.Cp = updateLocalidad.CodigoPostal;
 
                 await _context.SaveChangesAsync();
             }
@@ -75,10 +75,10 @@ namespace backend_milagrofinanciero.Services
         // Delete
         public async Task Delete(int id)
         {
-            var localidadParaEliminar = await GetById(id);
-            if (localidadParaEliminar is not null)
+            var localidadToDelete = await GetById(id);
+            if (localidadToDelete is not null)
             {
-                _context.Localidad.Remove(localidadParaEliminar);
+                _context.Localidad.Remove(localidadToDelete);
                 await _context.SaveChangesAsync();
             }
         }
