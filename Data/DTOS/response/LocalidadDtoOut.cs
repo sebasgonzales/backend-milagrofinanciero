@@ -3,5 +3,6 @@
     public class LocalidadDtoOut
     {
         public string CodigoPostal { get; set;}
+        public string NombreProvincia { get; set;}
     }
 }

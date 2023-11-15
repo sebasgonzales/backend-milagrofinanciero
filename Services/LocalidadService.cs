@@ -21,7 +21,8 @@ namespace backend_milagrofinanciero.Services
             return await _context.Localidad
                 .Select(l => new LocalidadDtoOut
                 {
-                    CodigoPostal = l.Cp
+                    CodigoPostal = l.Cp,
+                    NombreProvincia = l.Provincia.Nombre
                 }).ToListAsync();
         }
 
@@ -32,7 +33,8 @@ namespace backend_milagrofinanciero.Services
                 .Where(l => l.Id == id)
                 .Select(l => new LocalidadDtoOut
                 {
-                    CodigoPostal = l.Cp
+                    CodigoPostal = l.Cp,
+                    NombreProvincia = l.Provincia.Nombre
                 }).SingleOrDefaultAsync();
         }
 
