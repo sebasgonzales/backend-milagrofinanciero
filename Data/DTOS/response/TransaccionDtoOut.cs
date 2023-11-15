@@ -18,8 +18,8 @@ namespace backend_milagrofinanciero.Data.DTOS.response
 
         public long  CuentaDestino { get; set; } 
 
-        public long  CuentaOrigen { get; set; } 
+        public long  CuentaOrigen { get; set; }
 
-        public string  TipoTransaccion { get; set; } = null!;
+        public string TipoTransaccion { get; set; } = null!;
     }
 }
