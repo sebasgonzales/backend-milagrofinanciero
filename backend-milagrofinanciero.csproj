@@ -24,8 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\DTOS\response\" />
-    <Folder Include="Data\DTOS\request\" />
     <Folder Include="Services\NewFolder\" />
   </ItemGroup>
 

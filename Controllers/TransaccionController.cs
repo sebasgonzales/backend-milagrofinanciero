@@ -2,6 +2,8 @@
 using backend_milagrofinanciero.Services;
 using backend_milagrofinanciero.Data.BankModels;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using backend_milagrofinanciero.Data.DTOS.request;
+using backend_milagrofinanciero.Data.DTOS.response;
 
 namespace backend_milagrofinanciero.Controllers
 {
@@ -16,15 +18,16 @@ namespace backend_milagrofinanciero.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Transaccion>> Get()
+        public async Task<IEnumerable<TransaccionDtoOut>> Get()
         {
             return await _service.GetAll();
         }
 
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<Transaccion>> GetById(int id)
+        public async Task<ActionResult<TransaccionDtoOut>> GetById(int id)
         {
-            var transaccion = await _service.GetById(id);
+            var transaccion = await _service.GetDtoById(id);
         
             if (transaccion is null)
                     return TransaccionNotFound(id);
@@ -33,7 +36,7 @@ namespace backend_milagrofinanciero.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Transaccion transaccion) 
+        public async Task<IActionResult> Create(TransaccionDtoIn transaccion) 
         {
             var newTransaccion = await _service.Create(transaccion);
 
@@ -42,7 +45,7 @@ namespace backend_milagrofinanciero.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> Update(int id, Transaccion transaccion)
+        public async Task<IActionResult> Update(int id, TransaccionDtoIn transaccion)
         {
 
             if (id != transaccion.Id)
@@ -78,6 +81,7 @@ namespace backend_milagrofinanciero.Controllers
             }
         }
 
+        [NonAction]
         public NotFoundObjectResult TransaccionNotFound(int id)
         {
             return NotFound(new { message = $"La transaccion con ID = {id} no existe. " });
