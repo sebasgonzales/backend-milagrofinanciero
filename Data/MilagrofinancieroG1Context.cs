@@ -18,7 +18,7 @@ public partial class MilagrofinancieroG1Context : DbContext
 
     public virtual DbSet<Banco> Bancos { get; set; }
 
-    public virtual DbSet<Cliente> Clientes { get; set; }
+    public virtual DbSet<Cliente> Cliente { get; set; }
 
     public virtual DbSet<ClienteXCuenta> ClienteXCuenta { get; set; }
 
