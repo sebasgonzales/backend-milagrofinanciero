@@ -2,20 +2,21 @@
 using backend_milagrofinanciero.Data.BankModels;
 using backend_milagrofinanciero.Data.DTOS.request;
 using backend_milagrofinanciero.Data.DTOS.response;
+using backend_milagrofinanciero.Services.Impl;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend_milagrofinanciero.Services;
 
-public class EmpleadoService
+public class EmpleadoService : IEmpleadoService
 {
 
     private readonly MilagrofinancieroG1Context _context;
- 
+
 
     public EmpleadoService(MilagrofinancieroG1Context context)
     {
-    _context = context;
+        _context = context;
     }
 
     public async Task<IEnumerable<EmpleadoDtoOut>> GetAll()
@@ -55,12 +56,12 @@ public class EmpleadoService
     {
         var nuevoEmpleado = new Empleado();
 
-        nuevoEmpleado.Id = empleadoDTO.Id;
         nuevoEmpleado.Legajo = empleadoDTO.Legajo;
         nuevoEmpleado.Nombre = empleadoDTO.Nombre;
         nuevoEmpleado.CuitCuil = empleadoDTO.CuitCuil;
         nuevoEmpleado.SucursalId = empleadoDTO.SucursalId;
 
+        _context.Empleado.Add(nuevoEmpleado);
         await _context.SaveChangesAsync();
 
         return nuevoEmpleado;
@@ -68,22 +69,21 @@ public class EmpleadoService
 
     //metodo para actualizar 
     public async Task Update(int id, EmpleadoDtoIn empleado)
-    { 
-            var existingEmpleado = await GetById(id);
-    
-            if (existingEmpleado is not null)
-            {
+    {
+        var existingEmpleado = await GetById(id);
 
-                existingEmpleado.Nombre = empleado.Nombre;
-                existingEmpleado.CuitCuil = empleado.CuitCuil;
-                existingEmpleado.Legajo = empleado.Legajo;
-                existingEmpleado.SucursalId= empleado.SucursalId;
+        if (existingEmpleado is not null)
+        {
+            existingEmpleado.Nombre = empleado.Nombre;
+            existingEmpleado.CuitCuil = empleado.CuitCuil;
+            existingEmpleado.Legajo = empleado.Legajo;
+            existingEmpleado.SucursalId = empleado.SucursalId;
 
-                await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-            }
+        }
 
-      
+
     }
 
 

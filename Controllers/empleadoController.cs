@@ -49,31 +49,24 @@ public class EmpleadoController : ControllerBase
         var newEmpleado = await _service.Create(empleado);
 
         //El siguiente metodo devuelve nuevo empleado con la funcion GetById que creamos anteriormente.
-        return CreatedAtAction(nameof(GetById), new {id = empleado.Id}, empleado);
+        return CreatedAtAction(nameof(GetById), new {id = empleado.Id}, newEmpleado);
     }
 
     //PUT
 
-    [HttpPut]
+    [HttpPut("{id}")]
 
-    public async Task<IActionResult> Update(int id, EmpleadoDtoIn empleadoDTO)
+    public async Task<IActionResult> Update(int id, EmpleadoDtoIn empleado)
     {
-        if (id != empleadoDTO.Id)
+        var empleadoToUpdate = await _service.GetById(id);
+        if (empleadoToUpdate is not null)
         {
-            return BadRequest();
+            await _service.Update(id, empleado);
+            return NoContent();
         }
         else
         {
-            var empleadoToUpdate = _service.GetById(id);
-            if (empleadoToUpdate is not null)
-            {
-                await _service.Update(id, empleadoDTO);
-                return NoContent();
-            }
-            else
-            { 
-                return  NotFound();
-            }
+            return NotFound(id);
         }
     }
     // DELETE
