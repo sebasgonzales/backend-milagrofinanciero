@@ -26,7 +26,7 @@ public partial class MilagrofinancieroG1Context : DbContext
 
     public virtual DbSet<Empleado> Empleados { get; set; }
 
-    public virtual DbSet<Localidad> Localidads { get; set; }
+    public virtual DbSet<Localidad> Localidad { get; set; }
 
     public virtual DbSet<Pais> Pais { get; set; }
 
