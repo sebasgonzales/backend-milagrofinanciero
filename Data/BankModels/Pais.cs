@@ -7,7 +7,7 @@ public partial class Pais
 {
     public int Id { get; set; }
 
-    public string[] Nombre { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
 
-    public virtual Provincia? Provincium { get; set; }
+    public virtual ICollection<Provincia> Provincia { get; set; } = new List<Provincia>();
 }

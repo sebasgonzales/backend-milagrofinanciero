@@ -7,11 +7,15 @@ public partial class ClienteXCuenta
 {
     public int Id { get; set; }
 
-    public string[] Rol { get; set; } = null!;
+    public string Rol { get; set; } = null!;
 
     public DateOnly? Alta { get; set; }
 
-    public virtual Cuenta Id1 { get; set; } = null!;
+    public int ClienteId { get; set; }
 
-    public virtual Cliente IdNavigation { get; set; } = null!;
+    public int CuentaId { get; set; }
+
+    public virtual Cliente Cliente { get; set; } = null!;
+
+    public virtual Cuenta Cuenta { get; set; } = null!;
 }
