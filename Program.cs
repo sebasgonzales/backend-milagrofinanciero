@@ -32,6 +32,7 @@ builder.Services.AddScoped<EmpleadoService>();
 builder.Services.AddScoped<ProvinciaService>();
 builder.Services.AddScoped<TipoCuentaService>();
 builder.Services.AddScoped<LocalidadService>();
+builder.Services.AddScoped<ClienteXCuentaService>();
 
 
 var app = builder.Build();
