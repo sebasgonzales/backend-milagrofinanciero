@@ -25,6 +25,8 @@
 
   <ItemGroup>
     <Folder Include="Services\Impl\" />
+    <Folder Include="Services\NewFolder\" />
+
   </ItemGroup>
 
 </Project>
