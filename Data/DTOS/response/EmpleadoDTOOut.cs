@@ -2,7 +2,6 @@
 {
     public class EmpleadoDtoOut
     {
-
         public string Nombre { get; set; } = null!;
 
         public string CuitCuil { get; set; } = null!;

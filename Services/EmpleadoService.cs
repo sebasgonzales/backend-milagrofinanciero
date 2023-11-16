@@ -10,7 +10,6 @@ namespace backend_milagrofinanciero.Services;
 
 public class EmpleadoService : IEmpleadoService
 {
-
     private readonly MilagrofinancieroG1Context _context;
 
 

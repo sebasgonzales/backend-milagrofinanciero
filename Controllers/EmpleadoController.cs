@@ -26,7 +26,7 @@ public class EmpleadoController : ControllerBase
         return await _service.GetAll();
     }
 
-    //GET By ID
+    //GET
     [HttpGet("{id}")]
     public async Task<ActionResult<EmpleadoDtoOut>> GetById(int id)
     {
