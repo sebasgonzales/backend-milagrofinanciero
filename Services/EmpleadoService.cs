@@ -36,7 +36,9 @@ public class EmpleadoService
     //como el getById lo uso mucho, defino otro endpoint para el dtoOut
     public async Task<EmpleadoDtoOut?> GetDtoById(int id)
     {
-        return await _context.Empleados.Where(e => e.Id == id).Select(e => new EmpleadoDtoOut
+        return await _context.Empleados.
+        Where(e => e.Id == id).
+        Select(e => new EmpleadoDtoOut
         {
             CuitCuil = e.CuitCuil,
             Legajo = e.Legajo,
