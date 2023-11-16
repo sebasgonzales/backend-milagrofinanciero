@@ -1,6 +1,7 @@
 using backend_milagrofinanciero.Data;
 using backend_milagrofinanciero.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection")));
 
 //Service Layer
 builder.Services.AddScoped<ProvinciaService>();
+builder.Services.AddScoped<ClienteXCuentaService>();
 
 var app = builder.Build();
 
