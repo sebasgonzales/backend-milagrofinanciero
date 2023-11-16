@@ -29,9 +29,7 @@ builder.Services.AddScoped<CuentaService>();
 builder.Services.AddScoped<TipoTransaccionService>();
 builder.Services.AddScoped<BancoService>();
 builder.Services.AddScoped<EmpleadoService>();
-
-
-// Service Layer
+builder.Services.AddScoped<ProvinciaService>();
 builder.Services.AddScoped<TipoCuentaService>();
 
 
