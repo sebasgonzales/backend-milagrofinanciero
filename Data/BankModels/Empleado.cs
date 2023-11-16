@@ -16,4 +16,5 @@ public partial class Empleado
     public int? SucursalId { get; set; }
 
     public virtual Sucursal? Sucursal { get; set; } // dentro de la clase empleado, vas a tener sucursal. esto es la navegacion
+
 }
