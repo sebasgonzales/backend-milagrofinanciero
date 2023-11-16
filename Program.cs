@@ -1,6 +1,7 @@
 using backend_milagrofinanciero.Data;
 using backend_milagrofinanciero.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,15 +13,34 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// DBContext
 
+// DBContext
 builder.Services.AddDbContext<MilagrofinancieroG1Context>(options =>
-options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection")));
+options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection"))) ;
+
+//insertar un servicio a nuestra aplicacion
+builder.Services.AddScoped<ClienteService>();
+
+//Service Layer
+
+builder.Services.AddScoped<SucursalService>();
+builder.Services.AddScoped<TransaccionService>();
+
+
+// Service Layer
+builder.Services.AddScoped<CuentaService>();
 
 // Service Layer
 builder.Services.AddScoped<TipoTransaccionService>();
 
 var app = builder.Build();
+
+//Cada vez que se inicie el proyecto se va a ejecutar esto que ejecuta la migraci�n es decir crear la BD o actualizarla
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<MilagrofinancieroG1Context>();
+    context.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
