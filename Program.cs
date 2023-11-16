@@ -15,7 +15,6 @@ builder.Services.AddSwaggerGen();
 
 
 // DBContext
-
 builder.Services.AddDbContext<MilagrofinancieroG1Context>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection"))) ;
 
@@ -28,7 +27,17 @@ builder.Services.AddScoped<SucursalService>();
 builder.Services.AddScoped<TransaccionService>();
 
 
+// Service Layer
+builder.Services.AddScoped<CuentaService>();
+
 var app = builder.Build();
+
+//Cada vez que se inicie el proyecto se va a ejecutar esto que ejecuta la migraci�n es decir crear la BD o actualizarla
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<MilagrofinancieroG1Context>();
+    context.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
