@@ -52,6 +52,7 @@ namespace backend_milagrofinanciero.Services
         {
             var newLocalidad = new Localidad();
             newLocalidad.Cp = newLocalidadDto.CodigoPostal;
+            newLocalidad.ProvinciaId = newLocalidadDto.ProvinciaId;
 
             _context.Localidad.Add(newLocalidad);
             await _context.SaveChangesAsync();
@@ -67,6 +68,7 @@ namespace backend_milagrofinanciero.Services
             if (existingLocalidad is not null)
             {
                 existingLocalidad.Cp = updateLocalidad.CodigoPostal;
+                existingLocalidad.ProvinciaId = updateLocalidad.ProvinciaId;
 
                 await _context.SaveChangesAsync();
             }
