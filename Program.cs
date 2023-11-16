@@ -30,6 +30,9 @@ builder.Services.AddScoped<TransaccionService>();
 // Service Layer
 builder.Services.AddScoped<CuentaService>();
 
+// Service Layer
+builder.Services.AddScoped<TipoTransaccionService>();
+
 var app = builder.Build();
 
 //Cada vez que se inicie el proyecto se va a ejecutar esto que ejecuta la migraci�n es decir crear la BD o actualizarla
