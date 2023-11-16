@@ -35,6 +35,9 @@ builder.Services.AddScoped<LocalidadService>();
 builder.Services.AddScoped<ClienteXCuentaService>();
 
 
+//Service Layer (siempre arriba del var app = builder
+builder.Services.AddScoped<PaisService>();
+
 var app = builder.Build();
 
 //Cada vez que se inicie el proyecto se va a ejecutar esto que ejecuta la migraci�n es decir crear la BD o actualizarla
