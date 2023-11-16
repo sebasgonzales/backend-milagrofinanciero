@@ -20,6 +20,8 @@ builder.Services.AddDbContext<MilagrofinancieroG1Context>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection")));
 
 //Service Layer
+
+builder.Services.AddScoped<SucursalService>();
 builder.Services.AddScoped<TransaccionService>();
 
 
