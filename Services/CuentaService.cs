@@ -57,8 +57,8 @@ namespace backend_milagrofinanciero.Services
 
             newCuenta.NumeroCuenta = newCuentaDto.NumeroCuenta;
             newCuenta.Cbu = newCuentaDto.Cbu;
-            newCuenta.TipoCuenta = newCuentaDto.TipoCuenta;
-            newCuenta.Banco = newCuentaDto.Banco;
+            newCuenta.TipoCuentaId = newCuentaDto.TipoCuentaId;
+            newCuenta.BancoId = newCuentaDto.BancoId;
 
             _context.Cuenta.Add(newCuenta);
             await _context.SaveChangesAsync();
@@ -73,8 +73,8 @@ namespace backend_milagrofinanciero.Services
             {
                 cuentaExistente.NumeroCuenta = cuenta.NumeroCuenta;
                 cuentaExistente.Cbu = cuenta.Cbu;
-                cuentaExistente.TipoCuenta = cuenta.TipoCuenta;
-                cuentaExistente.Banco = cuenta.Banco;
+                cuentaExistente.TipoCuentaId = cuenta.TipoCuentaId;
+                cuentaExistente.BancoId = cuenta.BancoId;
 
                 await _context.SaveChangesAsync();
             }
