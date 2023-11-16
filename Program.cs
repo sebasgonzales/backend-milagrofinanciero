@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,7 +13,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 // DBContext
 builder.Services.AddDbContext<MilagrofinancieroG1Context>(options =>
@@ -25,13 +25,9 @@ builder.Services.AddScoped<ClienteService>();
 
 builder.Services.AddScoped<SucursalService>();
 builder.Services.AddScoped<TransaccionService>();
-
-
-// Service Layer
 builder.Services.AddScoped<CuentaService>();
-
-// Service Layer
 builder.Services.AddScoped<TipoTransaccionService>();
+builder.Services.AddScoped<BancoService>();
 
 var app = builder.Build();
 
