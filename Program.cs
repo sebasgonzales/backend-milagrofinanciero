@@ -18,11 +18,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MilagrofinancieroG1Context>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection")));
 
+
 // Service Layer
 builder.Services.AddScoped<LocalidadService>();
 builder.Services.AddScoped<ProvinciaService>();
 builder.Services.AddScoped<ClienteXCuentaService>();
-builder.Services.AddScoped<EmpleadoService>();  //AddScoped sirve para agregar un servicio a mi API
 
 var app = builder.Build();
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace backend_milagrofinanciero.Data.BankModels;
 
 public partial class Empleado
-{    
+{
     public int Id { get; set; }
 
     public string Nombre { get; set; } = null!;
@@ -15,6 +15,5 @@ public partial class Empleado
 
     public int? SucursalId { get; set; }
 
-    public virtual Sucursal? Sucursal { get; set; } // dentro de la clase empleado, vas a tener sucursal. esto es la navegacion
-
+    public virtual Sucursal? Sucursal { get; set; }
 }
