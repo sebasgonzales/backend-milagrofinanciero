@@ -18,31 +18,31 @@ public partial class MilagrofinancieroG1Context : DbContext
 
     public virtual DbSet<Banco> Bancos { get; set; }
 
-    public virtual DbSet<Cliente> Clientes { get; set; }
+    public virtual DbSet<Cliente> Cliente { get; set; }
 
     public virtual DbSet<ClienteXCuenta> ClienteXCuenta { get; set; }
 
     public virtual DbSet<Cuenta> Cuenta { get; set; }
 
-    public virtual DbSet<Empleado> Empleados { get; set; }
+    public virtual DbSet<Empleado> Empleado { get; set; }
 
-    public virtual DbSet<Localidad> Localidads { get; set; }
+    public virtual DbSet<Localidad> Localidad { get; set; }
 
     public virtual DbSet<Pais> Pais { get; set; }
 
     public virtual DbSet<Provincia> Provincia { get; set; }
 
-    public virtual DbSet<Sucursal> Sucursals { get; set; }
+    public virtual DbSet<Sucursal> Sucursal { get; set; }
 
     public virtual DbSet<TipoCuenta> TipoCuenta { get; set; }
 
     public virtual DbSet<TipoTransaccion> TipoTransaccions { get; set; }
 
-    public virtual DbSet<Transaccion> Transaccions { get; set; }
+    public virtual DbSet<Transaccion> Transaccion { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Server=127.0.0.1;Database=milagrofinanciero-g1;Integrated Security=true;Port=5432;User Id=postgres;Password=admin");
+        => optionsBuilder.UseNpgsql("Server=127.0.0.1;Database=milagrofinanciero-g1;Integrated Security=true;Port=5432;User Id=postgres;Password=123456789");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
