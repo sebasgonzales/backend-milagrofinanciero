@@ -69,7 +69,7 @@ public class EmpleadoController : ControllerBase
             return NotFound(id);
         }
     }
-    // DELETE
+    // DELETE ID
     [HttpDelete("{id}")]
 
     public async Task<IActionResult> Delete(int id)
