@@ -9,6 +9,6 @@
 
         public int Legajo { get; set; }
 
-        public string SucursalNombre { get; set; }
+        public string? SucursalNombre { get; set; }
     }
 }

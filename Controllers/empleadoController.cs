@@ -40,9 +40,10 @@ public class EmpleadoController : ControllerBase
         {
             return empleado;
         }
-    }     
+    }
 
-    //POST                   
+    //POST
+    [HttpPost]
     public async Task<IActionResult> Create(EmpleadoDtoIn empleado) 
     {
         var newEmpleado = await _service.Create(empleado);
@@ -83,7 +84,6 @@ public class EmpleadoController : ControllerBase
         var empleadoToDelete = await _service.GetById(id);
         if (empleadoToDelete is not null)
         {
-            await _service.Delete(id);
             await _service.Delete(id);
             return Ok();
         }

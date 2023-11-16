@@ -9,7 +9,7 @@
         public string CuitCuil { get; set; } = null!;
 
         public int Legajo { get; set; }
-
+        public int SucursalId {  get; set; }
 
     }
 }

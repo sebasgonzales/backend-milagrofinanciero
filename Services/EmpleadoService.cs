@@ -20,44 +20,50 @@ public class EmpleadoService
 
     public async Task<IEnumerable<EmpleadoDtoOut>> GetAll()
     {
-        return await _context.Empleados.Select(e => new EmpleadoDtoOut
+        return await _context.Empleado
+        .Select(e => new EmpleadoDtoOut
         {
+            Nombre = e.Nombre,
             CuitCuil = e.CuitCuil,
             Legajo = e.Legajo,
-            SucursalNombre = e.Sucursal != null ? e.Sucursal.Nombre : "" // si la sucursal es distin ta de null, asigno el nombre, sino le asigno "", el : es el sino
+            SucursalNombre = e.Sucursal.Nombre
         }).ToListAsync();
     }
 
     public async Task<Empleado?> GetById(int id)
     {
-        return await _context.Empleados.FirstAsync();
+        var empleado = await _context.Empleado
+            .Where(e => e.Id == id)
+            .SingleOrDefaultAsync();
+        return empleado;
     }
-    
+
     //como el getById lo uso mucho, defino otro endpoint para el dtoOut
     public async Task<EmpleadoDtoOut?> GetDtoById(int id)
     {
-        return await _context.Empleados.
+        return await _context.Empleado.
         Where(e => e.Id == id).
         Select(e => new EmpleadoDtoOut
         {
+            Nombre = e.Nombre,
             CuitCuil = e.CuitCuil,
             Legajo = e.Legajo,
-            SucursalNombre = e.Nombre
+            SucursalNombre = e.Sucursal.Nombre
         }).SingleOrDefaultAsync();
     }
     public async Task<Empleado> Create(EmpleadoDtoIn empleadoDTO)
     {
-        var nuevoempleado = new Empleado();
+        var nuevoEmpleado = new Empleado();
 
-        nuevoempleado.Id = empleadoDTO.Id;
-        nuevoempleado.Legajo = empleadoDTO.Legajo;
-        nuevoempleado.Nombre = empleadoDTO.Nombre;
-        nuevoempleado.CuitCuil = empleadoDTO.CuitCuil;
+        nuevoEmpleado.Id = empleadoDTO.Id;
+        nuevoEmpleado.Legajo = empleadoDTO.Legajo;
+        nuevoEmpleado.Nombre = empleadoDTO.Nombre;
+        nuevoEmpleado.CuitCuil = empleadoDTO.CuitCuil;
+        nuevoEmpleado.SucursalId = empleadoDTO.SucursalId;
 
-        await _context.Empleados.AddAsync(nuevoempleado);
         await _context.SaveChangesAsync();
 
-        return nuevoempleado;
+        return nuevoEmpleado;
     }
 
     //metodo para actualizar 
@@ -71,6 +77,7 @@ public class EmpleadoService
                 existingEmpleado.Nombre = empleado.Nombre;
                 existingEmpleado.CuitCuil = empleado.CuitCuil;
                 existingEmpleado.Legajo = empleado.Legajo;
+                existingEmpleado.SucursalId= empleado.SucursalId;
 
                 await _context.SaveChangesAsync();
 
@@ -86,7 +93,7 @@ public class EmpleadoService
 
         if (empleadoToDelete is not null)
         {
-            _context.Empleados.Remove(empleadoToDelete);
+            _context.Empleado.Remove(empleadoToDelete);
             await _context.SaveChangesAsync();
         }
     }
