@@ -23,8 +23,8 @@ public class EmpleadoService
         return await _context.Empleados.Select(e => new EmpleadoDtoOut
         {
             CuitCuil = e.CuitCuil,
-            Legajo= e.Legajo,
-            SucursalNombre = e.Nombre
+            Legajo = e.Legajo,
+            SucursalNombre = e.Sucursal != null ? e.Sucursal.Nombre : "" // si la sucursal es distin ta de null, asigno el nombre, sino le asigno "", el : es el sino
         }).ToListAsync();
     }
 
