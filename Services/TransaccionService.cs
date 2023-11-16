@@ -2,12 +2,13 @@
 using backend_milagrofinanciero.Data.BankModels;
 using backend_milagrofinanciero.Data.DTOS.request;
 using backend_milagrofinanciero.Data.DTOS.response;
+using backend_milagrofinanciero.Services.impl;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend_milagrofinanciero.Services
 {
-    public class TransaccionService
+    public class TransaccionService : ITransaccionService
     {
         private readonly MilagrofinancieroG1Context _context;
 
@@ -103,9 +104,9 @@ namespace backend_milagrofinanciero.Services
         {
             var transaccionToDelete = await GetById(id);
             if (transaccionToDelete is not null)
-            { 
-            _context.Transaccion.Remove(transaccionToDelete);
-            await _context.SaveChangesAsync();
+            {
+                _context.Transaccion.Remove(transaccionToDelete);
+                await _context.SaveChangesAsync();
             }
         }
     }
