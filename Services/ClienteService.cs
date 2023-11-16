@@ -5,18 +5,21 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Principal;
 using backend_milagrofinanciero.Data.DTOS.request;
 using backend_milagrofinanciero.Data.DTOS.response;
+using backend_milagrofinanciero.Services.Impl;
 
 namespace backend_milagrofinanciero.Services;
 
-public class ClienteService
+public class ClienteService : IClienteService
 {
     private readonly MilagrofinancieroG1Context _context;
     public ClienteService(MilagrofinancieroG1Context context)
     { _context = context; }
 
     public async Task<IEnumerable<ClienteDtoOut>> GetAll()
-    { return await _context.Cliente
-            .Select(c => new ClienteDtoOut {
+    {
+        return await _context.Cliente
+            .Select(c => new ClienteDtoOut
+            {
                 RazonSocial = c.RazonSocial,
                 CuitCuil = c.CuitCuil,
                 Alta = c.Alta,
@@ -53,9 +56,9 @@ public class ClienteService
     }
 
 
-    public async Task <Cliente> Create(ClienteDtoIn newClienteDTO)
+    public async Task<Cliente> Create(ClienteDtoIn newClienteDTO)
     {
-    var newCliente = new Cliente();
+        var newCliente = new Cliente();
 
         newCliente.RazonSocial = newClienteDTO.RazonSocial;
         newCliente.Alta = newClienteDTO.Alta;
@@ -66,9 +69,9 @@ public class ClienteService
         newCliente.LocalidadId = newClienteDTO.LocalidadId;
 
         _context.Cliente.Add(newCliente);
-    await _context.SaveChangesAsync();
-    
-    return newCliente;
+        await _context.SaveChangesAsync();
+
+        return newCliente;
     }
     public async Task Update(int id, ClienteDtoIn cliente)
     {
@@ -79,7 +82,7 @@ public class ClienteService
         {
             existingClient.RazonSocial = cliente.RazonSocial;
             existingClient.Alta = cliente.Alta;
-            existingClient.CuitCuil = cliente.CuitCuil; 
+            existingClient.CuitCuil = cliente.CuitCuil;
             existingClient.Calle = cliente.Calle;
             existingClient.Departamento = cliente.Departamento;
             existingClient.Numero = cliente.Numero;
