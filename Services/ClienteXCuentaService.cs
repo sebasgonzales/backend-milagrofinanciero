@@ -2,12 +2,13 @@
 using backend_milagrofinanciero.Data.BankModels;
 using backend_milagrofinanciero.Data.DTOS.request;
 using backend_milagrofinanciero.Data.DTOS.response;
+using backend_milagrofinanciero.Services.impl;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend_milagrofinanciero.Services
 {
-    public class ClienteXCuentaService
+    public class ClienteXCuentaService : IClienteXCuentaService
     {
         private readonly MilagrofinancieroG1Context _context;
 
@@ -19,7 +20,7 @@ namespace backend_milagrofinanciero.Services
         public async Task<IEnumerable<ClienteXCuentaDtoOut>> GetAll()
         {
             return await _context.ClienteXCuenta
-                
+
                 .Select(c => new ClienteXCuentaDtoOut
                 {
                     Rol = c.Rol,
@@ -55,7 +56,7 @@ namespace backend_milagrofinanciero.Services
             newClienteXCuenta.Alta = newClienteXCuentaDTO.Alta;
             newClienteXCuenta.ClienteId = newClienteXCuentaDTO.ClienteId;
             newClienteXCuenta.CuentaId = newClienteXCuentaDTO.CuentaId;
-            
+
 
 
             _context.ClienteXCuenta.Add(newClienteXCuenta);
