@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using backend_milagrofinanciero.Services;
-using backend_milagrofinanciero.Data.BankModels;
-using backend_milagrofinanciero.Data.DTOS.request;
-using backend_milagrofinanciero.Data.DTOS.response;
+using Librerias.Services;
+using Data.BankModels;
+using Core.DTOS.request;
+using Core.DTOS.response;
 
 namespace backend_milagrofinanciero.Controllers;
 
@@ -12,7 +12,7 @@ namespace backend_milagrofinanciero.Controllers;
 public class EmpleadoController : ControllerBase
 {
 
-    private readonly EmpleadoService _service;
+    private readonly IEmpleadoService _service;
 
     public EmpleadoController(EmpleadoService service)
     {
@@ -49,7 +49,7 @@ public class EmpleadoController : ControllerBase
         var newEmpleado = await _service.Create(empleado);
 
         //El siguiente metodo devuelve nuevo empleado con la funcion GetById que creamos anteriormente.
-        return CreatedAtAction(nameof(GetById), new {id = empleado.Id}, newEmpleado);
+        return CreatedAtAction(nameof(GetById), newEmpleado);
     }
 
     //PUT

@@ -1,5 +1,5 @@
 using backend_milagrofinanciero.Data;
-using backend_milagrofinanciero.Services;
+using Librerias.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -18,25 +18,19 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MilagrofinancieroG1Context>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection"))) ;
 
-//insertar un servicio a nuestra aplicacion
-builder.Services.AddScoped<ClienteService>();
-
 //Service Layer
-
-builder.Services.AddScoped<SucursalService>();
-builder.Services.AddScoped<TransaccionService>();
-builder.Services.AddScoped<CuentaService>();
-builder.Services.AddScoped<TipoTransaccionService>();
-builder.Services.AddScoped<BancoService>();
-builder.Services.AddScoped<EmpleadoService>();
-builder.Services.AddScoped<ProvinciaService>();
-builder.Services.AddScoped<TipoCuentaService>();
-builder.Services.AddScoped<LocalidadService>();
-builder.Services.AddScoped<ClienteXCuentaService>();
-
-
-//Service Layer (siempre arriba del var app = builder
-builder.Services.AddScoped<PaisService>();
+//builder.Services.AddScoped<ClienteService>();
+//builder.Services.AddScoped<SucursalService>();
+//builder.Services.AddScoped<TransaccionService>();
+//builder.Services.AddScoped<CuentaService>();
+//builder.Services.AddScoped<TipoTransaccionService>();
+//builder.Services.AddScoped<BancoService>();
+builder.Services.AddScoped<Librerias.Services.IEmpleadoService, Librerias.Services.EmpleadoService>();
+////builder.Services.AddScoped<ProvinciaService>();
+////builder.Services.AddScoped<TipoCuentaService>();
+////builder.Services.AddScoped<LocalidadService>();
+////builder.Services.AddScoped<ClienteXCuentaService>();
+//builder.Services.AddScoped<PaisService>();
 
 var app = builder.Build();
 

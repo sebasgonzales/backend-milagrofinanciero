@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend-milagrofinanciero", "backend-milagrofinanciero.csproj", "{2CABF503-AFAC-485D-834B-64CB418DB867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backend-milagrofinanciero", "backend-milagrofinanciero.csproj", "{2CABF503-AFAC-485D-834B-64CB418DB867}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{7C21B6A7-856C-47A0-B66A-65B746BB8BAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Librerias", "Librerias", "{C3C5BBBB-DF88-44E2-BB7F-3DFDD214F0FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "..\ClassLibrary1\Data.csproj", "{7D8A35A2-76E8-4436-9AE6-46E6C24DE03E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "..\Core12\Core.csproj", "{1EB51FB8-5303-489C-A82A-73A4D752F2EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "..\Service\Services.csproj", "{FD26D287-73FA-4F03-9025-4333B58A8C17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +25,27 @@ Global
 		{2CABF503-AFAC-485D-834B-64CB418DB867}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CABF503-AFAC-485D-834B-64CB418DB867}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CABF503-AFAC-485D-834B-64CB418DB867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D8A35A2-76E8-4436-9AE6-46E6C24DE03E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D8A35A2-76E8-4436-9AE6-46E6C24DE03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D8A35A2-76E8-4436-9AE6-46E6C24DE03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D8A35A2-76E8-4436-9AE6-46E6C24DE03E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EB51FB8-5303-489C-A82A-73A4D752F2EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EB51FB8-5303-489C-A82A-73A4D752F2EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EB51FB8-5303-489C-A82A-73A4D752F2EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EB51FB8-5303-489C-A82A-73A4D752F2EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD26D287-73FA-4F03-9025-4333B58A8C17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD26D287-73FA-4F03-9025-4333B58A8C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD26D287-73FA-4F03-9025-4333B58A8C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD26D287-73FA-4F03-9025-4333B58A8C17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2CABF503-AFAC-485D-834B-64CB418DB867} = {7C21B6A7-856C-47A0-B66A-65B746BB8BAE}
+		{7D8A35A2-76E8-4436-9AE6-46E6C24DE03E} = {C3C5BBBB-DF88-44E2-BB7F-3DFDD214F0FF}
+		{1EB51FB8-5303-489C-A82A-73A4D752F2EE} = {C3C5BBBB-DF88-44E2-BB7F-3DFDD214F0FF}
+		{FD26D287-73FA-4F03-9025-4333B58A8C17} = {C3C5BBBB-DF88-44E2-BB7F-3DFDD214F0FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3C9DDB5-18BF-4705-912F-4A3D4FA73D45}
