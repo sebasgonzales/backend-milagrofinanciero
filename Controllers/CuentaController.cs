@@ -34,13 +34,13 @@ public class CuentaController : ControllerBase
     public async Task<IActionResult> Create(CuentaDtoIn cuenta)
     {
         var newCuenta = await _service.Create(cuenta);
-        return CreatedAtAction(nameof(GetByIdDto),new {id = cuenta.id}, newCuenta);
+        return CreatedAtAction(nameof(GetByIdDto),new {id = cuenta.Id}, newCuenta);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, CuentaDtoIn cuenta)
     {
-        if (id != cuenta.id) return BadRequest(new { message = $"El ID ({id}) de la URL no coincide con el ID ({cuenta.id}) del cuerpo de la solicitud." });
+        if (id != cuenta.Id) return BadRequest(new { message = $"El ID ({id}) de la URL no coincide con el ID ({cuenta.Id}) del cuerpo de la solicitud." });
 
         var cuentaToUpdate = await _service.GetById(id);
 

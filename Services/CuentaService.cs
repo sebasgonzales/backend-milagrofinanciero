@@ -25,7 +25,8 @@ namespace backend_milagrofinanciero.Services
                     NumeroCuenta = c.NumeroCuenta,
                     Cbu = c.Cbu,
                     TipoCuenta = c.TipoCuenta.Nombre,
-                    Banco = c.Banco.Nombre
+                    Banco = c.Banco.Nombre,
+                    Sucursal = c.Sucursal.Nombre
                 }).ToListAsync();
 
 
@@ -40,7 +41,8 @@ namespace backend_milagrofinanciero.Services
                     NumeroCuenta = c.NumeroCuenta,
                     Cbu = c.Cbu,
                     TipoCuenta = c.TipoCuenta.Nombre,
-                    Banco = c.Banco.Nombre
+                    Banco = c.Banco.Nombre,
+                    Sucursal = c.Sucursal.Nombre
                 }).SingleOrDefaultAsync();
         }
 
@@ -59,6 +61,7 @@ namespace backend_milagrofinanciero.Services
             newCuenta.Cbu = newCuentaDto.Cbu;
             newCuenta.TipoCuentaId = newCuentaDto.TipoCuentaId;
             newCuenta.BancoId = newCuentaDto.BancoId;
+            newCuenta.SucursalId = newCuentaDto.SucursalId;
 
             _context.Cuenta.Add(newCuenta);
             await _context.SaveChangesAsync();
@@ -69,12 +72,13 @@ namespace backend_milagrofinanciero.Services
         public async Task Update(int id, CuentaDtoIn cuenta)
         {
             var cuentaExistente = await GetById(id);
-            if (cuentaExistente is null) 
+            if (cuentaExistente is null)
             {
                 cuentaExistente.NumeroCuenta = cuenta.NumeroCuenta;
                 cuentaExistente.Cbu = cuenta.Cbu;
                 cuentaExistente.TipoCuentaId = cuenta.TipoCuentaId;
                 cuentaExistente.BancoId = cuenta.BancoId;
+                cuentaExistente.SucursalId = cuenta.SucursalId;
 
                 await _context.SaveChangesAsync();
             }
