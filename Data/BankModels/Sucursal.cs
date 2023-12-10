@@ -19,7 +19,7 @@ public partial class Sucursal
 
     public int? LocalidadId { get; set; }
 
-    public virtual ICollection<Cuenta>? Cuenta { get; set; } = new List<Cuenta>();
+    public virtual ICollection<Cuenta>? Cuentas { get; set; } = new List<Cuenta>();
 
     public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
 

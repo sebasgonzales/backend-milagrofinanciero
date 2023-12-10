@@ -135,7 +135,7 @@ public partial class MilagrofinancieroG1Context : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_tipocuenta");
 
-            entity.HasOne(d => d.Sucursal).WithMany(p => p.Cuenta)
+            entity.HasOne(d => d.Sucursal).WithMany(p => p.Cuentas)
                 .HasForeignKey(d => d.SucursalId)
                 .HasConstraintName("fk_sucursal");
 

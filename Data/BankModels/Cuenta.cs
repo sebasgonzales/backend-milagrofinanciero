@@ -15,7 +15,6 @@ public partial class Cuenta
 
     public int BancoId { get; set; }
     public int SucursalId { get; set; }
-
     public virtual Banco Banco { get; set; } = null!;
     public virtual Sucursal Sucursal { get; set; } = null!;
 
