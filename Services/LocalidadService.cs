@@ -21,6 +21,7 @@ namespace backend_milagrofinanciero.Services
             return await _context.Localidad
                 .Select(l => new LocalidadDtoOut
                 {
+                    Nombre = l.Nombre,
                     CodigoPostal = l.Cp,
                     NombreProvincia = l.Provincia.Nombre
                 }).ToListAsync();
@@ -33,6 +34,7 @@ namespace backend_milagrofinanciero.Services
                 .Where(l => l.Id == id)
                 .Select(l => new LocalidadDtoOut
                 {
+                    Nombre = l.Nombre,
                     CodigoPostal = l.Cp,
                     NombreProvincia = l.Provincia.Nombre
                 }).SingleOrDefaultAsync();
@@ -51,6 +53,7 @@ namespace backend_milagrofinanciero.Services
         public async Task<Localidad> Create(LocalidadDtoIn newLocalidadDto)
         {
             var newLocalidad = new Localidad();
+            newLocalidad.Nombre = newLocalidadDto.Nombre;
             newLocalidad.Cp = newLocalidadDto.CodigoPostal;
             newLocalidad.ProvinciaId = newLocalidadDto.ProvinciaId;
 
@@ -67,6 +70,7 @@ namespace backend_milagrofinanciero.Services
 
             if (existingLocalidad is not null)
             {
+                existingLocalidad.Nombre = updateLocalidad.Nombre;
                 existingLocalidad.Cp = updateLocalidad.CodigoPostal;
                 existingLocalidad.ProvinciaId = updateLocalidad.ProvinciaId;
 

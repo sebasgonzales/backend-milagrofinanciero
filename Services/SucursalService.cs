@@ -65,7 +65,6 @@ public class SucursalService : ISucursalService
         newSucursal.Calle = newSucursalDTO.Calle;
         newSucursal.Departamento = newSucursalDTO.Departamento;
         newSucursal.Numero = newSucursalDTO.Numero;
-        newSucursal.CuentaId = newSucursalDTO.CuentaId;
         newSucursal.LocalidadId = newSucursalDTO.LocalidadId;
 
         _context.Sucursal.Add(newSucursal);
@@ -85,7 +84,6 @@ public class SucursalService : ISucursalService
             existingSucursal.Calle = sucursal.Calle;
             existingSucursal.Departamento = sucursal.Departamento;
             existingSucursal.Numero = sucursal.Numero;
-            existingSucursal.CuentaId = sucursal.CuentaId;
             existingSucursal.LocalidadId = existingSucursal.LocalidadId;
 
             await _context.SaveChangesAsync();

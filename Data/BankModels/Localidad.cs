@@ -6,7 +6,7 @@ namespace backend_milagrofinanciero.Data.BankModels;
 public partial class Localidad
 {
     public int Id { get; set; }
-
+    public string Nombre { get; set; }
     public string Cp { get; set; } = null!;
 
     public int ProvinciaId { get; set; }

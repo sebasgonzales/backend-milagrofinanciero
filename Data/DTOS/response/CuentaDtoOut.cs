@@ -7,5 +7,6 @@ namespace backend_milagrofinanciero.Data.DTOS.response
         public long Cbu { get;  set;}
         public string TipoCuenta { get; set;}
         public string Banco { get; set;}
+        public string Sucursal {  get; set;}
     }
 }

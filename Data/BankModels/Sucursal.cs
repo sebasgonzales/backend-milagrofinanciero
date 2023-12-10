@@ -17,11 +17,9 @@ public partial class Sucursal
 
     public string Numero { get; set; } = null!;
 
-    public int? CuentaId { get; set; }
-
     public int? LocalidadId { get; set; }
 
-    public virtual Cuenta? Cuenta { get; set; }
+    public virtual ICollection<Cuenta>? Cuenta { get; set; } = new List<Cuenta>();
 
     public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
 

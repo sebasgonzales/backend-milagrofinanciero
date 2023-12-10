@@ -42,7 +42,7 @@ public partial class MilagrofinancieroG1Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Server=127.0.0.1;Database=milagrofinanciero-g1;Integrated Security=true;Port=5432;User Id=postgres;Password=123456789");
+        => optionsBuilder.UseNpgsql("Server=127.0.0.1;Database=milagrofinanciero-g1;Trust Server Certificate=true;Port=5432;User Id=postgres;Password=admin");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -123,6 +123,7 @@ public partial class MilagrofinancieroG1Context : DbContext
             entity.Property(e => e.Cbu).HasColumnName("cbu");
             entity.Property(e => e.NumeroCuenta).HasColumnName("numero_cuenta");
             entity.Property(e => e.TipoCuentaId).HasColumnName("TipoCuenta_ID");
+            entity.Property(e => e.SucursalId).HasColumnName("Sucursal_ID");
 
             entity.HasOne(d => d.Banco).WithMany(p => p.Cuenta)
                 .HasForeignKey(d => d.BancoId)
@@ -133,6 +134,11 @@ public partial class MilagrofinancieroG1Context : DbContext
                 .HasForeignKey(d => d.TipoCuentaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_tipocuenta");
+
+            entity.HasOne(d => d.Sucursal).WithMany(p => p.Cuenta)
+                .HasForeignKey(d => d.SucursalId)
+                .HasConstraintName("fk_sucursal");
+
         });
 
         modelBuilder.Entity<Empleado>(entity =>
@@ -213,7 +219,6 @@ public partial class MilagrofinancieroG1Context : DbContext
             entity.Property(e => e.Cp)
                 .HasMaxLength(10)
                 .HasColumnName("cp");
-            entity.Property(e => e.CuentaId).HasColumnName("Cuenta_ID");
             entity.Property(e => e.Departamento)
                 .HasMaxLength(45)
                 .HasColumnName("departamento");
@@ -224,10 +229,6 @@ public partial class MilagrofinancieroG1Context : DbContext
             entity.Property(e => e.Numero)
                 .HasMaxLength(45)
                 .HasColumnName("numero");
-
-            entity.HasOne(d => d.Cuenta).WithMany(p => p.Sucursales)
-                .HasForeignKey(d => d.CuentaId)
-                .HasConstraintName("fk_cuenta");
 
             entity.HasOne(d => d.Localidad).WithMany(p => p.Sucursales)
                 .HasForeignKey(d => d.LocalidadId)
