@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -19,7 +22,7 @@ namespace Services
 
         public async Task<IEnumerable<TipoTransaccionDtoOut>> GetAll()
         {
-            return await _context.TipoTransaccions.Select(tt => new TipoTransaccionDtoOut
+            return await _context.TipoTransaccion.Select(tt => new TipoTransaccionDtoOut
             {
                 Nombre = tt.Nombre
             }).ToListAsync();
@@ -28,7 +31,7 @@ namespace Services
 
         public async Task<TipoTransaccionDtoOut?> GetDtoById(int id)
         {
-            return await _context.TipoTransaccions
+            return await _context.TipoTransaccion
                 .Where(tt => tt.Id == id)
                 .Select(tt => new TipoTransaccionDtoOut
                 {
@@ -39,7 +42,7 @@ namespace Services
 
         public async Task<TipoTransaccion?> GetById(int id)
         {
-            return await _context.TipoTransaccions.FindAsync(id);
+            return await _context.TipoTransaccion.FindAsync(id);
         }
 
         public async Task<TipoTransaccion> Create(TipoTransaccionDtoIn newtipoTransaccionDTO)
@@ -47,7 +50,7 @@ namespace Services
             var newtipoTransaccion = new TipoTransaccion();
             newtipoTransaccion.Nombre = newtipoTransaccionDTO.Nombre;
 
-            _context.TipoTransaccions.Add(newtipoTransaccion);
+            _context.TipoTransaccion.Add(newtipoTransaccion);
             await _context.SaveChangesAsync();
 
             return newtipoTransaccion;
@@ -74,7 +77,7 @@ namespace Services
             if (tipoTransaccionToDelete is not null)
             {
 
-                _context.TipoTransaccions.Remove(tipoTransaccionToDelete);
+                _context.TipoTransaccion.Remove(tipoTransaccionToDelete);
                 await _context.SaveChangesAsync();
             }
 

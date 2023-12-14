@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
+using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -57,7 +60,7 @@ namespace Services
             nuevoEmpleado.Legajo = empleadoDTO.Legajo;
             nuevoEmpleado.Nombre = empleadoDTO.Nombre;
             nuevoEmpleado.CuitCuil = empleadoDTO.CuitCuil;
-            nuevoEmpleado.SucursalId = empleadoDTO.SucursalId;
+            nuevoEmpleado.IdSucursal = empleadoDTO.IdSucursal;
 
             _context.Empleado.Add(nuevoEmpleado);
             await _context.SaveChangesAsync();
@@ -75,7 +78,7 @@ namespace Services
                 existingEmpleado.Nombre = empleado.Nombre;
                 existingEmpleado.CuitCuil = empleado.CuitCuil;
                 existingEmpleado.Legajo = empleado.Legajo;
-                existingEmpleado.SucursalId = empleado.SucursalId;
+                existingEmpleado.IdSucursal = empleado.IdSucursal;
 
                 await _context.SaveChangesAsync();
 
@@ -93,3 +96,4 @@ namespace Services
             }
         }
     }
+}

@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using backend_milagrofinanciero.Services;
-using backend_milagrofinanciero.Data.BankModels;
-using Microsoft.DotNet.Scaffolding.Shared.Messaging;
-using backend_milagrofinanciero.Data.DTOS.request;
-using backend_milagrofinanciero.Data.DTOS.response;
+﻿using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.AspNetCore.Mvc;
+using Services;
 
 
 namespace backend_milagrofinanciero.Controllers
@@ -12,13 +10,11 @@ namespace backend_milagrofinanciero.Controllers
     [ApiController]
     [Route("[controller]")]
 
-
-
     public class PaisController : ControllerBase
     {
-        private readonly PaisService _service;
+        private readonly IPaisService _service;
 
-        public PaisController(PaisService pais)
+        public PaisController(IPaisService pais)
         {
             _service = pais;
 

@@ -27,9 +27,9 @@ public partial class Transaccion
 
     public int IdTipoTransaccion { get; set; }
 
-    public virtual Cuenta IdCuentaDestinoNavigation { get; set; }
+    public virtual Cuenta CuentaDestino { get; set; }
 
-    public virtual Cuenta IdCuentaOrigenNavigation { get; set; }
+    public virtual Cuenta CuentaOrigen { get; set; }
 
-    public virtual TipoTransaccion IdTipoTransaccionNavigation { get; set; }
+    public virtual TipoTransaccion TipoTransaccion { get; set; }
 }

@@ -1,11 +1,8 @@
 ﻿
+using Core.DTO.request;
+using Core.DTO.response;
 using Microsoft.AspNetCore.Mvc;
-using backend_milagrofinanciero.Services;
-using backend_milagrofinanciero.Data.BankModels;
-using Microsoft.DotNet.Scaffolding.Shared.Messaging;
-using backend_milagrofinanciero.Data.DTOS.request;
-using backend_milagrofinanciero.Data.DTOS.response;
-
+using Services;
 namespace backend_milagrofinanciero.Controllers
 
 {
@@ -16,11 +13,11 @@ namespace backend_milagrofinanciero.Controllers
 
     public class TipoCuentaController : ControllerBase
     {
-        private readonly TipoCuentaService _service;
+        private readonly ITipoCuentaService _service;
 
-        public TipoCuentaController(TipoCuentaService tipocuenta)
+        public TipoCuentaController(ITipoCuentaService tipoCuenta)
         {
-            _service = tipocuenta;
+            _service = tipoCuenta;
 
         }
 

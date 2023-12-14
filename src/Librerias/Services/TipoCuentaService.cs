@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
+using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Services
 {
@@ -21,7 +25,6 @@ namespace Services
         {
             return await _context.TipoCuenta.Select(tc => new TipoCuentaDtoOut
             {
-                Id = tc.Id,
                 Nombre = tc.Nombre,
             }).ToListAsync();
 
@@ -34,7 +37,6 @@ namespace Services
                 .Where(tc => tc.Id == id)
                 .Select(tc => new TipoCuentaDtoOut
                 {
-                    Id = tc.Id,
                     Nombre = tc.Nombre,
                 }).SingleOrDefaultAsync();
 
@@ -89,8 +91,5 @@ namespace Services
         }
 
 
-    }
-    internal class TipoCuentaService
-    {
     }
 }

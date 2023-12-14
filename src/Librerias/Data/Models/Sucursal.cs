@@ -23,5 +23,5 @@ public partial class Sucursal
 
     public virtual ICollection<Empleado> Empleado { get; set; } = new List<Empleado>();
 
-    public virtual Localidad IdLocalidadNavigation { get; set; }
+    public virtual Localidad Localidad { get; set; }
 }

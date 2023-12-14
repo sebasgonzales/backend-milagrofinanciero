@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -22,7 +25,7 @@ namespace Services
                 .Select(l => new LocalidadDtoOut
                 {
                     Nombre = l.Nombre,
-                    CodigoPostal = l.Cp,
+                    CodigoPostal = l.CodigoPostal,
                     NombreProvincia = l.Provincia.Nombre
                 }).ToListAsync();
         }
@@ -35,7 +38,7 @@ namespace Services
                 .Select(l => new LocalidadDtoOut
                 {
                     Nombre = l.Nombre,
-                    CodigoPostal = l.Cp,
+                    CodigoPostal = l.CodigoPostal,
                     NombreProvincia = l.Provincia.Nombre
                 }).SingleOrDefaultAsync();
         }
@@ -54,8 +57,8 @@ namespace Services
         {
             var newLocalidad = new Localidad();
             newLocalidad.Nombre = newLocalidadDto.Nombre;
-            newLocalidad.Cp = newLocalidadDto.CodigoPostal;
-            newLocalidad.ProvinciaId = newLocalidadDto.ProvinciaId;
+            newLocalidad.CodigoPostal = newLocalidadDto.CodigoPostal;
+            newLocalidad.IdProvincia = newLocalidadDto.IdProvincia;
 
             _context.Localidad.Add(newLocalidad);
             await _context.SaveChangesAsync();
@@ -71,8 +74,8 @@ namespace Services
             if (existingLocalidad is not null)
             {
                 existingLocalidad.Nombre = updateLocalidad.Nombre;
-                existingLocalidad.Cp = updateLocalidad.CodigoPostal;
-                existingLocalidad.ProvinciaId = updateLocalidad.ProvinciaId;
+                existingLocalidad.CodigoPostal = updateLocalidad.CodigoPostal;
+                existingLocalidad.IdProvincia = updateLocalidad.IdProvincia;
 
                 await _context.SaveChangesAsync();
             }

@@ -17,5 +17,5 @@ public partial class Empleado
 
     public int? IdSucursal { get; set; }
 
-    public virtual Sucursal IdSucursalNavigation { get; set; }
+    public virtual Sucursal Sucursal { get; set; }
 }

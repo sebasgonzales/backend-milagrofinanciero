@@ -7,9 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backend-milagrofinanciero",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "src\Librerias\Data\Data.csproj", "{06ECF50E-119D-4272-91C8-F985B259DD1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\Librerias\CORE\Core.csproj", "{F2B06E74-9147-4950-99C3-AA178CB7F792}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Librerias\CORE\Core.csproj", "{F2B06E74-9147-4950-99C3-AA178CB7F792}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "src\Librerias\Services\Services.csproj", "{BA724D51-A20F-44C9-B93C-9390246C71AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "src\Librerias\Services\Services.csproj", "{BA724D51-A20F-44C9-B93C-9390246C71AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Librerias", "Librerias", "{2E81A286-9416-4C7D-816D-FF00CE73269B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentacion", "Presentacion", "{DD19184E-B88D-4160-BCCE-2E610E0A0207}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +40,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2CABF503-AFAC-485D-834B-64CB418DB867} = {DD19184E-B88D-4160-BCCE-2E610E0A0207}
+		{06ECF50E-119D-4272-91C8-F985B259DD1E} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
+		{F2B06E74-9147-4950-99C3-AA178CB7F792} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
+		{BA724D51-A20F-44C9-B93C-9390246C71AD} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3C9DDB5-18BF-4705-912F-4A3D4FA73D45}

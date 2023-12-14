@@ -15,7 +15,7 @@ public partial class ClienteXcuenta
 
     public int IdCuenta { get; set; }
 
-    public virtual Cliente IdClienteNavigation { get; set; }
+    public virtual Cliente Cliente { get; set; }
 
-    public virtual Cuenta IdCuentaNavigation { get; set; }
+    public virtual Cuenta Cuenta { get; set; }
 }

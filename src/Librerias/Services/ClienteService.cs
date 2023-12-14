@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DTO.request;
+using Core.DTO.response;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -66,7 +69,7 @@ namespace Services
             newCliente.Calle = newClienteDTO.Calle;
             newCliente.Departamento = newClienteDTO.Departamento;
             newCliente.Numero = newClienteDTO.Numero;
-            newCliente.LocalidadId = newClienteDTO.LocalidadId;
+            newCliente.IdLocalidad = newClienteDTO.IdLocalidad;
 
             _context.Cliente.Add(newCliente);
             await _context.SaveChangesAsync();
@@ -86,7 +89,7 @@ namespace Services
                 existingClient.Calle = cliente.Calle;
                 existingClient.Departamento = cliente.Departamento;
                 existingClient.Numero = cliente.Numero;
-                existingClient.LocalidadId = existingClient.LocalidadId;
+                existingClient.IdLocalidad = existingClient.IdLocalidad;
 
                 await _context.SaveChangesAsync();
             }
@@ -103,3 +106,4 @@ namespace Services
             }
         }
     }
+}

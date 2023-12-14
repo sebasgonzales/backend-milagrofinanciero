@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
+using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -22,7 +25,7 @@ namespace Services
                 //Include(c => c.Banco)
                 .Select(c => new CuentaDtoOut
                 {
-                    NumeroCuenta = c.NumeroCuenta,
+                    NumeroCuenta = c.Numero,
                     Cbu = c.Cbu,
                     TipoCuenta = c.TipoCuenta.Nombre,
                     Banco = c.Banco.Nombre,
@@ -38,7 +41,7 @@ namespace Services
                 .Where(c => c.Id == id)
                 .Select(c => new CuentaDtoOut
                 {
-                    NumeroCuenta = c.NumeroCuenta,
+                    NumeroCuenta = c.Numero,
                     Cbu = c.Cbu,
                     TipoCuenta = c.TipoCuenta.Nombre,
                     Banco = c.Banco.Nombre,
@@ -57,11 +60,11 @@ namespace Services
         {
             var newCuenta = new Cuenta();
 
-            newCuenta.NumeroCuenta = newCuentaDto.NumeroCuenta;
+            newCuenta.Numero = newCuentaDto.Numero;
             newCuenta.Cbu = newCuentaDto.Cbu;
-            newCuenta.TipoCuentaId = newCuentaDto.TipoCuentaId;
-            newCuenta.BancoId = newCuentaDto.BancoId;
-            newCuenta.SucursalId = newCuentaDto.SucursalId;
+            newCuenta.IdTipoCuenta = newCuentaDto.IdTipoCuenta;
+            newCuenta.IdBanco = newCuentaDto.IdBanco;
+            newCuenta.IdSucursal = newCuentaDto.IdSucursal;
 
             _context.Cuenta.Add(newCuenta);
             await _context.SaveChangesAsync();
@@ -72,13 +75,13 @@ namespace Services
         public async Task Update(int id, CuentaDtoIn cuenta)
         {
             var cuentaExistente = await GetById(id);
-            if (cuentaExistente is null)
+            if (cuentaExistente is not null)
             {
-                cuentaExistente.NumeroCuenta = cuenta.NumeroCuenta;
+                cuentaExistente.Numero = cuenta.Numero;
                 cuentaExistente.Cbu = cuenta.Cbu;
-                cuentaExistente.TipoCuentaId = cuenta.TipoCuentaId;
-                cuentaExistente.BancoId = cuenta.BancoId;
-                cuentaExistente.SucursalId = cuenta.SucursalId;
+                cuentaExistente.IdTipoCuenta = cuenta.IdTipoCuenta;
+                cuentaExistente.IdBanco = cuenta.IdBanco;
+                cuentaExistente.IdSucursal = cuenta.IdSucursal;
 
                 await _context.SaveChangesAsync();
             }

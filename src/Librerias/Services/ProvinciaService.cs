@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
+using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Services
 {
@@ -48,7 +52,7 @@ namespace Services
             var newProvincia = new Provincia();
 
             newProvincia.Nombre = newProvinciaDTO.Nombre;
-            newProvincia.PaisId = newProvinciaDTO.PaisId;
+            newProvincia.IdPais = newProvinciaDTO.IdPais;
 
 
             _context.Provincia.Add(newProvincia);
@@ -64,7 +68,7 @@ namespace Services
             if (existingProvincia is not null)
             {
                 existingProvincia.Nombre = provincia.Nombre;
-                existingProvincia.PaisId = provincia.PaisId;
+                existingProvincia.IdPais = provincia.IdPais;
 
 
                 await _context.SaveChangesAsync();

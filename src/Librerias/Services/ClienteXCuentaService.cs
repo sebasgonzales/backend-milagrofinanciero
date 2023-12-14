@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DTO.request;
+using Core.DTO.response;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -18,47 +21,48 @@ namespace Services
 
         public async Task<IEnumerable<ClienteXCuentaDtoOut>> GetAll()
         {
-            return await _context.ClienteXCuenta
+            return await _context.ClienteXcuenta
 
                 .Select(c => new ClienteXCuentaDtoOut
                 {
-                    Rol = c.Rol,
+                    //Rol = c.Rol,
                     Alta = c.Alta,
                     Cliente = c.Cliente.RazonSocial,
-                    Cuenta = c.Cuenta.NumeroCuenta
+                    Cuenta = c.Cuenta.Numero
+
                 }).ToListAsync();
         }
 
         public async Task<ClienteXCuentaDtoOut?> GetDtoById(int id)
         {
-            return await _context.ClienteXCuenta
+            return await _context.ClienteXcuenta
                 .Where(c => c.Id == id)
                 .Select(c => new ClienteXCuentaDtoOut
                 {
-                    Rol = c.Rol,
+                    //Rol = c.Rol,
                     Alta = c.Alta,
                     Cliente = c.Cliente.RazonSocial,
-                    Cuenta = c.Cuenta.NumeroCuenta
+                    Cuenta = c.Cuenta.Numero
                 }).SingleOrDefaultAsync();
         }
 
-        public async Task<ClienteXCuenta?> GetById(int id)
+        public async Task<ClienteXcuenta?> GetById(int id)
         {
-            return await _context.ClienteXCuenta.FindAsync(id);
+            return await _context.ClienteXcuenta.FindAsync(id);
         }
 
-        public async Task<ClienteXCuenta> Create(ClienteXCuentaDtoIn newClienteXCuentaDTO)
+        public async Task<ClienteXcuenta> Create(ClienteXCuentaDtoIn newClienteXCuentaDTO)
         {
-            var newClienteXCuenta = new ClienteXCuenta();
+            var newClienteXCuenta = new ClienteXcuenta();
 
-            newClienteXCuenta.Rol = newClienteXCuentaDTO.Rol;
+            //newClienteXCuenta.Rol = newClienteXCuentaDTO.Rol;
             newClienteXCuenta.Alta = newClienteXCuentaDTO.Alta;
-            newClienteXCuenta.ClienteId = newClienteXCuentaDTO.ClienteId;
-            newClienteXCuenta.CuentaId = newClienteXCuentaDTO.CuentaId;
+            newClienteXCuenta.IdCliente = newClienteXCuentaDTO.IdCliente;
+            newClienteXCuenta.IdCuenta = newClienteXCuentaDTO.IdCuenta;
 
 
 
-            _context.ClienteXCuenta.Add(newClienteXCuenta);
+            _context.ClienteXcuenta.Add(newClienteXCuenta);
             await _context.SaveChangesAsync();
 
             return newClienteXCuenta;
@@ -70,10 +74,10 @@ namespace Services
 
             if (existingClienteXCuenta is not null)
             {
-                existingClienteXCuenta.Rol = clienteXCuenta.Rol;
+                //existingClienteXCuenta.Rol = clienteXCuenta.Rol;
                 existingClienteXCuenta.Alta = clienteXCuenta.Alta;
-                existingClienteXCuenta.ClienteId = clienteXCuenta.ClienteId;
-                existingClienteXCuenta.CuentaId = clienteXCuenta.CuentaId;
+                existingClienteXCuenta.IdCuenta = clienteXCuenta.IdCuenta;
+                existingClienteXCuenta.IdCuenta = clienteXCuenta.IdCuenta;
 
 
                 await _context.SaveChangesAsync();
@@ -86,7 +90,7 @@ namespace Services
             var clienteXCuentaToDelete = await GetById(id);
             if (clienteXCuentaToDelete is not null)
             {
-                _context.ClienteXCuenta.Remove(clienteXCuentaToDelete);
+                _context.ClienteXcuenta.Remove(clienteXCuentaToDelete);
                 await _context.SaveChangesAsync();
             }
         }

@@ -13,7 +13,7 @@ public partial class Provincia
 
     public int IdPais { get; set; }
 
-    public virtual Pais IdPaisNavigation { get; set; }
+    public virtual Pais Pais { get; set; }
 
     public virtual ICollection<Localidad> Localidad { get; set; } = new List<Localidad>();
 }

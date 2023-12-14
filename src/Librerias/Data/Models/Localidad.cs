@@ -17,7 +17,7 @@ public partial class Localidad
 
     public virtual ICollection<Cliente> Cliente { get; set; } = new List<Cliente>();
 
-    public virtual Provincia IdProvinciaNavigation { get; set; }
+    public virtual Provincia Provincia { get; set; }
 
     public virtual ICollection<Sucursal> Sucursal { get; set; } = new List<Sucursal>();
 }

@@ -1,10 +1,5 @@
-using backend_milagrofinanciero.Data;
-using backend_milagrofinanciero.Services;
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Npgsql;
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,29 +11,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // DBContext
-builder.Services.AddDbContext<MilagrofinancieroG1Context>(options =>
-options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection"))) ;
-
-
-//insertar un servicio a nuestra aplicacion
-builder.Services.AddScoped<ClienteService>();
+builder.Services.AddDbContext<milagrofinancierog1Context>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("BankConnection")));
 
 //Service Layer
 
-builder.Services.AddScoped<SucursalService>();
-builder.Services.AddScoped<TransaccionService>();
-builder.Services.AddScoped<CuentaService>();
-builder.Services.AddScoped<TipoTransaccionService>();
-builder.Services.AddScoped<BancoService>();
-builder.Services.AddScoped<EmpleadoService>();
-builder.Services.AddScoped<ProvinciaService>();
-builder.Services.AddScoped<TipoCuentaService>();
-builder.Services.AddScoped<LocalidadService>();
-builder.Services.AddScoped<ClienteXCuentaService>();
-
-
-//Service Layer (siempre arriba del var app = builder
-builder.Services.AddScoped<PaisService>();
+builder.Services.AddScoped<Services.ISucursalService, Services.SucursalService>();
+builder.Services.AddScoped<Services.ITransaccionService, Services.TransaccionService>();
+builder.Services.AddScoped<Services.ICuentaService, Services.CuentaService>();
+builder.Services.AddScoped<Services.ITipoTransaccionService, Services.TipoTransaccionService>();
+builder.Services.AddScoped<Services.IBancoService, Services.BancoService>();
+builder.Services.AddScoped<Services.IEmpleadoService, Services.EmpleadoService>();
+builder.Services.AddScoped<Services.IProvinciaService, Services.ProvinciaService>();
+builder.Services.AddScoped<Services.ITipoCuentaService,Services.TipoCuentaService>();
+builder.Services.AddScoped<Services.ILocalidadService, Services.LocalidadService>();
+builder.Services.AddScoped<Services.IClienteXCuentaService, Services.ClienteXCuentaService>();
+builder.Services.AddScoped<Services.IClienteService, Services.ClienteService>();
+builder.Services.AddScoped<Services.IPaisService,Services.PaisService>();
 
 var app = builder.Build();
 

@@ -81,7 +81,7 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("razonSocial");
 
-            entity.HasOne(d => d.IdLocalidadNavigation).WithMany(p => p.Cliente)
+            entity.HasOne(d => d.Localidad).WithMany(p => p.Cliente)
                 .HasForeignKey(d => d.IdLocalidad)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_localidad");
@@ -100,12 +100,12 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.IdCliente).HasColumnName("idCliente");
             entity.Property(e => e.IdCuenta).HasColumnName("idCuenta");
 
-            entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.ClienteXcuenta)
+            entity.HasOne(d => d.Cliente).WithMany(p => p.ClienteXcuenta)
                 .HasForeignKey(d => d.IdCliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cliente");
 
-            entity.HasOne(d => d.IdCuentaNavigation).WithMany(p => p.ClienteXcuenta)
+            entity.HasOne(d => d.Cuenta).WithMany(p => p.ClienteXCuenta)
                 .HasForeignKey(d => d.IdCuenta)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cuenta");
@@ -124,17 +124,17 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.IdTipoCuenta).HasColumnName("idTipoCuenta");
             entity.Property(e => e.Numero).HasColumnName("numero");
 
-            entity.HasOne(d => d.IdBancoNavigation).WithMany(p => p.Cuenta)
+            entity.HasOne(d => d.Banco).WithMany(p => p.Cuenta)
                 .HasForeignKey(d => d.IdBanco)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_banco");
 
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Cuenta)
+            entity.HasOne(d => d.Sucursal).WithMany(p => p.Cuenta)
                 .HasForeignKey(d => d.IdSucursal)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_sucursal");
 
-            entity.HasOne(d => d.IdTipoCuentaNavigation).WithMany(p => p.Cuenta)
+            entity.HasOne(d => d.TipoCuenta).WithMany(p => p.Cuenta)
                 .HasForeignKey(d => d.IdTipoCuenta)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_tipocuenta");
@@ -158,7 +158,7 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("nombre");
 
-            entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Empleado)
+            entity.HasOne(d => d.Sucursal).WithMany(p => p.Empleado)
                 .HasForeignKey(d => d.IdSucursal)
                 .HasConstraintName("fk_sucursal");
         });
@@ -180,7 +180,7 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("nombre");
 
-            entity.HasOne(d => d.IdProvinciaNavigation).WithMany(p => p.Localidad)
+            entity.HasOne(d => d.Provincia).WithMany(p => p.Localidad)
                 .HasForeignKey(d => d.IdProvincia)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_provincia");
@@ -212,7 +212,7 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("nombre");
 
-            entity.HasOne(d => d.IdPaisNavigation).WithMany(p => p.Provincia)
+            entity.HasOne(d => d.Pais).WithMany(p => p.Provincia)
                 .HasForeignKey(d => d.IdPais)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_pais");
@@ -242,7 +242,7 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("numero");
 
-            entity.HasOne(d => d.IdLocalidadNavigation).WithMany(p => p.Sucursal)
+            entity.HasOne(d => d.Localidad).WithMany(p => p.Sucursal)
                 .HasForeignKey(d => d.IdLocalidad)
                 .HasConstraintName("fk_localidad");
         });
@@ -298,17 +298,17 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("referencia");
 
-            entity.HasOne(d => d.IdCuentaDestinoNavigation).WithMany(p => p.TransaccionIdCuentaDestinoNavigation)
+            entity.HasOne(d => d.CuentaDestino).WithMany(p => p.TransaccionCuentaDestinos)
                 .HasForeignKey(d => d.IdCuentaDestino)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cuentaDestino");
 
-            entity.HasOne(d => d.IdCuentaOrigenNavigation).WithMany(p => p.TransaccionIdCuentaOrigenNavigation)
+            entity.HasOne(d => d.CuentaOrigen).WithMany(p => p.TransaccionCuentaOrigenes)
                 .HasForeignKey(d => d.IdCuentaOrigen)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cuentaOrigen");
 
-            entity.HasOne(d => d.IdTipoTransaccionNavigation).WithMany(p => p.Transaccion)
+            entity.HasOne(d => d.TipoTransaccion).WithMany(p => p.Transaccion)
                 .HasForeignKey(d => d.IdTipoTransaccion)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_tipoTransaccion");

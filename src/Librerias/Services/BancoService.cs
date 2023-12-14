@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DTO.request;
+using Core.DTO.response;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -19,7 +22,7 @@ namespace Services
 
         public async Task<IEnumerable<BancoDtoOut>> GetAll()
         {
-            return await _context.Bancos.Select(b => new BancoDtoOut
+            return await _context.Banco.Select(b => new BancoDtoOut
             {
                 Nombre = b.Nombre
             }).ToListAsync();
@@ -28,7 +31,7 @@ namespace Services
 
         public async Task<BancoDtoOut?> GetDtoById(int id)
         {
-            return await _context.Bancos
+            return await _context.Banco
                 .Where(b => b.Id == id)
                 .Select(b => new BancoDtoOut
                 {
@@ -39,7 +42,7 @@ namespace Services
 
         public async Task<Banco?> GetById(int id)
         {
-            return await _context.Bancos.FindAsync(id);
+            return await _context.Banco.FindAsync(id);
         }
 
         public async Task<Banco> Create(BancoDtoIn newBancoDTO)
@@ -47,7 +50,7 @@ namespace Services
             var newBanco = new Banco();
             newBanco.Nombre = newBancoDTO.Nombre;
 
-            _context.Bancos.Add(newBanco);
+            _context.Banco.Add(newBanco);
             await _context.SaveChangesAsync();
 
             return newBanco;
@@ -74,7 +77,7 @@ namespace Services
             if (bancoToDelete is not null)
             {
 
-                _context.Bancos.Remove(bancoToDelete);
+                _context.Banco.Remove(bancoToDelete);
                 await _context.SaveChangesAsync();
             }
 

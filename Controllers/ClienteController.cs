@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using backend_milagrofinanciero.Services;
-using backend_milagrofinanciero.Data.BankModels;
+﻿using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication;
-using backend_milagrofinanciero.Data.DTOS.request;
-using backend_milagrofinanciero.Data.DTOS.response;
+using Services;
 
 namespace backend_milagrofinanciero.Controllers;
 
-    [ApiController]
+[ApiController]
 [Route("[controller]")]
 
 
@@ -16,9 +14,9 @@ namespace backend_milagrofinanciero.Controllers;
 public class ClienteController : ControllerBase
     
 {
-        private readonly ClienteService _service;
-        public ClienteController(ClienteService service)
-        { _service = service; }
+        private readonly IClienteService _service;
+        public ClienteController(IClienteService cliente)
+        { _service = cliente; }
         [HttpGet]
         public async Task<IEnumerable<ClienteDtoOut>> Get()
         {

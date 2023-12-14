@@ -1,7 +1,7 @@
-﻿using backend_milagrofinanciero.Data.DTOS.request;
-using backend_milagrofinanciero.Data.DTOS.response;
-using backend_milagrofinanciero.Services;
+﻿using Core.DTO.request;
+using Core.DTO.response;
 using Microsoft.AspNetCore.Mvc;
+using Services;
 
 namespace backend_milagrofinanciero.Controllers;
 
@@ -9,7 +9,7 @@ namespace backend_milagrofinanciero.Controllers;
 [Route("[controller]")]
 public class CuentaController : ControllerBase
 {
-    private readonly CuentaService _service;
+    private readonly ICuentaService _service;
     public CuentaController(CuentaService cuenta)
     {
         _service = cuenta;

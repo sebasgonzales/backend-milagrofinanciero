@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Models;
+using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.EntityFrameworkCore;
+
 
 
 namespace Services
@@ -23,13 +27,13 @@ namespace Services
                 .Select(t => new TransaccionDtoOut
                 {
                     Monto = t.Monto,
-                    NumeroOperacion = t.NumeroOperacion,
+                    Numero = t.Numero,
                     Acreditacion = t.Acreditacion,
                     Realizacion = t.Realizacion,
                     Motivo = t.Motivo,
                     Referencia = t.Referencia,
-                    CuentaDestino = t.CuentaDestino.NumeroCuenta,
-                    CuentaOrigen = t.CuentaOrigen.NumeroCuenta,
+                    CuentaDestino = t.CuentaDestino.Numero,
+                    CuentaOrigen = t.CuentaOrigen.Numero,
                     TipoTransaccion = t.TipoTransaccion.Nombre
 
                 }).ToListAsync();
@@ -42,13 +46,13 @@ namespace Services
                 .Select(t => new TransaccionDtoOut
                 {
                     Monto = t.Monto,
-                    NumeroOperacion = t.NumeroOperacion,
+                    Numero = t.Numero,
                     Acreditacion = t.Acreditacion,
                     Realizacion = t.Realizacion,
                     Motivo = t.Motivo,
                     Referencia = t.Referencia,
-                    CuentaDestino = t.CuentaDestino.NumeroCuenta,
-                    CuentaOrigen = t.CuentaOrigen.NumeroCuenta,
+                    CuentaDestino = t.CuentaDestino.Numero,
+                    CuentaOrigen = t.CuentaOrigen.Numero,
                     TipoTransaccion = t.TipoTransaccion.Nombre
                 }).SingleOrDefaultAsync();
         }
@@ -69,9 +73,9 @@ namespace Services
             newTransaccion.Motivo = newTransaccionDTO.Motivo;
             newTransaccion.Referencia = newTransaccionDTO.Referencia;
             newTransaccion.Monto = newTransaccionDTO.Monto;
-            newTransaccion.CuentaOrigenId = newTransaccionDTO.CuentaOrigenId;
-            newTransaccion.CuentaDestinoId = newTransaccionDTO.CuentaDestinoId;
-            newTransaccion.TipoTransaccionId = newTransaccionDTO.TipoTransaccionId;
+            newTransaccion.IdCuentaOrigen = newTransaccionDTO.IdCuentaOrigen;
+            newTransaccion.IdCuentaDestino = newTransaccionDTO.IdCuentaDestino;
+            newTransaccion.IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion;
 
 
             _context.Transaccion.Add(newTransaccion);
@@ -91,9 +95,9 @@ namespace Services
                 existingTransaccion.Realizacion = transaccion.Realizacion;
                 existingTransaccion.Motivo = transaccion.Motivo;
                 existingTransaccion.Referencia = transaccion.Referencia;
-                existingTransaccion.CuentaOrigenId = transaccion.CuentaOrigenId;
-                existingTransaccion.CuentaDestinoId = transaccion.CuentaDestinoId;
-                existingTransaccion.TipoTransaccionId = transaccion.TipoTransaccionId;
+                existingTransaccion.IdCuentaOrigen = transaccion.IdCuentaOrigen;
+                existingTransaccion.IdCuentaDestino = transaccion.IdCuentaDestino;
+                existingTransaccion.IdTipoTransaccion = transaccion.IdTipoTransaccion;
 
                 await _context.SaveChangesAsync();
             }

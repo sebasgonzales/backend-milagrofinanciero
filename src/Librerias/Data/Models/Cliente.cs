@@ -25,5 +25,5 @@ public partial class Cliente
 
     public virtual ICollection<ClienteXcuenta> ClienteXcuenta { get; set; } = new List<ClienteXcuenta>();
 
-    public virtual Localidad IdLocalidadNavigation { get; set; }
+    public virtual Localidad Localidad { get; set; }
 }

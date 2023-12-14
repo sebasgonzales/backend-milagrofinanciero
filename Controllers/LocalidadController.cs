@@ -1,18 +1,18 @@
-﻿using backend_milagrofinanciero.Data.DTOS.request;
-using backend_milagrofinanciero.Data.DTOS.response;
-using backend_milagrofinanciero.Services;
+﻿using Core.DTO.request;
+using Core.DTO.response;
 using Microsoft.AspNetCore.Mvc;
+using Services;
 
 namespace backend_milagrofinanciero.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class LocalidadController : ControllerBase
 {
-    private readonly LocalidadService _service;
+    private readonly ILocalidadService _service;
 
-    public LocalidadController (LocalidadService service)
+    public LocalidadController (LocalidadService localidad)
     {
-        _service = service;
+        _service = localidad;
     }
 
     [HttpGet]

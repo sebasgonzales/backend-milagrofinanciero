@@ -19,15 +19,15 @@ public partial class Cuenta
 
     public int IdSucursal { get; set; }
 
-    public virtual ICollection<ClienteXcuenta> ClienteXcuenta { get; set; } = new List<ClienteXcuenta>();
+    public virtual ICollection<ClienteXcuenta> ClienteXCuenta { get; set; } = new List<ClienteXcuenta>();
 
-    public virtual Banco IdBancoNavigation { get; set; }
+    public virtual Banco Banco { get; set; }
 
-    public virtual Sucursal IdSucursalNavigation { get; set; }
+    public virtual Sucursal Sucursal { get; set; }
 
-    public virtual TipoCuenta IdTipoCuentaNavigation { get; set; }
+    public virtual TipoCuenta TipoCuenta { get; set; }
 
-    public virtual ICollection<Transaccion> TransaccionIdCuentaDestinoNavigation { get; set; } = new List<Transaccion>();
+    public virtual ICollection<Transaccion> TransaccionCuentaDestinos { get; set; } = new List<Transaccion>();
 
-    public virtual ICollection<Transaccion> TransaccionIdCuentaOrigenNavigation { get; set; } = new List<Transaccion>();
+    public virtual ICollection<Transaccion> TransaccionCuentaOrigenes { get; set; } = new List<Transaccion>();
 }
