@@ -1,0 +1,89 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "milagrofinanciero-g1Context",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "Data",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "public.Banco",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Cliente",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.ClienteXCuenta",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Cuenta",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Empleado",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Localidad",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Pais",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Provincia",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Sucursal",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.TipoCuenta",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.TipoTransaccion",
+         "ObjectType": 0
+      },
+      {
+         "Name": "public.Transaccion",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": ".milagrofinanciero-g1",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

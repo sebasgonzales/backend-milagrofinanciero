@@ -1,24 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using backend_milagrofinanciero.Services;
-using backend_milagrofinanciero.Data.BankModels;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication;
-using backend_milagrofinanciero.Data.DTOS.request;
-using backend_milagrofinanciero.Data.DTOS.response;
+﻿using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.AspNetCore.Mvc;
+using Services;
 
 namespace backend_milagrofinanciero.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-
-
-
 public class SucursalController : ControllerBase
 
 {
-    private readonly SucursalService _service;
-    public SucursalController(SucursalService service)
-    { _service = service; }
+    private readonly ISucursalService _service;
+    public SucursalController(ISucursalService sucursal)
+    { _service = sucursal; }
     [HttpGet]
     public async Task<IEnumerable<SucursalDtoOut>> Get()
     {

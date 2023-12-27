@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using backend_milagrofinanciero.Services;
-using backend_milagrofinanciero.Data.BankModels;
-using Microsoft.DotNet.Scaffolding.Shared.Messaging;
-using backend_milagrofinanciero.Data.DTOS.request;
-using backend_milagrofinanciero.Data.DTOS.response;
+﻿using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.AspNetCore.Mvc;
+using Services;
 
 namespace backend_milagrofinanciero.Controllers
 

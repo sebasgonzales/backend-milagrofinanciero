@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using backend_milagrofinanciero.Services;
-using backend_milagrofinanciero.Data.BankModels;
-using backend_milagrofinanciero.Data.DTOS.request;
-using backend_milagrofinanciero.Data.DTOS.response;
+﻿using Core.DTO.request;
+using Core.DTO.response;
+using Microsoft.AspNetCore.Mvc;
+using Services;
 
 namespace backend_milagrofinanciero.Controllers;
 
@@ -12,11 +11,11 @@ namespace backend_milagrofinanciero.Controllers;
 public class EmpleadoController : ControllerBase
 {
 
-    private readonly EmpleadoService _service;
+    private readonly IEmpleadoService _service;
 
-    public EmpleadoController(EmpleadoService service)
+    public EmpleadoController(IEmpleadoService empleado)
     {
-        _service = service;
+        _service = empleado;
     }
 
     //GET
