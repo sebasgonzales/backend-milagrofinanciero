@@ -33,10 +33,11 @@ namespace Services
         public async Task<PaisDtoOut?> GetDtoById(int id)
         {
             return await _context.Pais
-                .Where(b => b.Id == id)
-                .Select(b => new PaisDtoOut
+                .Where(p => p.Id == id)
+                .Select(p => new PaisDtoOut
                 {
-                    Nombre = b.Nombre
+                    Nombre = p.Nombre
+                  
                 }).SingleOrDefaultAsync();
 
         }

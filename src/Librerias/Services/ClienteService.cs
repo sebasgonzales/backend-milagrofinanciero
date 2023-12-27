@@ -28,7 +28,7 @@ namespace Services
                     Alta = c.Alta,
                     Calle = c.Calle,
                     Departamento = c.Departamento,
-                    Numero = c.Numero,
+                    Numero = c.Numero                  
                 }).ToListAsync();
         }
 
@@ -44,8 +44,7 @@ namespace Services
                     Alta = c.Alta,
                     Calle = c.Calle,
                     Departamento = c.Departamento,
-                    Numero = c.Numero,
-
+                    Numero = c.Numero
                 }).SingleOrDefaultAsync();
         }
 
