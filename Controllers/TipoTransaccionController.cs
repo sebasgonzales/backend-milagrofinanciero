@@ -12,9 +12,9 @@ namespace backend_milagrofinanciero.Controllers
 
     public class TipoTransaccionController : ControllerBase
     {
-        private readonly TipoTransaccionService _service;
+        private readonly ITipoTransaccionService _service;
 
-        public TipoTransaccionController(TipoTransaccionService tipoTransaccion)
+        public TipoTransaccionController(ITipoTransaccionService tipoTransaccion)
         {
             _service =tipoTransaccion;
 
