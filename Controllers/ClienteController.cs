@@ -75,11 +75,11 @@ public class ClienteController : ControllerBase
 
     //clienteId es un parametro dinamico en la ruta
     [HttpGet("clientes/CuitCuil/{cuitCuil}/ClienteXCuenta")] // Modificación en la ruta del endpoint
-    public async Task<ActionResult<CuentaDtoOut>> GetCuentasByCuitCuil(string cuitCuil) // Modificación en el nombre del método
+    public async Task<ActionResult<CuentaDtoOut>> GetCuentasByCuitCuil(string cuitCuil) 
     {
         var cuentas = await _service.GetCuentasByCuitCuil(cuitCuil);
 
-        if (cuentas == null || !cuentas.Any()) // Modificación en la condición
+        if (cuentas == null ) 
         {
             return NotFound();
         }
