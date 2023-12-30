@@ -12,5 +12,7 @@ namespace Services
         Task<Cliente?> GetById(int id);
         Task<ClienteDtoOut?> GetByIdDto(int id);
         Task Update(int id, ClienteDtoIn cliente);
+
+        Task<List<CuentaDtoOut>> GetCuentasByCuitCuil(string cuitCuil);
     }
 }
