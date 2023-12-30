@@ -84,7 +84,7 @@ namespace Services
             return newTransaccion;
         }
 
-        public async Task Update(int id, TransaccionDtoIn transaccion)
+        public async Task Update(TransaccionDtoIn transaccion)
         {
             var existingTransaccion = await GetById(transaccion.Id);
 
@@ -111,6 +111,25 @@ namespace Services
             {
                 _context.Transaccion.Remove(transaccionToDelete);
                 await _context.SaveChangesAsync();
+            }
+        }
+
+        public int GetSaldo(long cbu, float monto)
+        {
+            int cuenta = Convert.ToInt32(_context.Cuenta
+                .Where(c => c.Cbu == cbu)
+                .Select(c => c.Id));
+            float saldo = _context.Transaccion
+                .Where(t => t.Id == cuenta)
+                .Sum(t => t.Monto);
+            if (saldo > monto)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+
             }
         }
     }

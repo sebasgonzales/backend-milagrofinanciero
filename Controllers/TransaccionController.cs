@@ -1,5 +1,6 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -41,6 +42,25 @@ namespace backend_milagrofinanciero.Controllers
             return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
         }
 
+        [HttpPost("{Logica}")]
+
+        public async Task<IActionResult> Transaccion(TransaccionDtoIn transaccion, long cbu, float monto)
+        {
+            var ejemplo = _service.GetSaldo(cbu, monto);
+
+            if (ejemplo == 1)
+            {
+                var newTransaccion = await _service.Create(transaccion);
+
+                return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+            }
+            else
+            {
+                return Error();
+            }
+        }
+        //f
+
         [HttpPut("{id}")]
 
         public async Task<IActionResult> Update(int id, TransaccionDtoIn transaccion)
@@ -53,7 +73,7 @@ namespace backend_milagrofinanciero.Controllers
 
             if (transaccionToUpdate is not null)
             {
-                await _service.Update(id,transaccion);
+                await _service.Update(transaccion);
                 return NoContent();
             }
             else 
@@ -83,6 +103,12 @@ namespace backend_milagrofinanciero.Controllers
         public NotFoundObjectResult TransaccionNotFound(int id)
         {
             return NotFound(new { message = $"La transaccion con ID = {id} no existe. " });
+        }
+
+        [NonAction]
+        public NotFoundObjectResult Error()
+        {
+            return NotFound(new { message = "No tiene saldo suficiente" });
         }
     }
 }
