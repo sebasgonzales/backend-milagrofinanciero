@@ -72,7 +72,7 @@ namespace Services
             newTransaccion.Realizacion = newTransaccionDTO.Realizacion;
             newTransaccion.Motivo = newTransaccionDTO.Motivo;
             newTransaccion.Referencia = newTransaccionDTO.Referencia;
-            newTransaccion.Monto = newTransaccionDTO.Monto;
+            //newTransaccion.Monto = newTransaccionDTO.Monto;
             newTransaccion.IdCuentaOrigen = newTransaccionDTO.IdCuentaOrigen;
             newTransaccion.IdCuentaDestino = newTransaccionDTO.IdCuentaDestino;
             newTransaccion.IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion;
@@ -114,14 +114,16 @@ namespace Services
             }
         }
 
-        public int GetSaldo(long cbu, float monto)
+        public async Task<int> GetSaldo(long cbu, float monto)
         {
-            int cuenta = Convert.ToInt32(_context.Cuenta
+            int id = await _context.Cuenta
                 .Where(c => c.Cbu == cbu)
-                .Select(c => c.Id));
-            float saldo = _context.Transaccion
-                .Where(t => t.Id == cuenta)
-                .Sum(t => t.Monto);
+                .Select(c => c.Id)
+                .FirstOrDefaultAsync();
+
+            float saldo = await  _context.Transaccion
+                .Where(t => t.IdCuentaDestino == id)
+                .SumAsync(t => t.Monto);
             if (saldo > monto)
             {
                 return 1;

@@ -34,21 +34,21 @@ namespace backend_milagrofinanciero.Controllers
             return transaccion;
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> Create(TransaccionDtoIn transaccion) 
+        //{
+        //    var newTransaccion = await _service.Create(transaccion);
+
+        //    return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+        //}
+
         [HttpPost]
-        public async Task<IActionResult> Create(TransaccionDtoIn transaccion) 
+
+        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long cbu, float monto)
         {
-            var newTransaccion = await _service.Create(transaccion);
+            var saldoDisponible = await _service.GetSaldo(cbu, monto);
 
-            return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
-        }
-
-        [HttpPost("{Logica}")]
-
-        public async Task<IActionResult> Transaccion(TransaccionDtoIn transaccion, long cbu, float monto)
-        {
-            var ejemplo = _service.GetSaldo(cbu, monto);
-
-            if (ejemplo == 1)
+            if (saldoDisponible == 1)
             {
                 var newTransaccion = await _service.Create(transaccion);
 

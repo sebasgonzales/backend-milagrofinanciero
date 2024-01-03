@@ -10,7 +10,7 @@ namespace backend_milagrofinanciero.Controllers;
 public class CuentaController : ControllerBase
 {
     private readonly ICuentaService _service;
-    public CuentaController(CuentaService cuenta)
+    public CuentaController(ICuentaService cuenta)
     {
         _service = cuenta;
     }
