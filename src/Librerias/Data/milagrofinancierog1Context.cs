@@ -39,8 +39,6 @@ public partial class milagrofinancierog1Context : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.HasPostgresEnum("tipoRol", new[] { "Titular", "Extension" });
-
         modelBuilder.Entity<Banco>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Banco_pkey");
@@ -99,6 +97,10 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Alta).HasColumnName("alta");
             entity.Property(e => e.IdCliente).HasColumnName("idCliente");
             entity.Property(e => e.IdCuenta).HasColumnName("idCuenta");
+            entity.Property(e => e.Rol)
+                .IsRequired()
+                .HasMaxLength(45)
+                .HasColumnName("rol");
 
             entity.HasOne(d => d.Cliente).WithMany(p => p.ClienteXcuenta)
                 .HasForeignKey(d => d.IdCliente)
