@@ -1,6 +1,5 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
-using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
