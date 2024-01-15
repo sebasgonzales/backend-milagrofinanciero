@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -72,7 +72,7 @@ namespace Services
             newTransaccion.Realizacion = newTransaccionDTO.Realizacion;
             newTransaccion.Motivo = newTransaccionDTO.Motivo;
             newTransaccion.Referencia = newTransaccionDTO.Referencia;
-            newTransaccion.Monto = newTransaccionDTO.Monto;
+            //newTransaccion.Monto = newTransaccionDTO.Monto;
             newTransaccion.IdCuentaOrigen = newTransaccionDTO.IdCuentaOrigen;
             newTransaccion.IdCuentaDestino = newTransaccionDTO.IdCuentaDestino;
             newTransaccion.IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion;
@@ -84,7 +84,7 @@ namespace Services
             return newTransaccion;
         }
 
-        public async Task Update(int id, TransaccionDtoIn transaccion)
+        public async Task Update(TransaccionDtoIn transaccion)
         {
             var existingTransaccion = await GetById(transaccion.Id);
 
@@ -113,22 +113,27 @@ namespace Services
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta)
+
+        public async Task<int> GetSaldo(long cbu, float monto)
         {
-            return await _context.Transaccion
-                .Where(t => t.CuentaOrigen.Numero == numeroCuenta || t.CuentaDestino.Numero == numeroCuenta)
-                .Select(t => new TransaccionDtoOut
-                {
-                    Monto = t.Monto,
-                    Numero = t.Numero,
-                    Acreditacion = t.Acreditacion,
-                    Realizacion = t.Realizacion,
-                    Motivo = t.Motivo,
-                    Referencia = t.Referencia,
-                    CuentaDestino = t.CuentaDestino.Numero,
-                    CuentaOrigen = t.CuentaOrigen.Numero,
-                    TipoTransaccion = t.TipoTransaccion.Nombre
-                }).ToListAsync();
+            int id = await _context.Cuenta
+                .Where(c => c.Cbu == cbu)
+                .Select(c => c.Id)
+                .FirstOrDefaultAsync();
+
+            float saldo = await  _context.Transaccion
+                .Where(t => t.IdCuentaDestino == id)
+                .SumAsync(t => t.Monto);
+            if (saldo > monto)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+
+            }
+
         }
     }
 }

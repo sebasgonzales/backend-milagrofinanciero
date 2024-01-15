@@ -35,13 +35,32 @@ namespace backend_milagrofinanciero.Controllers
             return transaccion;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(TransaccionDtoIn transaccion) 
-        {
-            var newTransaccion = await _service.Create(transaccion);
+        //[HttpPost]
+        //public async Task<IActionResult> Create(TransaccionDtoIn transaccion) 
+        //{
+        //    var newTransaccion = await _service.Create(transaccion);
 
-            return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+        //    return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+        //}
+
+        [HttpPost]
+
+        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long cbu, float monto)
+        {
+            var saldoDisponible = await _service.GetSaldo(cbu, monto);
+
+            if (saldoDisponible == 1)
+            {
+                var newTransaccion = await _service.Create(transaccion);
+
+                return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+            }
+            else
+            {
+                return Error();
+            }
         }
+        //f
 
         [HttpPut("{id}")]
 
@@ -55,7 +74,7 @@ namespace backend_milagrofinanciero.Controllers
 
             if (transaccionToUpdate is not null)
             {
-                await _service.Update(id,transaccion);
+                await _service.Update(transaccion);
                 return NoContent();
             }
             else 
@@ -102,6 +121,12 @@ namespace backend_milagrofinanciero.Controllers
         public NotFoundObjectResult TransaccionNotFound(int id)
         {
             return NotFound(new { message = $"La transaccion con ID = {id} no existe. " });
+        }
+
+        [NonAction]
+        public NotFoundObjectResult Error()
+        {
+            return NotFound(new { message = "No tiene saldo suficiente" });
         }
     }
 }

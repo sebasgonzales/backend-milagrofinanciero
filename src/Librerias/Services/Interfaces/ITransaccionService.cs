@@ -1,4 +1,4 @@
-﻿using Core.DTO.request;
+using Core.DTO.request;
 using Core.DTO.response;
 using Data.Models;
 using System.Numerics;
@@ -11,7 +11,7 @@ namespace Services
         Task<IEnumerable<TransaccionDtoOut>> GetAll();
         Task<Transaccion?> GetById(int id);
         Task<TransaccionDtoOut?> GetDtoById(int id);
-        Task Update(int id, TransaccionDtoIn transaccion);
-        Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta);
+        Task<int> GetSaldo(long cbu, float monto);
+        Task Update(TransaccionDtoIn transaccion);
     }
 }
