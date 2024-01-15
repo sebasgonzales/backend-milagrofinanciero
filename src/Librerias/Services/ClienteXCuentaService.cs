@@ -25,7 +25,7 @@ namespace Services
 
                 .Select(c => new ClienteXCuentaDtoOut
                 {
-                    //Rol = c.Rol,
+                    Rol = c.Rol,
                     Alta = c.Alta,
                     Cliente = c.Cliente.RazonSocial,
                     Cuenta = c.Cuenta.Numero
@@ -39,7 +39,7 @@ namespace Services
                 .Where(c => c.Id == id)
                 .Select(c => new ClienteXCuentaDtoOut
                 {
-                    //Rol = c.Rol,
+                    Rol = c.Rol,
                     Alta = c.Alta,
                     Cliente = c.Cliente.RazonSocial,
                     Cuenta = c.Cuenta.Numero
@@ -55,7 +55,7 @@ namespace Services
         {
             var newClienteXCuenta = new ClienteXcuenta();
 
-            //newClienteXCuenta.Rol = newClienteXCuentaDTO.Rol;
+            newClienteXCuenta.Rol = newClienteXCuentaDTO.Rol;
             newClienteXCuenta.Alta = newClienteXCuentaDTO.Alta;
             newClienteXCuenta.IdCliente = newClienteXCuentaDTO.IdCliente;
             newClienteXCuenta.IdCuenta = newClienteXCuentaDTO.IdCuenta;
@@ -74,7 +74,7 @@ namespace Services
 
             if (existingClienteXCuenta is not null)
             {
-                //existingClienteXCuenta.Rol = clienteXCuenta.Rol;
+                existingClienteXCuenta.Rol = clienteXCuenta.Rol;
                 existingClienteXCuenta.Alta = clienteXCuenta.Alta;
                 existingClienteXCuenta.IdCuenta = clienteXCuenta.IdCuenta;
                 existingClienteXCuenta.IdCuenta = clienteXCuenta.IdCuenta;

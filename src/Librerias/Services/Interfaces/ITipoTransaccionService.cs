@@ -1,6 +1,7 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
 using Data.Models;
+
 namespace Services
 {
     public interface ITipoTransaccionService

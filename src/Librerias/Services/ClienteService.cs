@@ -104,5 +104,38 @@ namespace Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<List<CuentaDtoOut>> GetCuentasByCuitCuil(string cuitCuil)
+        {
+            //obtengo el id del cliente
+            var clienteId = await _context.Cliente
+                .Where(c => c.CuitCuil == cuitCuil)
+                .Select(c => c.Id)
+                .FirstOrDefaultAsync(); //devuelve si encontro o sino default
+
+            if (clienteId == default)
+            {
+                return new List<CuentaDtoOut>(); // No esta el cliente, devuelve lista vacia
+            }
+
+            //si se encontro el cliente
+            var cuentas = await _context.ClienteXcuenta
+                .Where(cc => cc.IdCliente == clienteId) // cruzo las tablas
+                .Select(cc => new CuentaDtoOut
+                {
+                    NumeroCuenta = cc.Cuenta.Numero,
+                    Cbu = cc.Cuenta.Cbu,
+                    TipoCuenta = cc.Cuenta.TipoCuenta.Nombre,
+                    Banco = cc.Cuenta.Banco.Nombre,
+                    Sucursal = cc.Cuenta.Sucursal.Nombre
+                }).ToListAsync();
+
+            return cuentas;
+        }
+
+
+
+
     }
 }
+

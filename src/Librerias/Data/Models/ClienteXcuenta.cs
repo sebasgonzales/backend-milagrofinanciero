@@ -14,6 +14,7 @@ public partial class ClienteXcuenta
     public int IdCliente { get; set; }
 
     public int IdCuenta { get; set; }
+    public string Rol { get; set; }
 
     public virtual Cliente Cliente { get; set; }
 
