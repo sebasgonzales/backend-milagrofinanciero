@@ -1,7 +1,7 @@
-﻿using Core.DTO.request;
+using Core.DTO.request;
 using Core.DTO.response;
 using Data.Models;
-
+using System.Numerics;
 namespace Services
 {
     public interface ITransaccionService

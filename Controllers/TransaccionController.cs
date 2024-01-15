@@ -1,7 +1,9 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using System.Xml.Linq;
 
 namespace backend_milagrofinanciero.Controllers
 {
@@ -97,6 +99,23 @@ namespace backend_milagrofinanciero.Controllers
                 return TransaccionNotFound(id);
             }
         }
+
+        [HttpGet("transacciones/{numeroCuenta}")]
+        public async Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta)
+
+        {
+            var transaccionesBuscar = await _service.GetTransacciones(numeroCuenta);
+
+            if (transaccionesBuscar is not null)
+            {
+                return transaccionesBuscar;
+            }
+            else
+            {
+                return Enumerable.Empty<TransaccionDtoOut>();
+            }
+        }
+
 
         [NonAction]
         public NotFoundObjectResult TransaccionNotFound(int id)

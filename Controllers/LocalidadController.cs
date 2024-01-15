@@ -10,7 +10,7 @@ public class LocalidadController : ControllerBase
 {
     private readonly ILocalidadService _service;
 
-    public LocalidadController (LocalidadService localidad)
+    public LocalidadController (ILocalidadService localidad)
     {
         _service = localidad;
     }
