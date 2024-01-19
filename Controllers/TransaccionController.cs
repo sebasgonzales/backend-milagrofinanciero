@@ -1,5 +1,6 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -16,14 +17,15 @@ namespace backend_milagrofinanciero.Controllers
         {
             _service = transaccion;
         }
-
+        // GET /Transaciones
+        [EnableCors]
         [HttpGet]
         public async Task<IEnumerable<TransaccionDtoOut>> Get()
         {
             return await _service.GetAll();
         }
 
-
+        // GET /Transaciones/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TransaccionDtoOut>> GetById(int id)
         {
@@ -44,7 +46,6 @@ namespace backend_milagrofinanciero.Controllers
         //}
 
         [HttpPost]
-
         public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long cbu, float monto)
         {
             var saldoDisponible = await _service.GetSaldo(cbu, monto);
@@ -60,10 +61,8 @@ namespace backend_milagrofinanciero.Controllers
                 return Error();
             }
         }
-        //f
 
         [HttpPut("{id}")]
-
         public async Task<IActionResult> Update(int id, TransaccionDtoIn transaccion)
         {
 

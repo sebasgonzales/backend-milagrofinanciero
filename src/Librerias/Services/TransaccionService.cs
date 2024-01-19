@@ -114,6 +114,24 @@ namespace Services
             }
         }
 
+        public async Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta)
+        {
+            return await _context.Transaccion
+                .Where(t => t.CuentaOrigen.Numero == numeroCuenta || t.CuentaDestino.Numero == numeroCuenta)
+                .Select(t => new TransaccionDtoOut
+                {
+                    Monto = t.Monto,
+                    Numero = t.Numero,
+                    Acreditacion = t.Acreditacion,
+                    Realizacion = t.Realizacion,
+                    Motivo = t.Motivo,
+                    Referencia = t.Referencia,
+                    CuentaDestino = t.CuentaDestino.Numero,
+                    CuentaOrigen = t.CuentaOrigen.Numero,
+                    TipoTransaccion = t.TipoTransaccion.Nombre
+                }).ToListAsync();
+        }
+
         public async Task<int> GetSaldo(long cbu, float monto)
         {
             int id = await _context.Cuenta
