@@ -3,6 +3,7 @@ using Core.DTO.response;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services;
 using System.Xml.Linq;
 
@@ -13,10 +14,14 @@ namespace backend_milagrofinanciero.Controllers
     public class TransaccionController: ControllerBase
     {
         private readonly ITransaccionService _service;
-        public TransaccionController(ITransaccionService transaccion)
+        private readonly ICuentaService _cuentaService;
+        public TransaccionController(ITransaccionService transaccion, ICuentaService cuentaService)
         {
             _service = transaccion;
+            _cuentaService = cuentaService;
         }
+
+     
         // GET /Transaciones
         [EnableCors]
 
@@ -47,19 +52,44 @@ namespace backend_milagrofinanciero.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long numeroCuenta, float monto)
+        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, int numeroCuentaOrigen, long cbuDestino, float monto)
         {
-            var saldoDisponible = await _service.GetSaldo(cbuOrigen, monto);
+            //verifico el saldo
+            var saldoDisponible = await _service.GetSaldo(numeroCuentaOrigen, monto);
 
             if (saldoDisponible == 1)
             {
-                var newTransaccion = await _service.Create(transaccion);
+                // Obtener el ID de la cuenta de destino a partir del CBU
+                int? cuentaDestinoId = await _cuentaService.GetCuentaIdByCbu(cbuDestino);
 
-                return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+                // Obtener el ID de la cuenta de origen a partir del Numero
+                int? cuentaOrigenId = await _cuentaService.GetCuentaIdByNumeroCuenta(numeroCuentaOrigen);
+
+
+                if (cuentaDestinoId.HasValue && cuentaOrigenId.HasValue)
+                {
+                    // Configurar la información de la transacción
+                    transaccion.IdCuentaOrigen = cuentaOrigenId.Value;
+                    transaccion.IdCuentaDestino = cuentaDestinoId.Value;
+                    transaccion.IdTipoTransaccion = 1;
+                    // transaccion.IdTipoTransaccion = /* IdTipoTransaccion según sea necesario */;
+
+                    // Crear la transacción
+                    var newTransaccion = await _service.Create(transaccion);
+
+                    return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+                }
+                else
+                {
+                    return Error();
+
+                }
             }
             else
             {
-                return Error();
+             
+                // Manejar el caso en que no hay saldo suficiente
+                    return BadRequest("Saldo insuficiente para realizar la transferencia.");
             }
         }
 

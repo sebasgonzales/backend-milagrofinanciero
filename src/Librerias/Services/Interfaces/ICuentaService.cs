@@ -11,5 +11,14 @@ namespace Services
         Task<Cuenta?> GetById(int id);
         Task<CuentaDtoOut?> GetByIdDto(int id);
         Task Update(int id, CuentaDtoIn cuenta);
+
+        Task<Cuenta> GetCuentaByCbu(long cbu);
+        Task<Cuenta> GetCuentaByNumero(long numeroCuenta);
+
+        Task<int?> GetCuentaIdByCbu(long cbu);
+
+        Task<int?> GetCuentaIdByNumeroCuenta(int numeroCuenta);
+
     }
+
 }

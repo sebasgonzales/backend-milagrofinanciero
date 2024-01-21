@@ -1,5 +1,6 @@
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,8 @@ builder.Services.AddScoped<Services.ILocalidadService, Services.LocalidadService
 builder.Services.AddScoped<Services.IClienteXCuentaService, Services.ClienteXCuentaService>();
 builder.Services.AddScoped<Services.IClienteService, Services.ClienteService>();
 builder.Services.AddScoped<Services.IPaisService,Services.PaisService>();
+
+
 
 var app = builder.Build();
 

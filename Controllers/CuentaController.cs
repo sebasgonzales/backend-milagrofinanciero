@@ -71,5 +71,118 @@ public class CuentaController : ControllerBase
         }
     }
 
+    //obtener cuenta x CBU
+    [HttpGet("CuentaxCbu/{cbu}")]
+    public async Task<IActionResult> ObtenerCuentaPorCbu(long cbu)
+    {
+        try
+        {
+            var cuenta = await _service.GetCuentaByCbu(cbu);
+
+            if (cuenta != null)
+            {
+                //// Mapea la cuenta a un DTO u objeto de respuesta según sea necesario
+                //var cuentaDto = new CuentaDto
+                //{
+                //    // Mapea las propiedades de cuenta según sea necesario
+                //  Id = cuenta.Id,
+                //    Numero = cuenta.Numero,
+                //    Saldo = cuenta.Saldo,
+                //    // ...
+                //};
+
+                return Ok(cuenta);
+            }
+            else
+            {
+                return NotFound("No se encontró ninguna cuenta con el CBU proporcionado.");
+            }
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+        }
+    }
+   
+
+    //obtener cuenta x NumerodeCuenta
+    [HttpGet("cuenta/{numeroCuenta}")]
+    public async Task<IActionResult> ObtenerCuentaPorNumero(long numeroCuenta)
+    {
+        try
+        {
+            var cuenta = await _service.GetCuentaByNumero(numeroCuenta);
+
+            if (cuenta != null)
+            {
+                //// Mapea la cuenta a un DTO u objeto de respuesta según sea necesario
+                //var cuentaDto = new CuentaDto
+                //{
+                //    // Mapea las propiedades de cuenta según sea necesario
+                //    Id = cuenta.Id,
+                //    Numero = cuenta.Numero,
+                //    Saldo = cuenta.Saldo,
+                //    // ...
+                //};
+
+                return Ok(cuenta);
+            }
+            else
+            {
+                return NotFound("No se encontró ninguna cuenta con el NumeroDeCuente proporcionado.");
+            }
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+        }
+    }
+
+
+    //obtener ID x CBU
+    [HttpGet("IdxCbu/{cbu}")]
+    public async Task<IActionResult> ObtenerIdPorCbu(long cbu)
+    {
+        try
+        {
+            var cuentaId = await _service.GetCuentaIdByCbu(cbu);
+
+            if (cuentaId.HasValue)
+            {
+                return Ok(new { CuentaId = cuentaId.Value });
+            }
+            else
+            {
+                return NotFound("No se encontró una cuenta con el CBU proporcionado.");
+            }
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+        }
+    }
+
+    //obtener ID x NumeroCuenta
+    [HttpGet("IdxNumeroCuenta/{numeroCuenta}")]
+    public async Task<IActionResult> ObtenerIdPorNumeroCuenta(int numeroCuenta)
+    {
+        try
+        {
+            var cuentaId = await _service.GetCuentaIdByNumeroCuenta(numeroCuenta);
+
+            if (cuentaId.HasValue)
+            {
+                return Ok(new { CuentaId = cuentaId.Value });
+            }
+            else
+            {
+                return NotFound("No se encontró una cuenta con el numeroCuenta proporcionado.");
+            }
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+        }
+    }
 }
 

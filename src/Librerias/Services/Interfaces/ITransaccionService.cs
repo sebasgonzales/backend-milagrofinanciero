@@ -11,7 +11,7 @@ namespace Services
         Task<IEnumerable<TransaccionDtoOut>> GetAll();
         Task<Transaccion?> GetById(int id);
         Task<TransaccionDtoOut?> GetDtoById(int id);
-        Task<int> GetSaldo(long numeroCuenta, float monto);
+        Task<int> GetSaldo(int numeroCuenta, float monto);
         Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta);
         //Task Update(TransaccionDtoIn transaccion);
         Task<float> ObtenerSaldo(long numeroCuenta);

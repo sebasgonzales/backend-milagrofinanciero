@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Data.Models;
 
@@ -27,9 +28,10 @@ public partial class Transaccion
 
     public int IdTipoTransaccion { get; set; }
 
+    [JsonIgnore]
     public virtual Cuenta CuentaDestino { get; set; }
-
+    [JsonIgnore]
     public virtual Cuenta CuentaOrigen { get; set; }
-
+    [JsonIgnore]
     public virtual TipoTransaccion TipoTransaccion { get; set; }
 }

@@ -15,9 +15,10 @@ namespace Services
     public class TransaccionService : ITransaccionService
     {
         private readonly milagrofinancierog1Context _context;
-
-        public TransaccionService(milagrofinancierog1Context context)
+        private readonly ICuentaService _cuentaService;
+        public TransaccionService(milagrofinancierog1Context context, ICuentaService cuentaService)
         {
+            _cuentaService = cuentaService;
             _context = context;
         }
 
@@ -64,29 +65,33 @@ namespace Services
 
         public async Task<Transaccion> Create(TransaccionDtoIn newTransaccionDTO)
         {
-            var newTransaccion = new Transaccion();
-
-            newTransaccion.Monto = newTransaccionDTO.Monto;
-            //newTransaccion para Nro de op no, porque se autoincrementa
-            newTransaccion.Acreditacion = newTransaccionDTO.Acreditacion;
-            newTransaccion.Realizacion = newTransaccionDTO.Realizacion;
-            newTransaccion.Motivo = newTransaccionDTO.Motivo;
-            newTransaccion.Referencia = newTransaccionDTO.Referencia;
-            //newTransaccion.Monto = newTransaccionDTO.Monto;
-            newTransaccion.IdCuentaOrigen = newTransaccionDTO.IdCuentaOrigen;
-            newTransaccion.IdCuentaDestino = newTransaccionDTO.IdCuentaDestino;
-            newTransaccion.IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion;
-
-            // Obtener el número de cuenta de destino a partir del CBU
-            Cuenta cuentaDestino = await _context.Cuenta
-                .Where(c => c.Cbu == newTransaccion.CuentaDestino.Cbu)
-                .FirstOrDefaultAsync();
-
-            if (cuentaDestino != null)
+            try { 
+            // Crear una nueva instancia de Transaccion y asignar los valores del DTO
+            var newTransaccion = new Transaccion
             {
-                newTransaccion.IdCuentaDestino = cuentaDestino.Id;
-                newTransaccion.IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion;
+                Monto = newTransaccionDTO.Monto,
+                Acreditacion = newTransaccionDTO.Acreditacion,
+                Realizacion = newTransaccionDTO.Realizacion,
+                Motivo = newTransaccionDTO.Motivo,
+                Referencia = newTransaccionDTO.Referencia,
+               // IdCuentaOrigen = newTransaccionDTO.IdCuentaOrigen,
+                //IdCuentaDestino = newTransaccionDTO.IdCuentaDestino,
+                IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion
+            };
 
+            // Obtener la cuenta de destino a partir del CBU
+            Cuenta cuentaDestino = await _context.Cuenta
+                .Where(c => c.Id == newTransaccionDTO.IdCuentaDestino)
+                .FirstOrDefaultAsync();
+            Cuenta cuentaOrigen = await _context.Cuenta
+               .Where(c => c.Id == newTransaccionDTO.IdCuentaOrigen)
+               .FirstOrDefaultAsync();
+
+                if (cuentaDestino != null)
+            {
+                    // Configurar la cuenta de destino y guardar los cambios
+                    newTransaccion.IdCuentaOrigen = cuentaOrigen.Id;
+                    newTransaccion.IdCuentaDestino = cuentaDestino.Id;
                 _context.Transaccion.Add(newTransaccion);
                 await _context.SaveChangesAsync();
 
@@ -99,6 +104,14 @@ namespace Services
                 throw new Exception("La cuenta de destino no existe.");
             }
         }
+        catch (Exception ex)
+        {
+                // Manejar la excepción según tus necesidades
+                throw new Exception("error",ex);
+            }
+}
+
+
 
 
 
@@ -153,7 +166,7 @@ namespace Services
                 }).ToListAsync();
         }
 
-        public async Task<int> GetSaldo(long numeroCuenta, float monto)
+        public async Task<int> GetSaldo(int numeroCuenta, float monto)
         {
             int id = await _context.Cuenta
                 .Where(c => c.Numero == numeroCuenta)
@@ -163,7 +176,7 @@ namespace Services
             float saldo = await _context.Transaccion
                 .Where(t => t.IdCuentaDestino == id)
                 .SumAsync(t => t.Monto);
-            if (saldo > monto)
+            if (saldo >= monto)
             {
                 return 1;
             }
