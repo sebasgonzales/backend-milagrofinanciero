@@ -19,6 +19,7 @@ namespace backend_milagrofinanciero.Controllers
         }
         // GET /Transaciones
         [EnableCors]
+
         [HttpGet]
         public async Task<IEnumerable<TransaccionDtoOut>> Get()
         {
@@ -46,9 +47,9 @@ namespace backend_milagrofinanciero.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long cbu, float monto)
+        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long numeroCuenta, float monto)
         {
-            var saldoDisponible = await _service.GetSaldo(cbu, monto);
+            var saldoDisponible = await _service.GetSaldo(cbuOrigen, monto);
 
             if (saldoDisponible == 1)
             {
@@ -62,44 +63,45 @@ namespace backend_milagrofinanciero.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, TransaccionDtoIn transaccion)
-        {
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Update(int id, TransaccionDtoIn transaccion)
+        //{
 
-            if (id != transaccion.Id)
-                return BadRequest(new { message = $"El ID({id}) de la URL no coincide con el ID({transaccion.Id}) del cuerpo de la solicitud.  " });
+        //    if (id != transaccion.Id)
+        //        return BadRequest(new { message = $"El ID({id}) de la URL no coincide con el ID({transaccion.Id}) del cuerpo de la solicitud.  " });
 
-            var transaccionToUpdate = await _service.GetById(id);
+        //    var transaccionToUpdate = await _service.GetById(id);
 
-            if (transaccionToUpdate is not null)
-            {
-                await _service.Update(transaccion);
-                return NoContent();
-            }
-            else 
-            {
-                return TransaccionNotFound(id);
-            }
+        //    if (transaccionToUpdate is not null)
+        //    {
+        //        await _service.Update(transaccion);
+        //        return NoContent();
+        //    }
+        //    else 
+        //    {
+        //        return TransaccionNotFound(id);
+        //    }
 
-        }
+        //}
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var transaccionToDelete= await _service.GetById(id);
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    var transaccionToDelete= await _service.GetById(id);
 
-            if (transaccionToDelete is not null)
-            {
-                await _service.Delete(id);
-                return Ok();
-            }
-            else
-            {
-                return TransaccionNotFound(id);
-            }
-        }
+        //    if (transaccionToDelete is not null)
+        //    {
+        //        await _service.Delete(id);
+        //        return Ok();
+        //    }
+        //    else
+        //    {
+        //        return TransaccionNotFound(id);
+        //    }
+        //}
 
-        [HttpGet("transacciones/{numeroCuenta}")]
+
+        [HttpGet("HistorialTransacciones/{numeroCuenta}")]
         public async Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta)
 
         {
@@ -107,13 +109,45 @@ namespace backend_milagrofinanciero.Controllers
 
             if (transaccionesBuscar is not null)
             {
-                return transaccionesBuscar;
+                // Ordenar las transacciones desde la fecha más reciente hasta la más vieja
+                var transaccionesOrdenadas = transaccionesBuscar.OrderByDescending(t => t.Realizacion);
+
+                return transaccionesOrdenadas;
             }
             else
             {
                 return Enumerable.Empty<TransaccionDtoOut>();
             }
+
         }
+
+        // VER EL SALDO dee la cuenta
+        [HttpGet("saldo/{numeroCuenta}")]
+            public async Task<IActionResult> ObtenerSaldo(long numeroCuenta)
+            {
+            try
+            {
+                // Llamar al servicio para obtener el saldo
+                var saldo = await _service.ObtenerSaldo(numeroCuenta);
+
+                if (saldo >= 0) // Verifica si el saldo es no negativo, lo que indica que la cuenta existe
+                {
+                    return Ok(new { SaldoTotal = saldo });
+                }
+                else
+                {
+                    // Devolver 404 Not Found si la cuenta no existe
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier excepción y devolver un resultado apropiado
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
+       
 
 
         [NonAction]

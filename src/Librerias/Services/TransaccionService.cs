@@ -77,42 +77,63 @@ namespace Services
             newTransaccion.IdCuentaDestino = newTransaccionDTO.IdCuentaDestino;
             newTransaccion.IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion;
 
+            // Obtener el número de cuenta de destino a partir del CBU
+            Cuenta cuentaDestino = await _context.Cuenta
+                .Where(c => c.Cbu == newTransaccion.CuentaDestino.Cbu)
+                .FirstOrDefaultAsync();
 
-            _context.Transaccion.Add(newTransaccion);
-            await _context.SaveChangesAsync();
-
-            return newTransaccion;
-        }
-
-        public async Task Update(TransaccionDtoIn transaccion)
-        {
-            var existingTransaccion = await GetById(transaccion.Id);
-
-            if (existingTransaccion is not null)
+            if (cuentaDestino != null)
             {
-                existingTransaccion.Monto = transaccion.Monto;
-                existingTransaccion.Acreditacion = transaccion.Acreditacion;
-                existingTransaccion.Realizacion = transaccion.Realizacion;
-                existingTransaccion.Motivo = transaccion.Motivo;
-                existingTransaccion.Referencia = transaccion.Referencia;
-                existingTransaccion.IdCuentaOrigen = transaccion.IdCuentaOrigen;
-                existingTransaccion.IdCuentaDestino = transaccion.IdCuentaDestino;
-                existingTransaccion.IdTipoTransaccion = transaccion.IdTipoTransaccion;
+                newTransaccion.IdCuentaDestino = cuentaDestino.Id;
+                newTransaccion.IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion;
 
+                _context.Transaccion.Add(newTransaccion);
                 await _context.SaveChangesAsync();
+
+                return newTransaccion;
             }
-
-        }
-
-        public async Task Delete(int id)
-        {
-            var transaccionToDelete = await GetById(id);
-            if (transaccionToDelete is not null)
+            else
             {
-                _context.Transaccion.Remove(transaccionToDelete);
-                await _context.SaveChangesAsync();
+                // Manejar el caso en que la cuenta de destino no existe
+                // Puedes lanzar una excepción, devolver un código de error, etc.
+                throw new Exception("La cuenta de destino no existe.");
             }
         }
+
+
+
+        //NO SE DEBERIA ACTUALIZAR UNA TRANSACCION
+        //public async Task Update(TransaccionDtoIn transaccion)
+        //{
+        //    var existingTransaccion = await GetById(transaccion.Id);
+
+        //    if (existingTransaccion is not null)
+        //    {
+        //        existingTransaccion.Monto = transaccion.Monto;
+        //        existingTransaccion.Acreditacion = transaccion.Acreditacion;
+        //        existingTransaccion.Realizacion = transaccion.Realizacion;
+        //        existingTransaccion.Motivo = transaccion.Motivo;
+        //        existingTransaccion.Referencia = transaccion.Referencia;
+        //        existingTransaccion.IdCuentaOrigen = transaccion.IdCuentaOrigen;
+        //        existingTransaccion.IdCuentaDestino = transaccion.IdCuentaDestino;
+        //        existingTransaccion.IdTipoTransaccion = transaccion.IdTipoTransaccion;
+
+        //        await _context.SaveChangesAsync();
+        //    }
+
+        //}
+
+        //NO SE DEBERIA ELIMINAR UNA TRANSACCION
+
+        //public async Task Delete(int id)
+        //{
+        //    var transaccionToDelete = await GetById(id);
+        //    if (transaccionToDelete is not null)
+        //    {
+        //        _context.Transaccion.Remove(transaccionToDelete);
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
 
         public async Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta)
         {
@@ -132,14 +153,14 @@ namespace Services
                 }).ToListAsync();
         }
 
-        public async Task<int> GetSaldo(long cbu, float monto)
+        public async Task<int> GetSaldo(long numeroCuenta, float monto)
         {
             int id = await _context.Cuenta
-                .Where(c => c.Cbu == cbu)
+                .Where(c => c.Numero == numeroCuenta)
                 .Select(c => c.Id)
                 .FirstOrDefaultAsync();
 
-            float saldo = await  _context.Transaccion
+            float saldo = await _context.Transaccion
                 .Where(t => t.IdCuentaDestino == id)
                 .SumAsync(t => t.Monto);
             if (saldo > monto)
@@ -153,5 +174,35 @@ namespace Services
             }
 
         }
+
+        //PARA SBER EL SALDO D MI CUENTA sumando todas las transacciones existentes
+        public async Task<float> ObtenerSaldo(long numeroCuenta)
+        {
+            // Obtener la cuenta de origen
+            var cuenta = await _context.Cuenta
+                .Where(c => c.Numero == numeroCuenta)
+                .FirstOrDefaultAsync();
+
+            if (cuenta != null)
+            {
+                // Calcular el saldo restando los montos de las transacciones salientes y sumando las entrantes
+                float saldo = await _context.Transaccion
+                    .Where(t => t.IdCuentaOrigen == cuenta.Id)
+                    .SumAsync(t => -t.Monto) + await _context.Transaccion
+                    .Where(t => t.IdCuentaDestino == cuenta.Id)
+                    .SumAsync(t => t.Monto);
+
+                return saldo;
+            }
+            else
+            {
+                // Manejar el caso en que la cuenta no existe
+                return -1; // o algún valor que indique que la cuenta no fue encontrada
+
+            }
+        }
+
+
     }
+
 }
