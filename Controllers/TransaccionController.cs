@@ -57,6 +57,12 @@ namespace backend_milagrofinanciero.Controllers
             //verifico el saldo
             var saldoDisponible = await _service.GetSaldo(numeroCuentaOrigen, monto);
 
+            // Verificar que el monto en el cuerpo JSON sea igual al parámetro 'monto'
+            if (transaccion.Monto != monto)
+            {
+                // Manejar el caso en que los montos no coinciden
+                return BadRequest("El monto en el cuerpo JSON no coincide con el parámetro 'monto' en la solicitud.");
+            }
             if (saldoDisponible == 1)
             {
                 // Obtener el ID de la cuenta de destino a partir del CBU
@@ -69,6 +75,7 @@ namespace backend_milagrofinanciero.Controllers
                 if (cuentaDestinoId.HasValue && cuentaOrigenId.HasValue)
                 {
                     // Configurar la información de la transacción
+                    
                     transaccion.IdCuentaOrigen = cuentaOrigenId.Value;
                     transaccion.IdCuentaDestino = cuentaDestinoId.Value;
                     transaccion.IdTipoTransaccion = 1;
