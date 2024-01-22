@@ -52,7 +52,7 @@ namespace backend_milagrofinanciero.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, int numeroCuentaOrigen, long cbuDestino, float monto)
+        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long numeroCuentaOrigen, long cbuDestino, float monto)
         {
             //verifico el saldo
             var saldoDisponible = await _service.VerificadorSaldo(numeroCuentaOrigen, monto);
@@ -69,14 +69,14 @@ namespace backend_milagrofinanciero.Controllers
                 var cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
 
                 // Obtener el ID de la cuenta de origen a partir del Numero
-                var cuentaOrigenId = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
+                //var cuentaOrigenId = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
+                CuentaIdDtoOut cuentaOrigenDto = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
 
-
-                if (cuentaDestinoId!=null && cuentaOrigenId!=null)
+                if (cuentaDestinoId!=null && cuentaOrigenDto!=null)
                 {
                     // Configurar la información de la transacción
                     
-                    transaccion.IdCuentaOrigen = cuentaOrigenId.Id;
+                    transaccion.IdCuentaOrigen = cuentaOrigenDto.Id;
                     transaccion.IdCuentaDestino = cuentaDestinoId.Id;
                     transaccion.IdTipoTransaccion = 1;
                     // transaccion.IdTipoTransaccion = /* IdTipoTransaccion según sea necesario */;
@@ -173,7 +173,7 @@ namespace backend_milagrofinanciero.Controllers
                 }
                 if (saldo < 0)
                 {
-                    return BadRequest("El saldo es negativo");
+                    return BadRequest(new { saldoNegativo = saldo });
                 }
                 else
                 {

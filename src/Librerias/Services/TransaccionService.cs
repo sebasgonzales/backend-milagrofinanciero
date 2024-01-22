@@ -83,9 +83,13 @@ namespace Services
             Cuenta cuentaDestino = await _context.Cuenta
                 .Where(c => c.Id == newTransaccionDTO.IdCuentaDestino)
                 .FirstOrDefaultAsync();
-            Cuenta cuentaOrigen = await _context.Cuenta
-               .Where(c => c.Id == newTransaccionDTO.IdCuentaOrigen)
-               .FirstOrDefaultAsync();
+
+                Cuenta cuentaOrigen = await _context.Cuenta
+                   .Where(c => c.Id == newTransaccionDTO.IdCuentaOrigen)
+                     .FirstOrDefaultAsync();
+
+                //CuentaIdDtoOut cuentaOrigenDto = await GetCuenIdDtoByNumeroCuenta(numeroCuentaOrigen);
+
 
                 if (cuentaDestino != null && cuentaOrigen != null)
             {
