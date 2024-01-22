@@ -55,7 +55,7 @@ namespace backend_milagrofinanciero.Controllers
         public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, int numeroCuentaOrigen, long cbuDestino, float monto)
         {
             //verifico el saldo
-            var saldoDisponible = await _service.GetSaldo(numeroCuentaOrigen, monto);
+            var saldoDisponible = await _service.VerificadorSaldo(numeroCuentaOrigen, monto);
 
             // Verificar que el monto en el cuerpo JSON sea igual al parámetro 'monto'
             if (transaccion.Monto != monto)
@@ -170,6 +170,10 @@ namespace backend_milagrofinanciero.Controllers
                 if (saldo >= 0) // Verifica si el saldo es no negativo, lo que indica que la cuenta existe
                 {
                     return Ok(new { SaldoTotal = saldo });
+                }
+                if (saldo < 0)
+                {
+                    return BadRequest("El saldo es negativo");
                 }
                 else
                 {

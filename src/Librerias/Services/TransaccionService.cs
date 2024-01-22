@@ -87,7 +87,7 @@ namespace Services
                .Where(c => c.Id == newTransaccionDTO.IdCuentaOrigen)
                .FirstOrDefaultAsync();
 
-                if (cuentaDestino != null)
+                if (cuentaDestino != null && cuentaOrigen != null)
             {
                     // Configurar la cuenta de destino y guardar los cambios
                     newTransaccion.IdCuentaOrigen = cuentaOrigen.Id;
@@ -101,7 +101,7 @@ namespace Services
             {
                 // Manejar el caso en que la cuenta de destino no existe
                 // Puedes lanzar una excepción, devolver un código de error, etc.
-                throw new Exception("La cuenta de destino no existe.");
+                throw new Exception("La cuenta de destino o la cuenta origen no existe.");
             }
         }
         catch (Exception ex)
@@ -166,7 +166,7 @@ namespace Services
                 }).ToListAsync();
         }
 
-        public async Task<int> GetSaldo(int numeroCuenta, float monto)
+        public async Task<int> VerificadorSaldo(long numeroCuenta, float monto)
         {
             int id = await _context.Cuenta
                 .Where(c => c.Numero == numeroCuenta)
@@ -188,7 +188,7 @@ namespace Services
 
         }
 
-        //PARA SBER EL SALDO D MI CUENTA sumando todas las transacciones existentes
+        //PARA SABER EL SALDO DE MI CUENTA sumando todas las transacciones existentes
         public async Task<float> ObtenerSaldo(long numeroCuenta)
         {
             // Obtener la cuenta de origen
