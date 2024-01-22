@@ -20,4 +20,8 @@ namespace Core.DTO.request
         public required int IdTipoTransaccion { get; set; }
 
     }
+    public class TransaccionIdDtoIn
+    {
+        public required int Id { get; set;}
+    }
 }
