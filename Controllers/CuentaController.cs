@@ -70,7 +70,8 @@ public class CuentaController : ControllerBase
             return NotFound(id);
         }
     }
-
+    /*
+     * 
     //obtener cuenta x CBU
     [HttpGet("CuentaxCbu/{cbu}")]
     public async Task<IActionResult> ObtenerCuentaPorCbu(long cbu)
@@ -138,23 +139,21 @@ public class CuentaController : ControllerBase
         }
     }
 
+    */
 
     //obtener ID x CBU
     [HttpGet("IdxCbu/{cbu}")]
-    public async Task<IActionResult> ObtenerIdPorCbu(long cbu)
+    public async Task<ActionResult<CuentaIdDtoOut>> ObtenerIdPorCbu(long cbu)
     {
         try
         {
-            var cuentaId = await _service.GetCuentaIdByCbu(cbu);
+            var cuentaId = await _service.GetIdByCbu(cbu);
 
-            if (cuentaId.HasValue)
-            {
-                return Ok(new { CuentaId = cuentaId.Value });
-            }
-            else
+            if (cuentaId is null)
             {
                 return NotFound("No se encontró una cuenta con el CBU proporcionado.");
             }
+            return cuentaId;
         }
         catch (Exception ex)
         {
@@ -168,7 +167,7 @@ public class CuentaController : ControllerBase
     {
         try
         {
-            var cuentaId = await _service.GetByNumeroCuenta(numeroCuenta);
+            var cuentaId = await _service.GetIdByNumeroCuenta(numeroCuenta);
 
             if (cuentaId is null)
             {
