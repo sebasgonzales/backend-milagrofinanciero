@@ -164,20 +164,17 @@ public class CuentaController : ControllerBase
 
     //obtener ID x NumeroCuenta
     [HttpGet("IdxNumeroCuenta/{numeroCuenta}")]
-    public async Task<IActionResult> ObtenerIdPorNumeroCuenta(int numeroCuenta)
+    public async Task<ActionResult<CuentaIdDtoOut>> ObtenerIdPorNumeroCuenta(long numeroCuenta)
     {
         try
         {
-            var cuentaId = await _service.GetCuentaIdByNumeroCuenta(numeroCuenta);
+            var cuentaId = await _service.GetByNumeroCuenta(numeroCuenta);
 
-            if (cuentaId.HasValue)
-            {
-                return Ok(new { CuentaId = cuentaId.Value });
-            }
-            else
+            if (cuentaId is null)
             {
                 return NotFound("No se encontró una cuenta con el numeroCuenta proporcionado.");
             }
+            return cuentaId;
         }
         catch (Exception ex)
         {

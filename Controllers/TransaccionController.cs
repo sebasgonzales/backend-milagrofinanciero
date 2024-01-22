@@ -69,14 +69,14 @@ namespace backend_milagrofinanciero.Controllers
                 int? cuentaDestinoId = await _cuentaService.GetCuentaIdByCbu(cbuDestino);
 
                 // Obtener el ID de la cuenta de origen a partir del Numero
-                int? cuentaOrigenId = await _cuentaService.GetCuentaIdByNumeroCuenta(numeroCuentaOrigen);
+                var cuentaOrigenId = await _cuentaService.GetByNumeroCuenta(numeroCuentaOrigen);
 
 
-                if (cuentaDestinoId.HasValue && cuentaOrigenId.HasValue)
+                if (cuentaDestinoId.HasValue && cuentaOrigenId!=null)
                 {
                     // Configurar la información de la transacción
                     
-                    transaccion.IdCuentaOrigen = cuentaOrigenId.Value;
+                    transaccion.IdCuentaOrigen = cuentaOrigenId.Id;
                     transaccion.IdCuentaDestino = cuentaDestinoId.Value;
                     transaccion.IdTipoTransaccion = 1;
                     // transaccion.IdTipoTransaccion = /* IdTipoTransaccion según sea necesario */;

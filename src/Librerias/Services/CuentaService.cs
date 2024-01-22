@@ -119,12 +119,12 @@ namespace Services
             return cuenta;
         }
 
-        public async Task<int?> GetCuentaIdByNumeroCuenta(int numeroCuenta)
+        public async Task<CuentaIdDtoOut?> GetByNumeroCuenta(long numeroCuenta)
         {
             var cuenta = await _context.Cuenta
                 .Where(c => c.Numero == numeroCuenta)
-                .Select(c => c.Id)
-                .FirstOrDefaultAsync();
+                .Select(c => new CuentaIdDtoOut { Id =c.Id})
+                .SingleOrDefaultAsync();
 
             return cuenta;
         }
