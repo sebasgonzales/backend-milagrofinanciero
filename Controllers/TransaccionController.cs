@@ -78,7 +78,7 @@ namespace backend_milagrofinanciero.Controllers
                     
                     transaccion.IdCuentaOrigen = cuentaOrigenDto.Id;
                     transaccion.IdCuentaDestino = cuentaDestinoId.Id;
-                    transaccion.IdTipoTransaccion = 1;
+                   //transaccion.IdTipoTransaccion = 1;
                     // transaccion.IdTipoTransaccion = /* IdTipoTransaccion según sea necesario */;
 
                     // Crear la transacción
