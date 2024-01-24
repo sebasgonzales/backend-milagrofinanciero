@@ -66,7 +66,7 @@ namespace backend_milagrofinanciero.Controllers
             if (saldoDisponible == 1)
             {
                 // Obtener el ID de la cuenta de destino a partir del CBU
-                var cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
+                CuentaIdDtoOut cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
 
                 // Obtener el ID de la cuenta de origen a partir del Numero
                 //var cuentaOrigenId = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
@@ -78,7 +78,7 @@ namespace backend_milagrofinanciero.Controllers
                     
                     transaccion.IdCuentaOrigen = cuentaOrigenDto.Id;
                     transaccion.IdCuentaDestino = cuentaDestinoId.Id;
-                   //transaccion.IdTipoTransaccion = 1;
+                    //transaccion.IdTipoTransaccion = ;
                     // transaccion.IdTipoTransaccion = /* IdTipoTransaccion según sea necesario */;
 
                     // Crear la transacción
@@ -145,9 +145,11 @@ namespace backend_milagrofinanciero.Controllers
             var transaccionesBuscar = await _service.GetTransacciones(numeroCuenta);
 
             if (transaccionesBuscar is not null)
+
             {
                 // Ordenar las transacciones desde la fecha más reciente hasta la más vieja
-                var transaccionesOrdenadas = transaccionesBuscar.OrderByDescending(t => t.Realizacion);
+                var transaccionesOrdenadas = transaccionesBuscar.OrderByDescending(t => t.Numero);
+
 
                 return transaccionesOrdenadas;
             }

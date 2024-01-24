@@ -28,7 +28,7 @@ namespace Services
                 .Select(t => new TransaccionDtoOut
                 {
                     Monto = t.Monto,
-                    //Numero = t.Numero,
+                    Numero = t.Numero,
                     Acreditacion = t.Acreditacion,
                     Realizacion = t.Realizacion,
                     Motivo = t.Motivo,
@@ -47,7 +47,7 @@ namespace Services
                 .Select(t => new TransaccionDtoOut
                 {
                     Monto = t.Monto,
-                    //Numero = t.Numero,
+                    Numero = t.Numero,
                     Acreditacion = t.Acreditacion,
                     Realizacion = t.Realizacion,
                     Motivo = t.Motivo,
@@ -159,10 +159,10 @@ namespace Services
                 .Select(t => new TransaccionDtoOut
                 {
                     Monto = t.Monto,
-                   // Numero = t.Numero,
+                   Numero = t.Numero,
                     Acreditacion = t.Acreditacion,
                     Realizacion = t.Realizacion,
-                    Motivo = t.Motivo,
+                   Motivo = t.Motivo,
                     Referencia = t.Referencia,
                     CuentaDestino = t.CuentaDestino.Numero,
                     CuentaOrigen = t.CuentaOrigen.Numero,
