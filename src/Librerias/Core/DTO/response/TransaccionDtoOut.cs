@@ -11,8 +11,8 @@ namespace Core.DTO.response
         public required float Monto { get; set; }
         
         public required long Numero { get; set; }
-        public required DateOnly Acreditacion { get; set; }
-        public required DateOnly Realizacion { get; set; }
+        public required DateTime Acreditacion { get; set; }
+        public required DateTime Realizacion { get; set; }
         public required string Motivo { get; set; }
         public string? Referencia { get; set; }
         public required long CuentaDestino { get; set; }

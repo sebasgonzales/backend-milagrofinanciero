@@ -14,9 +14,9 @@ public partial class Transaccion
 
     public long Numero { get; set; }
 
-    public DateOnly Acreditacion { get; set; }
+    public DateTime Acreditacion { get; set; }
 
-    public DateOnly Realizacion { get; set; }
+    public DateTime Realizacion { get; set; }
 
     public string Motivo { get; set; }
 
