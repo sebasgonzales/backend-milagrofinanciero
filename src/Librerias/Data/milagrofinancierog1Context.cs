@@ -32,7 +32,7 @@ public partial class milagrofinancierog1Context : DbContext
     public virtual DbSet<Sucursal> Sucursal { get; set; }
 
     public virtual DbSet<TipoCuenta> TipoCuenta { get; set; }
-
+    public virtual DbSet<TipoMotivo> TipoMotivo { get; set; }
     public virtual DbSet<TipoTransaccion> TipoTransaccion { get; set; }
 
     public virtual DbSet<Transaccion> Transaccion { get; set; }
@@ -263,6 +263,17 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasColumnName("nombre");
         });
 
+        modelBuilder.Entity<TipoMotivo>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("TipoMotivo_pkey");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Nombre)
+                .IsRequired()
+                .HasMaxLength(45)
+                .HasColumnName("nombre");
+        });
+
         modelBuilder.Entity<TipoTransaccion>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("TipoTransaccion_pkey");
@@ -283,19 +294,20 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("nextval('\"Transaccion_ID_seq\"'::regclass)")
                 .HasColumnName("id");
-            entity.Property(e => e.Acreditacion).HasColumnName("acreditacion");
+            entity.Property(e => e.Acreditacion)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("acreditacion");
             entity.Property(e => e.IdCuentaDestino).HasColumnName("idCuentaDestino");
             entity.Property(e => e.IdCuentaOrigen).HasColumnName("idCuentaOrigen");
+            entity.Property(e => e.IdTipoMotivo).HasColumnName("idTipoMotivo");
             entity.Property(e => e.IdTipoTransaccion).HasColumnName("idTipoTransaccion");
             entity.Property(e => e.Monto).HasColumnName("monto");
-            entity.Property(e => e.Motivo)
-                .IsRequired()
-                .HasMaxLength(45)
-                .HasColumnName("motivo");
             entity.Property(e => e.Numero)
                 .HasDefaultValueSql("nextval('\"Transaccion_numero_operacion_seq\"'::regclass)")
                 .HasColumnName("numero");
-            entity.Property(e => e.Realizacion).HasColumnName("realizacion");
+            entity.Property(e => e.Realizacion)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("realizacion");
             entity.Property(e => e.Referencia)
                 .HasMaxLength(45)
                 .HasColumnName("referencia");
@@ -309,6 +321,11 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasForeignKey(d => d.IdCuentaOrigen)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cuentaOrigen");
+
+            entity.HasOne(d => d.TipoMotivo).WithMany(p => p.Transaccion)
+                .HasForeignKey(d => d.IdTipoMotivo)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_tipoMotivo");
 
             entity.HasOne(d => d.TipoTransaccion).WithMany(p => p.Transaccion)
                 .HasForeignKey(d => d.IdTipoTransaccion)

@@ -13,7 +13,7 @@ namespace Core.DTO.request
         //public required long Numero { get; set; }
         public required DateTime Acreditacion { get; set; }
         public required DateTime Realizacion { get; set; }
-        public required string Motivo { get; set; }
+        public required int idTipoMotivo { get; set; }
         public string? Referencia { get; set; }
         public required int IdCuentaOrigen { get; set; }
         public required int IdCuentaDestino { get; set; }

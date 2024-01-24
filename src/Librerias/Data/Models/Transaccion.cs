@@ -17,21 +17,19 @@ public partial class Transaccion
     public DateTime Acreditacion { get; set; }
 
     public DateTime Realizacion { get; set; }
-
-    public string Motivo { get; set; }
-
     public string Referencia { get; set; }
-
     public int IdCuentaOrigen { get; set; }
-
     public int IdCuentaDestino { get; set; }
 
     public int IdTipoTransaccion { get; set; }
+    public int IdTipoMotivo { get; set; }
 
     [JsonIgnore]
     public virtual Cuenta CuentaDestino { get; set; }
     [JsonIgnore]
     public virtual Cuenta CuentaOrigen { get; set; }
+    [JsonIgnore]
+    public virtual TipoMotivo TipoMotivo { get; set; }
     [JsonIgnore]
     public virtual TipoTransaccion TipoTransaccion { get; set; }
 }
