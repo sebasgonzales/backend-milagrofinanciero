@@ -294,9 +294,7 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("nextval('\"Transaccion_ID_seq\"'::regclass)")
                 .HasColumnName("id");
-            entity.Property(e => e.Acreditacion)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("acreditacion");
+            entity.Property(e => e.Acreditacion).HasColumnName("acreditacion");
             entity.Property(e => e.IdCuentaDestino).HasColumnName("idCuentaDestino");
             entity.Property(e => e.IdCuentaOrigen).HasColumnName("idCuentaOrigen");
             entity.Property(e => e.IdTipoMotivo).HasColumnName("idTipoMotivo");
@@ -305,9 +303,7 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Numero)
                 .HasDefaultValueSql("nextval('\"Transaccion_numero_operacion_seq\"'::regclass)")
                 .HasColumnName("numero");
-            entity.Property(e => e.Realizacion)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("realizacion");
+            entity.Property(e => e.Realizacion).HasColumnName("realizacion");
             entity.Property(e => e.Referencia)
                 .HasMaxLength(45)
                 .HasColumnName("referencia");
