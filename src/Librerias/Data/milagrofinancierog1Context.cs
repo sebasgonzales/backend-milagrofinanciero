@@ -63,6 +63,10 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Calle)
                 .HasMaxLength(45)
                 .HasColumnName("calle");
+            entity.Property(e => e.Password)
+                .IsRequired()
+                .HasMaxLength(16)
+                .HasColumnName("password");
             entity.Property(e => e.CuitCuil)
                 .IsRequired()
                 .HasMaxLength(13)
@@ -71,13 +75,17 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("departamento");
             entity.Property(e => e.IdLocalidad).HasColumnName("idLocalidad");
-            entity.Property(e => e.Numero)
+            entity.Property(e => e.AlturaCalle)
                 .HasMaxLength(45)
-                .HasColumnName("numero");
+                .HasColumnName("alturaCalle");
             entity.Property(e => e.RazonSocial)
                 .IsRequired()
                 .HasMaxLength(45)
                 .HasColumnName("razonSocial");
+            entity.Property(e => e.Username)
+                .IsRequired()
+                .HasMaxLength(45)
+                .HasColumnName("username");
 
             entity.HasOne(d => d.Localidad).WithMany(p => p.Cliente)
                 .HasForeignKey(d => d.IdLocalidad)
