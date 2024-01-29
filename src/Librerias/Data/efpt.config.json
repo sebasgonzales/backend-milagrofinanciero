@@ -28,6 +28,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "public.Contacto",
+         "ObjectType": 0
+      },
+      {
          "Name": "public.Cuenta",
          "ObjectType": 0
       },
