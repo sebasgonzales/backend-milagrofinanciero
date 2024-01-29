@@ -97,5 +97,39 @@ namespace Services
             }
         }
 
+        /*
+         public async Task<Cuenta> GetCuentaByCbu(long cbu)
+        {
+            return await _context.Cuenta
+                .FirstOrDefaultAsync(c => c.Cbu == cbu);
+        }
+        public async Task<Cuenta> GetCuentaByNumero(long numeroCuenta)
+        {
+            return await _context.Cuenta
+                .Where(c => c.Numero == numeroCuenta)
+                .FirstOrDefaultAsync();
+        }
+        
+         */
+
+        public async Task<CuentaIdDtoOut> GetIdByCbu(long cbu)
+        {
+            var cuenta = await _context.Cuenta
+                .Where(c => c.Cbu == cbu)
+                .Select(c => new CuentaIdDtoOut { Id = c.Id })
+                .SingleOrDefaultAsync();
+
+            return cuenta;
+        }
+
+        public async Task<CuentaIdDtoOut?> GetIdByNumeroCuenta(long numeroCuenta)
+        {
+            var cuenta = await _context.Cuenta
+                .Where(c => c.Numero == numeroCuenta)
+                .Select(c => new CuentaIdDtoOut { Id =c.Id})
+                .SingleOrDefaultAsync();
+
+            return cuenta;
+        }
     }
 }

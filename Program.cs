@@ -1,5 +1,6 @@
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +13,14 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:3000");
+                          policy.WithOrigins("http://localhost:3000")
+      .AllowAnyMethod()
+      .AllowAnyHeader()
+      .AllowCredentials();
+
                       });
 });
+
 
 // Add services to the container.
 
@@ -41,6 +47,10 @@ builder.Services.AddScoped<Services.ILocalidadService, Services.LocalidadService
 builder.Services.AddScoped<Services.IClienteXCuentaService, Services.ClienteXCuentaService>();
 builder.Services.AddScoped<Services.IClienteService, Services.ClienteService>();
 builder.Services.AddScoped<Services.IPaisService,Services.PaisService>();
+builder.Services.AddScoped<Services.ITipoMotivoService, Services.TipoMotivoService>();
+
+
+
 
 var app = builder.Build();
 

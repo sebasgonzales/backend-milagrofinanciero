@@ -28,7 +28,9 @@ namespace Services
                     Alta = c.Alta,
                     Calle = c.Calle,
                     Departamento = c.Departamento,
-                    Numero = c.Numero                  
+                    AlturaCalle = c.AlturaCalle,
+                    Username = c.Username,
+                    Localidad = c.Localidad.Nombre
                 }).ToListAsync();
         }
 
@@ -44,7 +46,9 @@ namespace Services
                     Alta = c.Alta,
                     Calle = c.Calle,
                     Departamento = c.Departamento,
-                    Numero = c.Numero
+                    AlturaCalle = c.AlturaCalle,
+                    Username= c.Username,
+                    Localidad = c.Localidad.Nombre
                 }).SingleOrDefaultAsync();
         }
 
@@ -67,7 +71,9 @@ namespace Services
             newCliente.CuitCuil = newClienteDTO.CuitCuil;
             newCliente.Calle = newClienteDTO.Calle;
             newCliente.Departamento = newClienteDTO.Departamento;
-            newCliente.Numero = newClienteDTO.Numero;
+            newCliente.AlturaCalle = newClienteDTO.AlturaCalle;
+            newCliente.Username = newClienteDTO.Username;
+            newCliente.Password = newClienteDTO.Password;
             newCliente.IdLocalidad = newClienteDTO.IdLocalidad;
 
             _context.Cliente.Add(newCliente);
@@ -87,7 +93,9 @@ namespace Services
                 existingClient.CuitCuil = cliente.CuitCuil;
                 existingClient.Calle = cliente.Calle;
                 existingClient.Departamento = cliente.Departamento;
-                existingClient.Numero = cliente.Numero;
+                existingClient.AlturaCalle = cliente.AlturaCalle;
+                existingClient.Username = cliente.Username;
+                existingClient.Password = cliente.Password;
                 existingClient.IdLocalidad = existingClient.IdLocalidad;
 
                 await _context.SaveChangesAsync();

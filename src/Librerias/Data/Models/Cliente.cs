@@ -13,15 +13,18 @@ public partial class Cliente
 
     public string CuitCuil { get; set; }
 
-    public DateOnly Alta { get; set; }
+    public DateTime Alta { get; set; }
 
     public string Calle { get; set; }
 
     public string Departamento { get; set; }
 
-    public string Numero { get; set; }
+    public string AlturaCalle { get; set; }
 
     public int IdLocalidad { get; set; }
+    public string Username { get; set; }
+
+    public string Password { get; set; }
 
     public virtual ICollection<ClienteXcuenta> ClienteXcuenta { get; set; } = new List<ClienteXcuenta>();
 
