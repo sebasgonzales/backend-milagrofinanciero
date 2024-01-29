@@ -131,5 +131,32 @@ namespace Services
 
             return cuenta;
         }
+
+        public async Task<List<ContactoDtoOut>> GetContactos(long numeroCuenta)
+        {
+            //obtengo el id de la cuenta
+            var cuentaId = await _context.Cuenta
+                .Where(c => c.Numero == numeroCuenta)
+                .Select(c => c.Id)
+                .FirstOrDefaultAsync(); //devuelve si encontro o sino default
+            if (cuentaId == default)
+            {
+                return new List<ContactoDtoOut>(); // No esta el cliente, devuelve lista vacia
+            }
+            //si se encontró los contactos
+            var contactos = await _context.Contacto
+                .Where(cc => cc.IdCuenta == cuentaId) // cruzo las tablas
+                .Select(cc => new ContactoDtoOut
+                {
+
+                    Nombre = cc.Nombre,
+                    Cbu = cc.Cbu,
+                    Banco = cc.Banco.Nombre
+                }).ToListAsync();
+
+            return contactos;
+
+        }
+
     }
 }

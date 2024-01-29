@@ -17,8 +17,8 @@ namespace Services
         public ContactoService(milagrofinancierog1Context context)
         {
             _context = context;
-
         }
+
 
         public async Task<IEnumerable<ContactoDtoOut>> GetAll()
         {
@@ -93,7 +93,6 @@ namespace Services
             }
 
         }
-
 
     }
 }

@@ -13,9 +13,9 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.WithOrigins("http://localhost:3000")
-      .AllowAnyMethod()
-      .AllowAnyHeader()
-      .AllowCredentials();
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .AllowCredentials();
 
                       });
 });
@@ -48,8 +48,6 @@ builder.Services.AddScoped<Services.IClienteService, Services.ClienteService>();
 builder.Services.AddScoped<Services.IPaisService,Services.PaisService>();
 builder.Services.AddScoped<Services.ITipoMotivoService, Services.TipoMotivoService>();
 builder.Services.AddScoped<Services.IContactoService, Services.ContactoService>();
-
-
 
 
 
