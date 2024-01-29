@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using Data.Modelos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Models;
@@ -134,8 +133,10 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Cbu).HasColumnName("cbu");
             entity.Property(e => e.IdBanco).HasColumnName("idBanco");
             entity.Property(e => e.IdCuenta).HasColumnName("idCuenta");
-            entity.Property(e => e.Numero).HasColumnName("numero");
-
+            entity.Property(e => e.Nombre)
+                .IsRequired()
+                .HasMaxLength(45)
+                .HasColumnName("nombre");
             entity.HasOne(d => d.Banco).WithMany(p => p.Contacto)
                 .HasForeignKey(d => d.IdBanco)
                 .OnDelete(DeleteBehavior.ClientSetNull)

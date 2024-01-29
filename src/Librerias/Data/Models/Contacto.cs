@@ -10,9 +10,9 @@ namespace Data.Models
     {
         public int Id { get; set; }
 
-        public int Numero { get; set; }
+        public long Cbu { get; set; }
 
-        public int Cbu { get; set; }
+        public string Nombre {  get; set; }
 
         public int IdCuenta { get; set; }
 
