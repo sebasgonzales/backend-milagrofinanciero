@@ -181,7 +181,7 @@ public class CuentaController : ControllerBase
         }
     }
     //cuentaId es un parametro dinamico en la ruta
-    [HttpGet("cuentas/numeroCuenta/{numeroCuenta}/contacto")] // Modificación en la ruta del endpoint
+    [HttpGet("cuentas/Numero/{numeroCuenta}/Contacto")] // Modificación en la ruta del endpoint
     public async Task<ActionResult<ContactoDtoOut>> GetContactos(long numeroCuenta)
     {
         var contactos = await _service.GetContactos(numeroCuenta);
