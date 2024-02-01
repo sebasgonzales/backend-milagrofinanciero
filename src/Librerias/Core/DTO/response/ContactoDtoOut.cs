@@ -13,4 +13,9 @@ namespace Core.DTO.response
         public string Banco { get; set;}
 
     }
+
+    public class ContactoIdDtoOut
+    {
+        public required int Id { get; set; }
+    }
 }
