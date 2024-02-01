@@ -99,6 +99,23 @@ namespace backend_milagrofinanciero.Controllers
             return NotFound(new { message = $"El contacto con ID = {id} no existe." });
         }
 
+        [HttpGet("IdxCbu/{cbu}")]
+        public async Task<ActionResult<ContactoIdDtoOut>> ObtenerIdPorCbu(long cbu)
+        {
+            try
+            {
+                var contactoId = await _service.GetIdByCbu(cbu);
 
+                if (contactoId is null)
+                {
+                    return NotFound("No se encontró un contacto con el CBU proporcionado.");
+                }
+                return contactoId;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
     }
 }

@@ -12,5 +12,8 @@ namespace Services
         Task<Contacto?> GetById(int id);
         Task<ContactoDtoOut?> GetDtoById(int id);
         Task Update(int id, ContactoDtoIn contacto);
+
+        Task<ContactoIdDtoOut?> GetIdByCbu(long cbu);
+
     }
 }

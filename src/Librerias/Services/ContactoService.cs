@@ -94,6 +94,16 @@ namespace Services
 
         }
 
+        public async Task<ContactoIdDtoOut> GetIdByCbu(long cbu)
+        {
+            var contacto = await _context.Contacto
+                .Where(c => c.Cbu == cbu)
+                .Select(c => new ContactoIdDtoOut { Id = c.Id })
+                .SingleOrDefaultAsync();
+
+            return contacto;
+        }
+
     }
 }
 
