@@ -10,4 +10,9 @@ namespace Core.DTO.response
     {
         public required string Nombre { get; set; }
     }
+    public class BancoIdDtoOut
+    {
+        public required int Id { get; set; }
+    }
+
 }
