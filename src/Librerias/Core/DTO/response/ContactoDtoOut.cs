@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace Core.DTO.response
 {
-    public class BancoDtoOut
+    public class ContactoDtoOut
     {
         public required string Nombre { get; set; }
+        public required long Cbu { get; set; }
+        public string Banco { get; set;}
+
     }
-    public class BancoIdDtoOut
+
+    public class ContactoIdDtoOut
     {
         public required int Id { get; set; }
     }
-
 }

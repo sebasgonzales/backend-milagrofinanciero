@@ -12,5 +12,7 @@ namespace Services
         Task<Banco?> GetById(int id);
         Task<BancoDtoOut?> GetDtoById(int id);
         Task Update(int id, BancoDtoIn banco);
+
+        Task<BancoIdDtoOut?> GetIdByNombre(string nombre);
     }
 }

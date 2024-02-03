@@ -180,5 +180,18 @@ public class CuentaController : ControllerBase
             return StatusCode(500, $"Error interno del servidor: {ex.Message}");
         }
     }
+    //cuentaId es un parametro dinamico en la ruta
+    [HttpGet("cuentas/Numero/{numeroCuenta}/Contacto")] // Modificación en la ruta del endpoint
+    public async Task<ActionResult<ContactoDtoOut>> GetContactos(long numeroCuenta)
+    {
+        var contactos = await _service.GetContactos(numeroCuenta);
+
+        if (contactos == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(contactos);
+    }
 }
 

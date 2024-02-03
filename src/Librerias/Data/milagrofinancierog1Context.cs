@@ -19,6 +19,8 @@ public partial class milagrofinancierog1Context : DbContext
 
     public virtual DbSet<ClienteXcuenta> ClienteXcuenta { get; set; }
 
+    public virtual DbSet<Contacto> Contacto { get; set; }
+
     public virtual DbSet<Cuenta> Cuenta { get; set; }
 
     public virtual DbSet<Empleado> Empleado { get; set; }
@@ -32,7 +34,9 @@ public partial class milagrofinancierog1Context : DbContext
     public virtual DbSet<Sucursal> Sucursal { get; set; }
 
     public virtual DbSet<TipoCuenta> TipoCuenta { get; set; }
+
     public virtual DbSet<TipoMotivo> TipoMotivo { get; set; }
+
     public virtual DbSet<TipoTransaccion> TipoTransaccion { get; set; }
 
     public virtual DbSet<Transaccion> Transaccion { get; set; }
@@ -116,6 +120,29 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasConstraintName("fk_cliente");
 
             entity.HasOne(d => d.Cuenta).WithMany(p => p.ClienteXCuenta)
+                .HasForeignKey(d => d.IdCuenta)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_cuenta");
+        });
+
+        modelBuilder.Entity<Contacto>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Contacto_pkey");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Cbu).HasColumnName("cbu");
+            entity.Property(e => e.IdBanco).HasColumnName("idBanco");
+            entity.Property(e => e.IdCuenta).HasColumnName("idCuenta");
+            entity.Property(e => e.Nombre)
+                .IsRequired()
+                .HasMaxLength(45)
+                .HasColumnName("nombre");
+            entity.HasOne(d => d.Banco).WithMany(p => p.Contacto)
+                .HasForeignKey(d => d.IdBanco)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_banco");
+
+            entity.HasOne(d => d.Cuenta).WithMany(p => p.Contacto)
                 .HasForeignKey(d => d.IdCuenta)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cuenta");

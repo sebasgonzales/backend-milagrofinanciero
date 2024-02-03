@@ -66,59 +66,53 @@ namespace Services
         public async Task<Transaccion> Create(TransaccionDtoIn newTransaccionDTO)
         {
             try { 
-            // Crear una nueva instancia de Transaccion y asignar los valores del DTO
-            var newTransaccion = new Transaccion
-            {
-                Monto = newTransaccionDTO.Monto,
-                Acreditacion = newTransaccionDTO.Acreditacion,
-                Realizacion = newTransaccionDTO.Realizacion,
-                IdTipoMotivo = newTransaccionDTO.idTipoMotivo,
-                Referencia = newTransaccionDTO.Referencia,
-               // IdCuentaOrigen = newTransaccionDTO.IdCuentaOrigen,
-                //IdCuentaDestino = newTransaccionDTO.IdCuentaDestino,
-                IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion
-            };
+                // Crear una nueva instancia de Transaccion y asignar los valores del DTO
+                var newTransaccion = new Transaccion
+                {
+                    Monto = newTransaccionDTO.Monto,
+                    Acreditacion = newTransaccionDTO.Acreditacion,
+                    Realizacion = newTransaccionDTO.Realizacion,
+                    IdTipoMotivo = newTransaccionDTO.idTipoMotivo,
+                    Referencia = newTransaccionDTO.Referencia,
+                    //IdCuentaOrigen = newTransaccionDTO.IdCuentaOrigen,
+                    //IdCuentaDestino = newTransaccionDTO.IdCuentaDestino,
+                    IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion
+                };
 
-            // Obtener la cuenta de destino a partir del CBU
-            Cuenta cuentaDestino = await _context.Cuenta
-                .Where(c => c.Id == newTransaccionDTO.IdCuentaDestino)
-                .FirstOrDefaultAsync();
+                // Obtener la cuenta de destino a partir del CBU
+                Cuenta cuentaDestino = await _context.Cuenta
+                    .Where(c => c.Id == newTransaccionDTO.IdCuentaDestino)
+                    .FirstOrDefaultAsync();
 
                 Cuenta cuentaOrigen = await _context.Cuenta
-                   .Where(c => c.Id == newTransaccionDTO.IdCuentaOrigen)
-                     .FirstOrDefaultAsync();
+                    .Where(c => c.Id == newTransaccionDTO.IdCuentaOrigen)
+                    .FirstOrDefaultAsync();
 
                 //CuentaIdDtoOut cuentaOrigenDto = await GetCuenIdDtoByNumeroCuenta(numeroCuentaOrigen);
-
-
                 if (cuentaDestino != null && cuentaOrigen != null)
-            {
+                {
                     // Configurar la cuenta de destino y guardar los cambios
                     newTransaccion.IdCuentaOrigen = cuentaOrigen.Id;
                     newTransaccion.IdCuentaDestino = cuentaDestino.Id;
-                _context.Transaccion.Add(newTransaccion);
-                await _context.SaveChangesAsync();
+                    _context.Transaccion.Add(newTransaccion);
+                    await _context.SaveChangesAsync();
 
-                return newTransaccion;
+                    return newTransaccion;
+                }
+                else
+                {
+                    // Manejar el caso en que la cuenta de destino no existe
+                    // Puedes lanzar una excepciï¿½n, devolver un cï¿½digo de error, etc.
+                    throw new Exception("La cuenta de destino o la cuenta origen no existe.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Manejar el caso en que la cuenta de destino no existe
-                // Puedes lanzar una excepción, devolver un código de error, etc.
-                throw new Exception("La cuenta de destino o la cuenta origen no existe.");
-            }
-        }
-        catch (Exception ex)
-        {
-                // Manejar la excepción según tus necesidades
+                // Manejar la excepciï¿½n segï¿½n tus necesidades
                 throw new Exception("error",ex);
             }
-}
-
-
-
-
-
+        }
+        
         //NO SE DEBERIA ACTUALIZAR UNA TRANSACCION
         //public async Task Update(TransaccionDtoIn transaccion)
         //{
@@ -214,12 +208,9 @@ namespace Services
             else
             {
                 // Manejar el caso en que la cuenta no existe
-                return -1; // o algún valor que indique que la cuenta no fue encontrada
+                return -1; // o algï¿½n valor que indique que la cuenta no fue encontrada
 
             }
         }
-
-
     }
-
 }

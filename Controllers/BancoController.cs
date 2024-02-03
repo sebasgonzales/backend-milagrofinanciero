@@ -103,6 +103,25 @@ namespace backend_milagrofinanciero.Controllers
             return NotFound(new { message = $"El banco con ID = {id} no existe." });
         }
 
+        [HttpGet("IdxNombre/{nombre}")]
+        public async Task<ActionResult<BancoIdDtoOut>> ObtenerIdPorNombre(string nombre)
+        {
+            try
+            {
+                var bancoId = await _service.GetIdByNombre(nombre);
+
+                if (bancoId is null)
+                {
+                    return NotFound("No se encontró un banco con el nombre proporcionado.");
+                }
+                return bancoId;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
+
 
     }
 
