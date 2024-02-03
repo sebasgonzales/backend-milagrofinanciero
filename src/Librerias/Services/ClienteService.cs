@@ -52,6 +52,17 @@ namespace Services
                 }).SingleOrDefaultAsync();
         }
 
+
+        // GetNombre
+        public async Task<string> GetNombre(string username)
+        {
+            var cliente = await _context.Cliente
+                .Where(c => c.Username == username)
+                .SingleOrDefaultAsync();
+            return cliente.RazonSocial;
+        }
+
+
         // GetById sin Dto
         public async Task<Cliente?> GetById(int id)
         {
