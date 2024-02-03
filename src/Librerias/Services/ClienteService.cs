@@ -53,7 +53,7 @@ namespace Services
         }
 
 
-        // GetNombre
+        // GetNombre nuevo
         public async Task<string> GetNombre(string username)
         {
             var cliente = await _context.Cliente
