@@ -10,29 +10,29 @@ namespace backend_milagrofinanciero.Controllers;
 [Route("[controller]")]
 
 
-    
-public class ClienteController : ControllerBase
-    
-{
-        private readonly IClienteService _service;
-        public ClienteController(IClienteService cliente)
-        { _service = cliente; }
-        [HttpGet]
-        public async Task<IEnumerable<ClienteDtoOut>> Get()
-        {
-            return await _service.GetAll();
-        }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ClienteDtoOut>>? GetById(int id)
-        {
+public class ClienteController : ControllerBase
+
+{
+    private readonly IClienteService _service;
+    public ClienteController(IClienteService cliente)
+    { _service = cliente; }
+    [HttpGet]
+    public async Task<IEnumerable<ClienteDtoOut>> Get()
+    {
+        return await _service.GetAll();
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ClienteDtoOut>>? GetById(int id)
+    {
         var cliente = await _service.GetByIdDto(id);
 
         if (cliente is null)
             return NotFound(id);
 
         return cliente;
-        }
+    }
 
     [HttpPost]
     public async Task<IActionResult> Create(ClienteDtoIn cliente)
@@ -51,7 +51,7 @@ public class ClienteController : ControllerBase
 
         var clienteToUpdate = await _service.GetById(id);
 
-        if (clienteToUpdate is not null) 
+        if (clienteToUpdate is not null)
         { await _service.Update(id, cliente);
             return NoContent();
         }
@@ -75,17 +75,31 @@ public class ClienteController : ControllerBase
 
     //clienteId es un parametro dinamico en la ruta
     [HttpGet("clientes/CuitCuil/{cuitCuil}/ClienteXCuenta")] // Modificación en la ruta del endpoint
-    public async Task<ActionResult<CuentaDtoOut>> GetCuentasByCuitCuil(string cuitCuil) 
+    public async Task<ActionResult<CuentaDtoOut>> GetCuentasByCuitCuil(string cuitCuil)
     {
         var cuentas = await _service.GetCuentasByCuitCuil(cuitCuil);
 
-        if (cuentas == null ) 
+        if (cuentas == null)
         {
             return NotFound();
         }
 
         return Ok(cuentas);
     }
+
+    [HttpGet("clientes/RazonSocial/{username}/Cliente")] 
+    public async Task<ActionResult<ClienteDtoOut>> GetNombreByUsername(string username)
+    {
+        var cliente = await _service.GetNombre(username);
+
+        if (cliente == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(cliente);
+    }
+
 
 }
 
