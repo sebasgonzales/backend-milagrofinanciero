@@ -14,7 +14,7 @@ namespace Services
 
         //Task<Cuenta> GetCuentaByCbu(long cbu);
         //Task<Cuenta> GetCuentaByNumero(long numeroCuenta);
-        Task<CuentaIdDtoOut?> GetIdByCbu(long cbu);
+        Task<CuentaIdDtoOut?> GetIdByCbu(string cbu);
 
         Task<CuentaIdDtoOut?> GetIdByNumeroCuenta(long numeroCuenta);
         Task<List<ContactoDtoOut>> GetContactos(long numeroCuenta);

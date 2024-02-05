@@ -94,7 +94,7 @@ namespace Services
 
         }
 
-        public async Task<ContactoIdDtoOut> GetIdByCbu(long cbu)
+        public async Task<ContactoIdDtoOut> GetIdByCbu(string cbu)
         {
             var contacto = await _context.Contacto
                 .Where(c => c.Cbu == cbu)

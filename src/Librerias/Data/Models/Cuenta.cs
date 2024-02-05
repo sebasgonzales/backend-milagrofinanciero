@@ -11,7 +11,7 @@ public partial class Cuenta
 
     public long Numero { get; set; }
 
-    public long Cbu { get; set; }
+    public string Cbu { get; set; }
 
     public int IdTipoCuenta { get; set; }
 

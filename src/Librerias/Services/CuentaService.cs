@@ -112,7 +112,7 @@ namespace Services
         
          */
 
-        public async Task<CuentaIdDtoOut> GetIdByCbu(long cbu)
+        public async Task<CuentaIdDtoOut> GetIdByCbu(string cbu)
         {
             var cuenta = await _context.Cuenta
                 .Where(c => c.Cbu == cbu)

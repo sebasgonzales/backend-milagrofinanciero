@@ -52,7 +52,7 @@ namespace backend_milagrofinanciero.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long numeroCuentaOrigen, long cbuDestino, float monto)
+        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long numeroCuentaOrigen, string cbuDestino, float monto)
         {
             //verifico el saldo
             var saldoDisponible = await _service.VerificadorSaldo(numeroCuentaOrigen, monto);

@@ -130,7 +130,10 @@ public partial class milagrofinancierog1Context : DbContext
             entity.HasKey(e => e.Id).HasName("Contacto_pkey");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Cbu).HasColumnName("cbu");
+            entity.Property(e => e.Cbu)
+                .IsRequired()
+                .HasMaxLength(22)
+                .HasColumnName("cbu");
             entity.Property(e => e.IdBanco).HasColumnName("idBanco");
             entity.Property(e => e.IdCuenta).HasColumnName("idCuenta");
             entity.Property(e => e.Nombre)
@@ -155,7 +158,10 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("nextval('\"Cuenta_ID_seq\"'::regclass)")
                 .HasColumnName("id");
-            entity.Property(e => e.Cbu).HasColumnName("cbu");
+            entity.Property(e => e.Cbu)
+                .IsRequired()
+                .HasMaxLength(22)
+                .HasColumnName("cbu");
             entity.Property(e => e.IdBanco).HasColumnName("idBanco");
             entity.Property(e => e.IdSucursal).HasColumnName("idSucursal");
             entity.Property(e => e.IdTipoCuenta).HasColumnName("idTipoCuenta");
