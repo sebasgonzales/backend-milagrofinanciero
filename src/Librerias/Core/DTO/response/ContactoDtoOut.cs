@@ -9,7 +9,7 @@ namespace Core.DTO.response
     public class ContactoDtoOut
     {
         public required string Nombre { get; set; }
-        public required long Cbu { get; set; }
+        public required string Cbu { get; set; }
         public string Banco { get; set;}
 
     }

@@ -10,7 +10,7 @@ namespace Core.DTO.request
     {
         public required int Id { get; set; }
         public required string Nombre { get; set; }
-        public required long Cbu { get; set; }
+        public required string Cbu { get; set; }
         public int IdBanco { get; set; }
         public int IdCuenta {  get; set; }
     }

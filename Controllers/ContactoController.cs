@@ -100,7 +100,7 @@ namespace backend_milagrofinanciero.Controllers
         }
 
         [HttpGet("IdxCbu/{cbu}")]
-        public async Task<ActionResult<ContactoIdDtoOut>> ObtenerIdPorCbu(long cbu)
+        public async Task<ActionResult<ContactoIdDtoOut>> ObtenerIdPorCbu(string cbu)
         {
             try
             {

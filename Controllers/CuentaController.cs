@@ -143,7 +143,7 @@ public class CuentaController : ControllerBase
 
     //obtener ID x CBU
     [HttpGet("IdxCbu/{cbu}")]
-    public async Task<ActionResult<CuentaIdDtoOut>> ObtenerIdPorCbu(long cbu)
+    public async Task<ActionResult<CuentaIdDtoOut>> ObtenerIdPorCbu(string cbu)
     {
         try
         {

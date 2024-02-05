@@ -10,7 +10,7 @@ namespace Data.Models
     {
         public int Id { get; set; }
 
-        public long Cbu { get; set; }
+        public string Cbu { get; set; }
 
         public string Nombre {  get; set; }
 
