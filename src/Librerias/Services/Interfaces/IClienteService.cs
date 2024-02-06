@@ -9,6 +9,7 @@ namespace Services
         Task<Cliente> Create(ClienteDtoIn newClienteDTO);
         Task Delete(int id);
         Task<IEnumerable<ClienteDtoOut>> GetAll();
+        Task<ClienteDtoOut> GetNombre(string username);
         Task<Cliente?> GetById(int id);
         Task<ClienteDtoOut?> GetByIdDto(int id);
         Task Update(int id, ClienteDtoIn cliente);
