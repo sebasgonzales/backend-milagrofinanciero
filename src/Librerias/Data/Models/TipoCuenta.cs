@@ -11,7 +11,5 @@ public partial class TipoCuenta
 
     public string Nombre { get; set; }
 
-    public DateOnly Alta { get; set; }
-
     public virtual ICollection<Cuenta> Cuenta { get; set; } = new List<Cuenta>();
 }

@@ -50,6 +50,10 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("nextval('\"Banco_ID_seq\"'::regclass)")
                 .HasColumnName("id");
+            entity.Property(e => e.Codigo)
+                .IsRequired()
+                .HasMaxLength(10)
+                .HasColumnName("codigo");
             entity.Property(e => e.Nombre)
                 .IsRequired()
                 .HasMaxLength(45)
@@ -301,7 +305,6 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("nextval('\"TipoCuenta_ID_seq\"'::regclass)")
                 .HasColumnName("id");
-            entity.Property(e => e.Alta).HasColumnName("alta");
             entity.Property(e => e.Nombre)
                 .IsRequired()
                 .HasMaxLength(45)
