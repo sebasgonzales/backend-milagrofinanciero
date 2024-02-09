@@ -48,6 +48,7 @@ builder.Services.AddScoped<Services.IClienteService, Services.ClienteService>();
 builder.Services.AddScoped<Services.IPaisService,Services.PaisService>();
 builder.Services.AddScoped<Services.ITipoMotivoService, Services.TipoMotivoService>();
 builder.Services.AddScoped<Services.IContactoService, Services.ContactoService>();
+builder.Services.AddScoped<Hashing.Hashear>();
 
 
 
