@@ -87,7 +87,7 @@ public class ClienteController : ControllerBase
         return Ok(cuentas);
     }
 
-    [HttpGet("clientes/RazonSocial/{username}/Cliente")] 
+    [HttpGet("clientes/Nombre/{username}/Cliente")] 
     public async Task<ActionResult<ClienteDtoOut>> GetNombreByUsername(string username)
     {
         var cliente = await _service.GetNombre(username);

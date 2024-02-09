@@ -82,10 +82,14 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.AlturaCalle)
                 .HasMaxLength(45)
                 .HasColumnName("alturaCalle");
-            entity.Property(e => e.RazonSocial)
-                .IsRequired()
-                .HasMaxLength(45)
-                .HasColumnName("razonSocial");
+            entity.Property(e => e.Nombre)
+               .IsRequired()
+               .HasMaxLength(30)
+               .HasColumnName("nombre");
+            entity.Property(e => e.Apellido)
+                            .IsRequired()
+                            .HasMaxLength(30)
+                            .HasColumnName("apellido");
             entity.Property(e => e.Username)
                 .IsRequired()
                 .HasMaxLength(45)
@@ -109,7 +113,9 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Alta).HasColumnName("alta");
             entity.Property(e => e.IdCliente).HasColumnName("idCliente");
             entity.Property(e => e.IdCuenta).HasColumnName("idCuenta");
-            entity.Property(e => e.Titular).HasDefaultValue(true);
+            entity.Property(e => e.Titular)
+            .HasDefaultValue(true)
+            .HasColumnName("titular");
 
 
             entity.HasOne(d => d.Cliente).WithMany(p => p.ClienteCuenta)

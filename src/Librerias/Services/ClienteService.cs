@@ -23,7 +23,8 @@ namespace Services
             return await _context.Cliente
                 .Select(c => new ClienteDtoOut
                 {
-                    RazonSocial = c.RazonSocial,
+                    Nombre = c.Nombre,
+                    Apellido = c.Apellido,
                     CuitCuil = c.CuitCuil,
                     Alta = c.Alta,
                     Calle = c.Calle,
@@ -41,7 +42,8 @@ namespace Services
                 .Where(c => c.Id == id)
                 .Select(c => new ClienteDtoOut
                 {
-                    RazonSocial = c.RazonSocial,
+                    Nombre = c.Nombre,
+                    Apellido = c.Apellido,
                     CuitCuil = c.CuitCuil,
                     Alta = c.Alta,
                     Calle = c.Calle,
@@ -60,7 +62,8 @@ namespace Services
                 .Where(c => c.Username == username)
                 .Select(c => new ClienteDtoOut
                 {
-                    RazonSocial = c.RazonSocial,
+                    Nombre = c.Nombre,
+                    Apellido = c.Apellido,
                     CuitCuil = c.CuitCuil,
                     Alta = c.Alta,
                     Calle = c.Calle,
@@ -87,7 +90,8 @@ namespace Services
         {
             var newCliente = new Cliente();
 
-            newCliente.RazonSocial = newClienteDTO.RazonSocial;
+            newCliente.Nombre = newClienteDTO.Nombre;
+            newCliente.Apellido = newClienteDTO.Apellido;
             newCliente.Alta = newClienteDTO.Alta;
             newCliente.CuitCuil = newClienteDTO.CuitCuil;
             newCliente.Calle = newClienteDTO.Calle;
@@ -109,7 +113,8 @@ namespace Services
 
             if (existingClient is not null)
             {
-                existingClient.RazonSocial = cliente.RazonSocial;
+                existingClient.Nombre = cliente.Nombre;
+                existingClient.Apellido = cliente.Apellido;
                 existingClient.Alta = cliente.Alta;
                 existingClient.CuitCuil = cliente.CuitCuil;
                 existingClient.Calle = cliente.Calle;

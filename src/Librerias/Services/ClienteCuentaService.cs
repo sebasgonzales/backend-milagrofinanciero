@@ -27,7 +27,7 @@ namespace Services
                 {
                     Titular = c.Titular,
                     Alta = c.Alta,
-                    Cliente = c.Cliente.RazonSocial,
+                    Cliente = c.Cliente.Nombre,
                     Cuenta = c.Cuenta.Numero
 
                 }).ToListAsync();
@@ -41,7 +41,7 @@ namespace Services
                 {
                     Titular = c.Titular,
                     Alta = c.Alta,
-                    Cliente = c.Cliente.RazonSocial,
+                    Cliente = c.Cliente.Nombre+" "+c.Cliente.Apellido,
                     Cuenta = c.Cuenta.Numero
                 }).SingleOrDefaultAsync();
         }

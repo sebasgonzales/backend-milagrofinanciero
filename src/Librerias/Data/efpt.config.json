@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Models",
+   "OutputPath": "Modelos",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "Data",
    "Schemas": null,
