@@ -339,7 +339,6 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("nextval('\"Transaccion_ID_seq\"'::regclass)")
                 .HasColumnName("id");
-            entity.Property(e => e.Acreditacion).HasColumnName("acreditacion");
             entity.Property(e => e.IdCuentaDestino).HasColumnName("idCuentaDestino");
             entity.Property(e => e.IdCuentaOrigen).HasColumnName("idCuentaOrigen");
             entity.Property(e => e.IdTipoMotivo).HasColumnName("idTipoMotivo");
