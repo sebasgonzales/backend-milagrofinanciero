@@ -11,7 +11,7 @@ namespace Core.DTO.request
         public required int Id { get; set; }
         public required float Monto { get; set; }
         //public required long Numero { get; set; }
-        public required DateTime Acreditacion { get; set; }
+
         public required DateTime Realizacion { get; set; }
         public required int idTipoMotivo { get; set; }
         public string? Referencia { get; set; }

@@ -24,7 +24,8 @@ namespace Services
         {
             return await _context.Banco.Select(b => new BancoDtoOut
             {
-                Nombre = b.Nombre
+                Nombre = b.Nombre,
+                Codigo = b.Codigo
             }).ToListAsync();
 
         }
@@ -35,7 +36,8 @@ namespace Services
                 .Where(b => b.Id == id)
                 .Select(b => new BancoDtoOut
                 {
-                    Nombre = b.Nombre
+                    Nombre = b.Nombre,
+                    Codigo = b.Codigo
                 }).SingleOrDefaultAsync();
 
         }
@@ -49,6 +51,7 @@ namespace Services
         {
             var newBanco = new Banco();
             newBanco.Nombre = newBancoDTO.Nombre;
+            newBanco.Codigo = newBancoDTO.Codigo;
 
             _context.Banco.Add(newBanco);
             await _context.SaveChangesAsync();
@@ -65,6 +68,8 @@ namespace Services
             {
 
                 existingBanco.Nombre = banco.Nombre;
+                existingBanco.Codigo = banco.Codigo;
+
                 await _context.SaveChangesAsync();
             }
 

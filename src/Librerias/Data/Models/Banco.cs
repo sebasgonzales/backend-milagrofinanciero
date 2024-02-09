@@ -8,9 +8,8 @@ namespace Data.Models;
 public partial class Banco
 {
     public int Id { get; set; }
-
     public string Nombre { get; set; }
+    public string Codigo { get; set; }
     public virtual ICollection<Contacto> Contacto { get; set; } = new List<Contacto>();
-
     public virtual ICollection<Cuenta> Cuenta { get; set; } = new List<Cuenta>();
 }

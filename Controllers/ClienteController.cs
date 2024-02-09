@@ -74,7 +74,7 @@ public class ClienteController : ControllerBase
     }
 
     //clienteId es un parametro dinamico en la ruta
-    [HttpGet("clientes/CuitCuil/{cuitCuil}/ClienteXCuenta")] // Modificación en la ruta del endpoint
+    [HttpGet("clientes/CuitCuil/{cuitCuil}/ClienteCuenta")] // Modificación en la ruta del endpoint
     public async Task<ActionResult<CuentaDtoOut>> GetCuentasByCuitCuil(string cuitCuil)
     {
         var cuentas = await _service.GetCuentasByCuitCuil(cuitCuil);
@@ -87,7 +87,7 @@ public class ClienteController : ControllerBase
         return Ok(cuentas);
     }
 
-    [HttpGet("clientes/RazonSocial/{username}/Cliente")] 
+    [HttpGet("clientes/Nombre/{username}/Cliente")] 
     public async Task<ActionResult<ClienteDtoOut>> GetNombreByUsername(string username)
     {
         var cliente = await _service.GetNombre(username);

@@ -29,7 +29,6 @@ namespace Services
                 {
                     Monto = t.Monto,
                     Numero = t.Numero,
-                    Acreditacion = t.Acreditacion,
                     Realizacion = t.Realizacion,
                     Motivo = t.TipoMotivo.Nombre,
                     Referencia = t.Referencia,
@@ -48,7 +47,6 @@ namespace Services
                 {
                     Monto = t.Monto,
                     Numero = t.Numero,
-                    Acreditacion = t.Acreditacion,
                     Realizacion = t.Realizacion,
                     Motivo = t.TipoMotivo.Nombre,
                     Referencia = t.Referencia,
@@ -70,7 +68,6 @@ namespace Services
                 var newTransaccion = new Transaccion
                 {
                     Monto = newTransaccionDTO.Monto,
-                    Acreditacion = newTransaccionDTO.Acreditacion,
                     Realizacion = newTransaccionDTO.Realizacion,
                     IdTipoMotivo = newTransaccionDTO.idTipoMotivo,
                     Referencia = newTransaccionDTO.Referencia,
@@ -121,7 +118,6 @@ namespace Services
         //    if (existingTransaccion is not null)
         //    {
         //        existingTransaccion.Monto = transaccion.Monto;
-        //        existingTransaccion.Acreditacion = transaccion.Acreditacion;
         //        existingTransaccion.Realizacion = transaccion.Realizacion;
         //        existingTransaccion.Motivo = transaccion.Motivo;
         //        existingTransaccion.Referencia = transaccion.Referencia;
@@ -154,7 +150,6 @@ namespace Services
                 {
                     Monto = t.Monto,
                    Numero = t.Numero,
-                    Acreditacion = t.Acreditacion,
                     Realizacion = t.Realizacion,
                    Motivo = t.TipoMotivo.Nombre,
                     Referencia = t.Referencia,

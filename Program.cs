@@ -43,7 +43,7 @@ builder.Services.AddScoped<Services.IEmpleadoService, Services.EmpleadoService>(
 builder.Services.AddScoped<Services.IProvinciaService, Services.ProvinciaService>();
 builder.Services.AddScoped<Services.ITipoCuentaService,Services.TipoCuentaService>();
 builder.Services.AddScoped<Services.ILocalidadService, Services.LocalidadService>();
-builder.Services.AddScoped<Services.IClienteXCuentaService, Services.ClienteXCuentaService>();
+builder.Services.AddScoped<Services.IClienteCuentaService, Services.ClienteCuentaService>();
 builder.Services.AddScoped<Services.IClienteService, Services.ClienteService>();
 builder.Services.AddScoped<Services.IPaisService,Services.PaisService>();
 builder.Services.AddScoped<Services.ITipoMotivoService, Services.TipoMotivoService>();

@@ -7,6 +7,6 @@ namespace Services
 {
     public interface IHomeService
     {
-        Task<IEnumerable<ClienteXCuentaDtoOut>> GetCuentasByClienteUsername(string username);
+        Task<IEnumerable<ClienteCuentaDtoOut>> GetCuentasByClienteUsername(string username);
     }
 }

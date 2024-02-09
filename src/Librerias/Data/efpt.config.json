@@ -24,7 +24,7 @@
          "ObjectType": 0
       },
       {
-         "Name": "public.ClienteXCuenta",
+         "Name": "public.ClienteCuenta",
          "ObjectType": 0
       },
       {
@@ -72,7 +72,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": ".milagrofinanciero-g1",
+   "UiHint": ".S31-Grupo1-Banco",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

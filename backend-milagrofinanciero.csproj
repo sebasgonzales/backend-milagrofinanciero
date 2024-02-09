@@ -13,6 +13,8 @@
     <Compile Remove="src\Librerias\Core\obj\**" />
     <Compile Remove="src\Librerias\Data\bin\**" />
     <Compile Remove="src\Librerias\Data\obj\**" />
+    <Compile Remove="src\Librerias\Hashing\bin\**" />
+    <Compile Remove="src\Librerias\Hashing\obj\**" />
     <Compile Remove="src\Librerias\Services\bin\**" />
     <Compile Remove="src\Librerias\Services\obj\**" />
     <Content Remove="Services\NewFolder\**" />
@@ -20,6 +22,8 @@
     <Content Remove="src\Librerias\Core\obj\**" />
     <Content Remove="src\Librerias\Data\bin\**" />
     <Content Remove="src\Librerias\Data\obj\**" />
+    <Content Remove="src\Librerias\Hashing\bin\**" />
+    <Content Remove="src\Librerias\Hashing\obj\**" />
     <Content Remove="src\Librerias\Services\bin\**" />
     <Content Remove="src\Librerias\Services\obj\**" />
     <EmbeddedResource Remove="Services\NewFolder\**" />
@@ -27,6 +31,8 @@
     <EmbeddedResource Remove="src\Librerias\Core\obj\**" />
     <EmbeddedResource Remove="src\Librerias\Data\bin\**" />
     <EmbeddedResource Remove="src\Librerias\Data\obj\**" />
+    <EmbeddedResource Remove="src\Librerias\Hashing\bin\**" />
+    <EmbeddedResource Remove="src\Librerias\Hashing\obj\**" />
     <EmbeddedResource Remove="src\Librerias\Services\bin\**" />
     <EmbeddedResource Remove="src\Librerias\Services\obj\**" />
     <None Remove="Services\NewFolder\**" />
@@ -34,6 +40,8 @@
     <None Remove="src\Librerias\Core\obj\**" />
     <None Remove="src\Librerias\Data\bin\**" />
     <None Remove="src\Librerias\Data\obj\**" />
+    <None Remove="src\Librerias\Hashing\bin\**" />
+    <None Remove="src\Librerias\Hashing\obj\**" />
     <None Remove="src\Librerias\Services\bin\**" />
     <None Remove="src\Librerias\Services\obj\**" />
   </ItemGroup>
@@ -51,6 +59,10 @@
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="src\Librerias\Hashing\" />
   </ItemGroup>
 
 </Project>

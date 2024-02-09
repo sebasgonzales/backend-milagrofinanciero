@@ -17,15 +17,15 @@ namespace Services
             _context = context;
         }
 
-        public async Task<IEnumerable<ClienteXCuentaDtoOut>> GetCuentasByClienteUsername(string username)
+        public async Task<IEnumerable<ClienteCuentaDtoOut>> GetCuentasByClienteUsername(string username)
         {
-            var cuentasCliente = await _context.ClienteXcuenta
+            var cuentasCliente = await _context.ClienteCuenta
                 .Include(cc => cc.Cliente)
                 .Include(cc => cc.Cuenta)
                 .Where(cc => cc.Cliente.Username == username)
-                .Select(cc => new ClienteXCuentaDtoOut
+                .Select(cc => new ClienteCuentaDtoOut
                 {
-                    Rol = cc.Rol,
+                    Titular = cc.Titular,
                     Alta = cc.Alta,
                     Cliente = cc.Cliente.Username,
                     Cuenta = cc.Cuenta.Numero
