@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Modelos",
+   "OutputPath": "Models",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "Data",
    "Schemas": null,
@@ -72,7 +72,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": ".milagrofinanciero-g1",
+   "UiHint": ".S31-Grupo1-Banco",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

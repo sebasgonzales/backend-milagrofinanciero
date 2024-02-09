@@ -109,11 +109,8 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.Alta).HasColumnName("alta");
             entity.Property(e => e.IdCliente).HasColumnName("idCliente");
             entity.Property(e => e.IdCuenta).HasColumnName("idCuenta");
-            entity.Property(e => e.Titular)
-                .IsRequired()
-                .HasDefaultValue(true)
-                .HasColumnName("titular")
-                .HasColumnType("boolean");
+            entity.Property(e => e.Titular).HasDefaultValue(true);
+
 
             entity.HasOne(d => d.Cliente).WithMany(p => p.ClienteCuenta)
                 .HasForeignKey(d => d.IdCliente)
