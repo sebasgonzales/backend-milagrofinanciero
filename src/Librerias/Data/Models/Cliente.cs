@@ -26,7 +26,7 @@ public partial class Cliente
 
     public string Password { get; set; }
 
-    public virtual ICollection<ClienteXcuenta> ClienteXcuenta { get; set; } = new List<ClienteXcuenta>();
+    public virtual ICollection<ClienteCuenta> ClienteCuenta { get; set; } = new List<ClienteCuenta>();
 
     public virtual Localidad Localidad { get; set; }
 }

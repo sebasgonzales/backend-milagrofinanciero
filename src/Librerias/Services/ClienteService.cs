@@ -148,7 +148,7 @@ namespace Services
             }
 
             //si se encontro el cliente
-            var cuentas = await _context.ClienteXcuenta
+            var cuentas = await _context.ClienteCuenta
                 .Where(cc => cc.IdCliente == clienteId) // cruzo las tablas
                 .Select(cc => new CuentaDtoOut
                 {

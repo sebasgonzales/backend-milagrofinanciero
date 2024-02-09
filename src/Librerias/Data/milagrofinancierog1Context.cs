@@ -17,7 +17,7 @@ public partial class milagrofinancierog1Context : DbContext
 
     public virtual DbSet<Cliente> Cliente { get; set; }
 
-    public virtual DbSet<ClienteXcuenta> ClienteXcuenta { get; set; }
+    public virtual DbSet<ClienteCuenta> ClienteCuenta { get; set; }
 
     public virtual DbSet<Contacto> Contacto { get; set; }
 
@@ -97,29 +97,30 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasConstraintName("fk_localidad");
         });
 
-        modelBuilder.Entity<ClienteXcuenta>(entity =>
+        modelBuilder.Entity<ClienteCuenta>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("ClienteXCuenta_pkey");
+            entity.HasKey(e => e.Id).HasName("ClienteCuenta_pkey");
 
-            entity.ToTable("ClienteXCuenta");
+            entity.ToTable("ClienteCuenta");
 
             entity.Property(e => e.Id)
-                .HasDefaultValueSql("nextval('\"ClienteXCuenta_ID_seq\"'::regclass)")
+                .HasDefaultValueSql("nextval('\"ClienteCuenta_ID_seq\"'::regclass)")
                 .HasColumnName("id");
             entity.Property(e => e.Alta).HasColumnName("alta");
             entity.Property(e => e.IdCliente).HasColumnName("idCliente");
             entity.Property(e => e.IdCuenta).HasColumnName("idCuenta");
-            entity.Property(e => e.Rol)
+            entity.Property(e => e.Titular)
                 .IsRequired()
-                .HasMaxLength(45)
-                .HasColumnName("rol");
+                .HasDefaultValue(true)
+                .HasColumnName("titular")
+                .HasColumnType("boolean");
 
-            entity.HasOne(d => d.Cliente).WithMany(p => p.ClienteXcuenta)
+            entity.HasOne(d => d.Cliente).WithMany(p => p.ClienteCuenta)
                 .HasForeignKey(d => d.IdCliente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cliente");
 
-            entity.HasOne(d => d.Cuenta).WithMany(p => p.ClienteXCuenta)
+            entity.HasOne(d => d.Cuenta).WithMany(p => p.ClienteCuenta)
                 .HasForeignKey(d => d.IdCuenta)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cuenta");

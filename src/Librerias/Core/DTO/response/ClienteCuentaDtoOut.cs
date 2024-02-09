@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.DTO.response
 {
-    public class ClienteXCuentaDtoOut
+    public class ClienteCuentaDtoOut
     {
-        public required string Rol { get; set; } 
+        public required bool Titular { get; set; } 
         public required DateOnly Alta { get; set; }
         public required string Cliente { get; set; } 
         public required long Cuenta { get; set; }
