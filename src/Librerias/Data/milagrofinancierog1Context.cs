@@ -73,7 +73,7 @@ public partial class milagrofinancierog1Context : DbContext
                 .HasColumnName("calle");
             entity.Property(e => e.Password)
                 .IsRequired()
-                .HasMaxLength(16)
+                .HasMaxLength(64)
                 .HasColumnName("password");
             entity.Property(e => e.CuitCuil)
                 .IsRequired()

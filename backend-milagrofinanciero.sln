@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Librerias", "Librerias", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentacion", "Presentacion", "{DD19184E-B88D-4160-BCCE-2E610E0A0207}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hashing", "src\Librerias\Hashing\Hashing.csproj", "{F34A2C02-CB24-4A12-91FF-81AF925D77C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{BA724D51-A20F-44C9-B93C-9390246C71AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA724D51-A20F-44C9-B93C-9390246C71AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA724D51-A20F-44C9-B93C-9390246C71AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F34A2C02-CB24-4A12-91FF-81AF925D77C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F34A2C02-CB24-4A12-91FF-81AF925D77C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F34A2C02-CB24-4A12-91FF-81AF925D77C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F34A2C02-CB24-4A12-91FF-81AF925D77C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{06ECF50E-119D-4272-91C8-F985B259DD1E} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
 		{F2B06E74-9147-4950-99C3-AA178CB7F792} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
 		{BA724D51-A20F-44C9-B93C-9390246C71AD} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
+		{F34A2C02-CB24-4A12-91FF-81AF925D77C4} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3C9DDB5-18BF-4705-912F-4A3D4FA73D45}
