@@ -4,13 +4,13 @@ using Data.Models;
 
 namespace Services
 {
-    public interface IClienteXCuentaService
+    public interface IClienteCuentaService
     {
-        Task<ClienteXcuenta> Create(ClienteXCuentaDtoIn newClienteXCuentaDTO);
+        Task<ClienteCuenta> Create(ClienteCuentaDtoIn newClienteCuentaDTO);
         Task Delete(int id);
-        Task<IEnumerable<ClienteXCuentaDtoOut>> GetAll();
-        Task<ClienteXcuenta?> GetById(int id);
-        Task<ClienteXCuentaDtoOut?> GetDtoById(int id);
-        Task Update(int id, ClienteXCuentaDtoIn clienteXCuenta);
+        Task<IEnumerable<ClienteCuentaDtoOut>> GetAll();
+        Task<ClienteCuenta?> GetById(int id);
+        Task<ClienteCuentaDtoOut?> GetDtoById(int id);
+        Task Update(int id, ClienteCuentaDtoIn clienteCuenta);
     }
 }

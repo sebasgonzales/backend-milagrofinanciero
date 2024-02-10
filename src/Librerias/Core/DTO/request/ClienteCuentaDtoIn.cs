@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Core.DTO.request
 {
-    public class ClienteXCuentaDtoIn
+    public class ClienteCuentaDtoIn
     {
         public required int Id { get; set; }
-        public required string Rol { get; set; }
+        public required bool Titular { get; set; }
         public required DateOnly Alta { get; set; }
         public required int IdCliente { get; set; }
         public required int IdCuenta { get; set; }

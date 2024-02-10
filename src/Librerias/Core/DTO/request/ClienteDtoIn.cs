@@ -9,7 +9,8 @@ namespace Core.DTO.request
     public class ClienteDtoIn
     {
         public required int Id { get; set; }
-        public required string RazonSocial { get; set; }
+        public required string Nombre { get; set; }
+        public required string Apellido { get; set; }
         public required string CuitCuil { get; set; } 
         public required DateTime Alta { get; set; }
         public required string Calle { get; set; }

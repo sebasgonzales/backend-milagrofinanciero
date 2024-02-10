@@ -14,8 +14,6 @@ public partial class Transaccion
 
     public long Numero { get; set; }
 
-    public DateTime Acreditacion { get; set; }
-
     public DateTime Realizacion { get; set; }
     public string Referencia { get; set; }
     public int IdCuentaOrigen { get; set; }

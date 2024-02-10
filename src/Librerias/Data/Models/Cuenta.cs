@@ -19,7 +19,7 @@ public partial class Cuenta
 
     public int IdSucursal { get; set; }
 
-    public virtual ICollection<ClienteXcuenta> ClienteXCuenta { get; set; } = new List<ClienteXcuenta>();
+    public virtual ICollection<ClienteCuenta> ClienteCuenta { get; set; } = new List<ClienteCuenta>();
     public virtual ICollection<Contacto> Contacto { get; set; } = new List<Contacto>();
 
     public virtual Banco Banco { get; set; }

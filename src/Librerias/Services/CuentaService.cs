@@ -22,7 +22,8 @@ namespace Services
         public async Task<IEnumerable<CuentaDtoOut>> GetAll()
         {
             return await _context.Cuenta
-                //Include(c => c.Banco)
+                //Include(c =>
+                //Banco)
                 .Select(c => new CuentaDtoOut
                 {
                     NumeroCuenta = c.Numero,

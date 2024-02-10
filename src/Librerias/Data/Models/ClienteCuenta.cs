@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Data.Models;
 
-public partial class ClienteXcuenta
+public partial class ClienteCuenta
 {
     public int Id { get; set; }
 
@@ -14,7 +14,7 @@ public partial class ClienteXcuenta
     public int IdCliente { get; set; }
 
     public int IdCuenta { get; set; }
-    public string Rol { get; set; }
+    public bool Titular { get; set; }
 
     public virtual Cliente Cliente { get; set; }
 

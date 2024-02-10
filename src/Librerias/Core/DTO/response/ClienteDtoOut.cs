@@ -10,7 +10,9 @@ namespace Core.DTO.response
     public class ClienteDtoOut
     {
         public string Username { get; set; }
-        public required string RazonSocial { get; set; }
+        public required string Nombre { get; set; }
+        public required string Apellido { get; set; }
+
         public required string CuitCuil { get; set; }
         public required DateTime Alta { get; set; }
         public required string Calle { get; set; }

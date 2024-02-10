@@ -10,7 +10,8 @@ public partial class Cliente
 {
     public int Id { get; set; }
 
-    public string RazonSocial { get; set; }
+    public string Nombre { get; set; }
+    public string Apellido { get; set; }
 
     public string CuitCuil { get; set; }
 
@@ -27,8 +28,7 @@ public partial class Cliente
 
     public string Password { get; set; }
 
-
-    public virtual ICollection<ClienteXcuenta> ClienteXcuenta { get; set; } = new List<ClienteXcuenta>();
+    public virtual ICollection<ClienteCuenta> ClienteCuenta { get; set; } = new List<ClienteCuenta>();
 
     public virtual Localidad Localidad { get; set; }
 }
