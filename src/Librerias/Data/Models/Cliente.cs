@@ -27,11 +27,6 @@ public partial class Cliente
 
     public string Password { get; set; }
 
-    /*public string _password
-    {
-        get { return Password; }
-        set { Password = Hashing.HashearConSHA256(value); }
-    }*/
 
     public virtual ICollection<ClienteXcuenta> ClienteXcuenta { get; set; } = new List<ClienteXcuenta>();
 
