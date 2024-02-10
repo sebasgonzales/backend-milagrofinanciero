@@ -59,10 +59,10 @@ namespace Services
 
 
         // GetNombre nuevo
-        public async Task<ClienteDtoOut> GetNombre(string username)
+        public async Task<string> GetNombre(string cuitCuil)
         {
             var cliente = await _context.Cliente
-                .Where(c => c.Username == username)
+                .Where(c => c.CuitCuil == cuitCuil)
                 .Select(c => new ClienteDtoOut
                 {
                     Nombre = c.Nombre,
@@ -75,7 +75,7 @@ namespace Services
                     Username = c.Username,
                     Localidad = c.Localidad.Nombre
                 }).SingleOrDefaultAsync();
-            return cliente;
+            return cliente.Nombre;
         }
 
 
