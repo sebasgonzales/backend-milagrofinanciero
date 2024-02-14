@@ -49,7 +49,7 @@ namespace Services
                     Calle = c.Calle,
                     Departamento = c.Departamento,
                     AlturaCalle = c.AlturaCalle,
-                    Username= c.Username,
+                    Username = c.Username,
                     Localidad = c.Localidad.Nombre
                 }).SingleOrDefaultAsync();
         }
@@ -167,8 +167,37 @@ namespace Services
             return cuentas;
         }
 
+        public async Task<List<ClienteDtoOut>> GetClienteByCuitCuil(string cuitCuil)
+{
+    // Obtengo el id del cliente
+    var clienteId = await _context.Cliente
+        .Where(c => c.CuitCuil == cuitCuil)
+        .Select(c => c.Id)
+        .FirstOrDefaultAsync(); // Devuelve si encontró o sino default
 
+    if (clienteId == default)
+    {
+        return new List<ClienteDtoOut>(); // No está el cliente, devuelve lista vacía
+    }
 
+    // Si se encontró el cliente, selecciono y mapeo sus datos
+    var cliente = await _context.Cliente
+        .Where(c => c.Id == clienteId)
+        .Select(c => new ClienteDtoOut
+        {
+            Nombre = c.Nombre,
+            Apellido = c.Apellido,
+            CuitCuil = c.CuitCuil,
+            Alta = c.Alta,
+            Calle = c.Calle,
+            Departamento = c.Departamento,
+            AlturaCalle = c.AlturaCalle,
+            Username = c.Username,
+            Localidad = c.Localidad.Nombre
+        }).ToListAsync();
+
+    return cliente;
+}
 
     }
 }
