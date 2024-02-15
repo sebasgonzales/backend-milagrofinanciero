@@ -22,7 +22,6 @@
     <Content Remove="src\Librerias\Core\obj\**" />
     <Content Remove="src\Librerias\Data\bin\**" />
     <Content Remove="src\Librerias\Data\obj\**" />
-    <Content Remove="src\Librerias\Hashing\bin\**" />
     <Content Remove="src\Librerias\Hashing\obj\**" />
     <Content Remove="src\Librerias\Services\bin\**" />
     <Content Remove="src\Librerias\Services\obj\**" />
@@ -31,7 +30,6 @@
     <EmbeddedResource Remove="src\Librerias\Core\obj\**" />
     <EmbeddedResource Remove="src\Librerias\Data\bin\**" />
     <EmbeddedResource Remove="src\Librerias\Data\obj\**" />
-    <EmbeddedResource Remove="src\Librerias\Hashing\bin\**" />
     <EmbeddedResource Remove="src\Librerias\Hashing\obj\**" />
     <EmbeddedResource Remove="src\Librerias\Services\bin\**" />
     <EmbeddedResource Remove="src\Librerias\Services\obj\**" />
@@ -47,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlusFree" Version="4.5.3.8" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">

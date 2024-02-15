@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.DTO.request;
 using Core.DTO.response;
 using Data.Models;
+using Hashing;
 using Microsoft.EntityFrameworkCore;
 
 namespace Services
@@ -13,9 +14,11 @@ namespace Services
     public class ClienteService : IClienteService
     {
         private readonly milagrofinancierog1Context _context;
-        public ClienteService(milagrofinancierog1Context context)
+        private readonly Hashear _hashing;
+        public ClienteService(milagrofinancierog1Context context, Hashear hashing)
         {
             _context = context;
+            _hashing = hashing;
         }
 
         public async Task<IEnumerable<ClienteDtoOut>> GetAll()
@@ -56,10 +59,10 @@ namespace Services
 
 
         // GetNombre nuevo
-        public async Task<ClienteDtoOut> GetNombre(string username)
+        public async Task<string> GetNombre(string cuitCuil)
         {
             var cliente = await _context.Cliente
-                .Where(c => c.Username == username)
+                .Where(c => c.CuitCuil == cuitCuil)
                 .Select(c => new ClienteDtoOut
                 {
                     Nombre = c.Nombre,
@@ -72,7 +75,7 @@ namespace Services
                     Username = c.Username,
                     Localidad = c.Localidad.Nombre
                 }).SingleOrDefaultAsync();
-            return cliente;
+            return cliente.Nombre;
         }
 
 
@@ -98,7 +101,7 @@ namespace Services
             newCliente.Departamento = newClienteDTO.Departamento;
             newCliente.AlturaCalle = newClienteDTO.AlturaCalle;
             newCliente.Username = newClienteDTO.Username;
-            newCliente.Password = newClienteDTO.Password;
+            newCliente.Password = _hashing.HashearConSHA256(newClienteDTO.Password);
             newCliente.IdLocalidad = newClienteDTO.IdLocalidad;
 
             _context.Cliente.Add(newCliente);

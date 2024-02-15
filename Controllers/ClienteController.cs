@@ -87,10 +87,10 @@ public class ClienteController : ControllerBase
         return Ok(cuentas);
     }
 
-    [HttpGet("clientes/Nombre/{username}/Cliente")] 
-    public async Task<ActionResult<ClienteDtoOut>> GetNombreByUsername(string username)
+    [HttpGet("clientes/Nombre/{cuitCuil}/Cliente")] 
+    public async Task<ActionResult<string>> GetNombreByCuitCuil(string cuitCuil)
     {
-        var cliente = await _service.GetNombre(username);
+        var cliente = await _service.GetNombre(cuitCuil);
 
         if (cliente == null)
         {
