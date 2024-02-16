@@ -18,7 +18,7 @@ namespace Services
 
         Task<CuentaIdDtoOut?> GetIdByNumeroCuenta(long numeroCuenta);
         Task<List<ContactoDtoOut>> GetContactos(long numeroCuenta);
-        Task<List<CuentaTitularOrNotDtoOut>> GetRolByNumeroCuenta(long numeroCuenta);
+        Task<CuentaTitularOrNotDtoOut> GetRolByNumeroCuenta(long numeroCuenta);
 
 
     }
