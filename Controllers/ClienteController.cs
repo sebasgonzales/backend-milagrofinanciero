@@ -113,6 +113,25 @@ public class ClienteController : ControllerBase
 
         return Ok(cliente);
     }
+
+    [HttpGet("IdxCuitCuil/{cuitCuil}")]
+    public async Task<ActionResult<ClienteIdDtoOut>> GetIdByCuitCuil(string cuitCuil)
+    {
+        try
+        {
+            var clienteId = await _service.GetIdByCuitCuil(cuitCuil);
+
+            if (clienteId is null)
+            {
+                return NotFound("No se encontró un cliente con el cuitcuil proporcionado.");
+            }
+            return clienteId;
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+        }
+    }
 }
 
 

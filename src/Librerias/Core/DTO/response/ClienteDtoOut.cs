@@ -20,4 +20,8 @@ namespace Core.DTO.response
         public required string AlturaCalle { get; set; }
         public required string Localidad { get; set; }
     }
+    public class ClienteIdDtoOut
+    {
+        public required int Id { get; set; }
+    }
 }

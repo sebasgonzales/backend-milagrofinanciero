@@ -9,7 +9,7 @@ public partial class ClienteCuenta
 {
     public int Id { get; set; }
 
-    public DateOnly Alta { get; set; }
+    public DateTime Alta { get; set; }
 
     public int IdCliente { get; set; }
 

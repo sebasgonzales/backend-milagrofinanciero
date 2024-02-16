@@ -10,7 +10,7 @@ namespace Core.DTO.request
     {
         public required int Id { get; set; }
         public required bool Titular { get; set; }
-        public required DateOnly Alta { get; set; }
+        public required DateTime Alta { get; set; }
         public required int IdCliente { get; set; }
         public required int IdCuenta { get; set; }
     }

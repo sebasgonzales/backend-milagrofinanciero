@@ -16,7 +16,7 @@ namespace Services
 
         Task<List<CuentaDtoOut>> GetCuentasByCuitCuil(string cuitCuil);
         Task<List<ClienteDtoOut>> GetClienteByCuitCuil(string cuitCuil);
-
+        Task<ClienteIdDtoOut> GetIdByCuitCuil(string cuitCuil);
 
 
     }

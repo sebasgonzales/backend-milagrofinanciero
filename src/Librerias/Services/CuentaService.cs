@@ -127,7 +127,7 @@ namespace Services
         {
             var cuenta = await _context.Cuenta
                 .Where(c => c.Numero == numeroCuenta)
-                .Select(c => new CuentaIdDtoOut { Id =c.Id})
+                .Select(c => new CuentaIdDtoOut { Id = c.Id })
                 .SingleOrDefaultAsync();
 
             return cuenta;
@@ -159,5 +159,24 @@ namespace Services
 
         }
 
+        public async Task<List<CuentaTitularOrNotDtoOut>> GetRolByNumeroCuenta(long numeroCuenta)
+        {
+            var cuentaId = await _context.Cuenta
+                .Where(c => c.Numero == numeroCuenta)
+                .Select(c => c.Id)
+                .FirstOrDefaultAsync();
+            if (cuentaId == default)
+            {
+                return new List<CuentaTitularOrNotDtoOut>();
+            }
+            var roles = await _context.ClienteCuenta
+                .Where(cc => cc.IdCuenta == cuentaId) // cruzo las tablas
+                .Select(cc => new CuentaTitularOrNotDtoOut
+                {
+                    Titular = cc.Titular
+                }).ToListAsync();
+
+            return roles;
+        }
     }
 }

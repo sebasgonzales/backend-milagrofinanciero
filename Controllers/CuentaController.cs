@@ -193,5 +193,17 @@ public class CuentaController : ControllerBase
 
         return Ok(contactos);
     }
+    [HttpGet("cuentas/Numero/{numeroCuenta}/Rol")] // Modificación en la ruta del endpoint
+    public async Task<ActionResult<CuentaTitularOrNotDtoOut>> GetRolByNumeroCuenta(long numeroCuenta)
+    {
+        var roles = await _service.GetRolByNumeroCuenta(numeroCuenta);
+
+        if (roles == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(roles);
+    }
 }
 
