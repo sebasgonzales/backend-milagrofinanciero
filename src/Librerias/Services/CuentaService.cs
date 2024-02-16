@@ -173,7 +173,7 @@ namespace Services
                 return new <CuentaTitularOrNotDtoOut>();
             }*/
             var roles = await _context.ClienteCuenta
-                .Where(cc => cc.IdCuenta == cuentaId) // cruzo las tablas
+                .Where(cc => cc.IdCuenta == cuentaId) // cruzo las tabla
                 .Select(cc => new CuentaTitularOrNotDtoOut
                 {
                     Titular = cc.Titular
