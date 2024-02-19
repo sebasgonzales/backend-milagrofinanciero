@@ -63,8 +63,12 @@ namespace Services
         public async Task<Cuenta> Create(CuentaDtoIn newCuentaDto)
         {
             var newCuenta = new Cuenta();
+            int numFijo = 111;
+            long numAleatorio= Array.ConvertAll(AlgoritmoGenerador.GenerarNumerosAleatorios(), x => (int)x)[0];
+            long numCuenta= long.Parse(numFijo.ToString() + numAleatorio.ToString());
 
-            newCuenta.Numero = 111000000000 + Array.ConvertAll(AlgoritmoGenerador.GenerarNumerosAleatorios(), x => (int)x)[0];
+
+            newCuenta.Numero = numCuenta;
             newCuenta.Cbu = newCuentaDto.Cbu;
             newCuenta.IdTipoCuenta = newCuentaDto.IdTipoCuenta;
             newCuenta.IdBanco = newCuentaDto.IdBanco;
