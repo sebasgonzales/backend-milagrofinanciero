@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentacion", "Presentacio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hashing", "src\Librerias\Hashing\Hashing.csproj", "{F34A2C02-CB24-4A12-91FF-81AF925D77C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneradorNumeros", "src\Librerias\GeneradorNumeros\GeneradorNumeros.csproj", "{D074A593-BE9E-445D-B7EC-F9BFA5967DE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{F34A2C02-CB24-4A12-91FF-81AF925D77C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F34A2C02-CB24-4A12-91FF-81AF925D77C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F34A2C02-CB24-4A12-91FF-81AF925D77C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D074A593-BE9E-445D-B7EC-F9BFA5967DE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D074A593-BE9E-445D-B7EC-F9BFA5967DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D074A593-BE9E-445D-B7EC-F9BFA5967DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D074A593-BE9E-445D-B7EC-F9BFA5967DE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{F2B06E74-9147-4950-99C3-AA178CB7F792} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
 		{BA724D51-A20F-44C9-B93C-9390246C71AD} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
 		{F34A2C02-CB24-4A12-91FF-81AF925D77C4} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
+		{D074A593-BE9E-445D-B7EC-F9BFA5967DE4} = {2E81A286-9416-4C7D-816D-FF00CE73269B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3C9DDB5-18BF-4705-912F-4A3D4FA73D45}

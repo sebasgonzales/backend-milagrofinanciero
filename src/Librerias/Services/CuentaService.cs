@@ -7,12 +7,15 @@ using Data.Models;
 using Core.DTO.request;
 using Core.DTO.response;
 using Microsoft.EntityFrameworkCore;
+using GeneradorNumeros;
+using System.Diagnostics;
 
 namespace Services
 {
     public class CuentaService : ICuentaService
     {
         private readonly milagrofinancierog1Context _context;
+       
 
         public CuentaService(milagrofinancierog1Context context)
         {
@@ -61,7 +64,7 @@ namespace Services
         {
             var newCuenta = new Cuenta();
 
-            newCuenta.Numero = newCuentaDto.Numero;
+            newCuenta.Numero = 111000000000 + Array.ConvertAll(AlgoritmoGenerador.GenerarNumerosAleatorios(), x => (int)x)[0];
             newCuenta.Cbu = newCuentaDto.Cbu;
             newCuenta.IdTipoCuenta = newCuentaDto.IdTipoCuenta;
             newCuenta.IdBanco = newCuentaDto.IdBanco;
