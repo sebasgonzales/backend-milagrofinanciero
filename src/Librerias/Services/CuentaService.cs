@@ -67,16 +67,16 @@ namespace Services
             long numAleatorio= Array.ConvertAll(AlgoritmoGenerador.GenerarNumerosAleatorios(), x => (int)x)[0];
             long numCuenta= long.Parse(numFijo.ToString() + numAleatorio.ToString());
 
-            // Obtengo el código del banco
-            var banco = await _context.Banco
+            // Obtengo el código del banco (string)
+            var codigoBanco = await _context.Banco
                 .Where(b => b.Id == newCuentaDto.IdBanco)
                 .Select(b => b.Codigo)
                 .FirstOrDefaultAsync();
-            if (banco == null)
+            if (codigoBanco == null)
             {
-                throw new Exception("El banco especificado no existe.");
+                throw new Exception("No se encontro el código del banco.");
             }
-            string cbu = banco.ToString() + numCuenta.ToString();
+            string cbu = codigoBanco + numCuenta.ToString();
 
             newCuenta.Numero = numCuenta;
             newCuenta.Cbu = cbu;

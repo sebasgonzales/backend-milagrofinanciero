@@ -98,6 +98,14 @@ namespace Services
             return banco;
         }
 
+        public async Task<BancoIdDtoOut> GetIdByCodigo(string codigo)
+        {
+            var banco = await _context.Banco
+                .Where(b => b.Codigo == codigo)
+                .Select(b => new BancoIdDtoOut { Id = b.Id })
+                .SingleOrDefaultAsync();
 
+            return banco;
+        }
     }
 }
