@@ -15,7 +15,7 @@ namespace GeneradorNumeros
             // Generamos 9 números aleatorios y los almacenamos en el array
             for (int i = 0; i < 9; i++)
             {
-                numerosAleatorios[i] = rnd.Next();
+                numerosAleatorios[i] = rnd.Next(100000000, 999999999);
             }
 
             Console.WriteLine(numerosAleatorios);
