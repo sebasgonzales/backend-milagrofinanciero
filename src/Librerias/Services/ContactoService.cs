@@ -94,10 +94,10 @@ namespace Services
 
         }
 
-        public async Task<ContactoIdDtoOut> GetIdByCbu(string cbu)
+        public async Task<ContactoIdDtoOut> GetIdByCbu(string cbu, int idCuenta)
         {
             var contacto = await _context.Contacto
-                .Where(c => c.Cbu == cbu)
+                .Where(c => c.Cbu == cbu && c.IdCuenta == idCuenta)
                 .Select(c => new ContactoIdDtoOut { Id = c.Id })
                 .SingleOrDefaultAsync();
 
