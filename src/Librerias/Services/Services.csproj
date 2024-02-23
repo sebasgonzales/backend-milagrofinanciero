@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CORE\Core.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
+    <ProjectReference Include="..\GeneradorNumeros\GeneradorNumeros.csproj" />
     <ProjectReference Include="..\Hashing\Hashing.csproj" />
   </ItemGroup>
 

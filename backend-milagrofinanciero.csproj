@@ -13,6 +13,7 @@
     <Compile Remove="src\Librerias\Core\obj\**" />
     <Compile Remove="src\Librerias\Data\bin\**" />
     <Compile Remove="src\Librerias\Data\obj\**" />
+    <Compile Remove="src\Librerias\GeneradorNumeros\obj\**" />
     <Compile Remove="src\Librerias\Hashing\bin\**" />
     <Compile Remove="src\Librerias\Hashing\obj\**" />
     <Compile Remove="src\Librerias\Services\bin\**" />
@@ -22,6 +23,7 @@
     <Content Remove="src\Librerias\Core\obj\**" />
     <Content Remove="src\Librerias\Data\bin\**" />
     <Content Remove="src\Librerias\Data\obj\**" />
+    <Content Remove="src\Librerias\GeneradorNumeros\obj\**" />
     <Content Remove="src\Librerias\Hashing\obj\**" />
     <Content Remove="src\Librerias\Services\bin\**" />
     <Content Remove="src\Librerias\Services\obj\**" />
@@ -30,6 +32,7 @@
     <EmbeddedResource Remove="src\Librerias\Core\obj\**" />
     <EmbeddedResource Remove="src\Librerias\Data\bin\**" />
     <EmbeddedResource Remove="src\Librerias\Data\obj\**" />
+    <EmbeddedResource Remove="src\Librerias\GeneradorNumeros\obj\**" />
     <EmbeddedResource Remove="src\Librerias\Hashing\obj\**" />
     <EmbeddedResource Remove="src\Librerias\Services\bin\**" />
     <EmbeddedResource Remove="src\Librerias\Services\obj\**" />
@@ -38,6 +41,7 @@
     <None Remove="src\Librerias\Core\obj\**" />
     <None Remove="src\Librerias\Data\bin\**" />
     <None Remove="src\Librerias\Data\obj\**" />
+    <None Remove="src\Librerias\GeneradorNumeros\obj\**" />
     <None Remove="src\Librerias\Hashing\bin\**" />
     <None Remove="src\Librerias\Hashing\obj\**" />
     <None Remove="src\Librerias\Services\bin\**" />

@@ -7,12 +7,15 @@ using Data.Models;
 using Core.DTO.request;
 using Core.DTO.response;
 using Microsoft.EntityFrameworkCore;
+using GeneradorNumeros;
+using System.Diagnostics;
 
 namespace Services
 {
     public class CuentaService : ICuentaService
     {
         private readonly milagrofinancierog1Context _context;
+       
 
         public CuentaService(milagrofinancierog1Context context)
         {
@@ -60,12 +63,28 @@ namespace Services
         public async Task<Cuenta> Create(CuentaDtoIn newCuentaDto)
         {
             var newCuenta = new Cuenta();
+            int numFijo = 111;
+            long numAleatorio= Array.ConvertAll(AlgoritmoGenerador.GenerarNumerosAleatorios(), x => (int)x)[0];
+            long numCuenta= long.Parse(numFijo.ToString() + numAleatorio.ToString());
 
-            newCuenta.Numero = newCuentaDto.Numero;
-            newCuenta.Cbu = newCuentaDto.Cbu;
+            // Obtengo el código del banco (string)
+            var codigoBanco = await _context.Banco
+                .Where(b => b.Id == newCuentaDto.IdBanco)
+                .Select(b => b.Codigo)
+                .FirstOrDefaultAsync();
+            if (codigoBanco == null)
+            {
+                throw new Exception("No se encontro el código del banco.");
+            }
+            string cbu = codigoBanco + numCuenta.ToString();
+
+            newCuenta.Numero = numCuenta;
+            newCuenta.Cbu = cbu;
             newCuenta.IdTipoCuenta = newCuentaDto.IdTipoCuenta;
             newCuenta.IdBanco = newCuentaDto.IdBanco;
             newCuenta.IdSucursal = newCuentaDto.IdSucursal;
+
+            
 
             _context.Cuenta.Add(newCuenta);
             await _context.SaveChangesAsync();

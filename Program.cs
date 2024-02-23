@@ -50,6 +50,7 @@ builder.Services.AddScoped<Services.ITipoMotivoService, Services.TipoMotivoServi
 builder.Services.AddScoped<Services.IContactoService, Services.ContactoService>();
 builder.Services.AddScoped<Services.ILoginService, Services.LoginService>();
 builder.Services.AddScoped<Hashing.Hashear>();
+builder.Services.AddScoped<GeneradorNumeros.AlgoritmoGenerador>();
 builder.Services.AddScoped<Services.IHomeService, Services.HomeService>();
 
 
