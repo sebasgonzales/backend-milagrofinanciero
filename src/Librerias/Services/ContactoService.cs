@@ -26,7 +26,8 @@ namespace Services
             {
                 Nombre = c.Nombre,
                 Cbu = c.Cbu,
-                Banco = c.Banco.Nombre
+                Banco = c.Banco.Nombre,
+                Cuenta = c.Cuenta.Numero
             }).ToListAsync();
 
         }
@@ -39,7 +40,8 @@ namespace Services
                 {
                     Nombre = c.Nombre,
                     Cbu = c.Cbu,
-                    Banco = c.Banco.Nombre
+                    Banco = c.Banco.Nombre,
+                    Cuenta = c.Cuenta.Numero
                 }).SingleOrDefaultAsync();
 
         }

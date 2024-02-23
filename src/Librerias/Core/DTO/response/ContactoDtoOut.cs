@@ -12,6 +12,8 @@ namespace Core.DTO.response
         public required string Cbu { get; set; }
         public string Banco { get; set;}
 
+        public long Cuenta { get; set; }
+
     }
 
     public class ContactoIdDtoOut

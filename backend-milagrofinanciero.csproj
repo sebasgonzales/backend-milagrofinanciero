@@ -65,6 +65,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="src\Librerias\GeneradorNumeros\" />
     <Folder Include="src\Librerias\Hashing\" />
   </ItemGroup>
 
