@@ -32,8 +32,8 @@ namespace Services
                     Realizacion = t.Realizacion,
                     Motivo = t.TipoMotivo.Nombre,
                     Referencia = t.Referencia,
-                    CuentaDestino = t.CuentaDestino.Numero,
-                    CuentaOrigen = t.CuentaOrigen.Numero,
+                    CbuDestino = t.CuentaDestino.Cbu,
+                    CbuOrigen = t.CuentaOrigen.Cbu,
                     TipoTransaccion = t.TipoTransaccion.Nombre
 
                 }).ToListAsync();
@@ -50,8 +50,8 @@ namespace Services
                     Realizacion = t.Realizacion,
                     Motivo = t.TipoMotivo.Nombre,
                     Referencia = t.Referencia,
-                    CuentaDestino = t.CuentaDestino.Numero,
-                    CuentaOrigen = t.CuentaOrigen.Numero,
+                    CbuDestino = t.CuentaDestino.Cbu,
+                    CbuOrigen = t.CuentaOrigen.Cbu,
                     TipoTransaccion = t.TipoTransaccion.Nombre
                 }).SingleOrDefaultAsync();
         }
@@ -153,8 +153,8 @@ namespace Services
                     Realizacion = t.Realizacion,
                    Motivo = t.TipoMotivo.Nombre,
                     Referencia = t.Referencia,
-                    CuentaDestino = t.CuentaDestino.Numero,
-                    CuentaOrigen = t.CuentaOrigen.Numero,
+                    CbuDestino = t.CuentaDestino.Cbu,
+                    CbuOrigen = t.CuentaOrigen.Cbu,
                     TipoTransaccion = t.TipoTransaccion.Nombre
                 }).ToListAsync();
         }
