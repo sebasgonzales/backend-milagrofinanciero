@@ -193,6 +193,26 @@ public class CuentaController : ControllerBase
 
         return Ok(contactos);
     }
-    
+
+    //obtener Cbu x NumeroCuenta
+    [HttpGet("CbuxNumeroCuenta/{numeroCuenta}")]
+    public async Task<ActionResult<string?>> ObtenerCbuPorNumeroCuenta(long numeroCuenta)
+    {
+        try
+        {
+            var cuentaCbu = await _service.GetCbuByNumeroCuenta(numeroCuenta);
+
+            if (cuentaCbu is null)
+            {
+                return NotFound("No se encontró una cuenta con el numeroCuenta proporcionado.");
+            }
+            return cuentaCbu;
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+        }
+    }
+
 }
 
