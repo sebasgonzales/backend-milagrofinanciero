@@ -7,6 +7,8 @@ using Data.Models;
 using Core.DTO.request;
 using Core.DTO.response;
 using Microsoft.EntityFrameworkCore;
+using RestSharp;
+using RestSharp.Authenticators;
 
 
 
@@ -63,7 +65,8 @@ namespace Services
 
         public async Task<Transaccion> Create(TransaccionDtoIn newTransaccionDTO)
         {
-            try { 
+            try
+            {
                 // Crear una nueva instancia de Transaccion y asignar los valores del DTO
                 var newTransaccion = new Transaccion
                 {
@@ -106,10 +109,10 @@ namespace Services
             catch (Exception ex)
             {
                 // Manejar la excepci�n seg�n tus necesidades
-                throw new Exception("error",ex);
+                throw new Exception("error", ex);
             }
         }
-        
+
         //NO SE DEBERIA ACTUALIZAR UNA TRANSACCION
         //public async Task Update(TransaccionDtoIn transaccion)
         //{
@@ -149,9 +152,9 @@ namespace Services
                 .Select(t => new TransaccionDtoOut
                 {
                     Monto = t.Monto,
-                   Numero = t.Numero,
+                    Numero = t.Numero,
                     Realizacion = t.Realizacion,
-                   Motivo = t.TipoMotivo.Nombre,
+                    Motivo = t.TipoMotivo.Nombre,
                     Referencia = t.Referencia,
                     CuentaDestino = t.CuentaDestino.Numero,
                     CuentaOrigen = t.CuentaOrigen.Numero,
@@ -184,6 +187,16 @@ namespace Services
         //PARA SABER EL SALDO DE MI CUENTA sumando todas las transacciones existentes
         public async Task<float> ObtenerSaldo(long numeroCuenta)
         {
+
+            var options = new RestClientOptions("https://api.twitter.com/1.1")
+            {
+                Authenticator = new HttpBasicAuthenticator("username", "password")
+            };
+            var client = new RestClient(options);
+            var request = new RestRequest("statuses/home_timeline.json");
+            // The cancellation token comes from the caller. You can still make a call without it.
+            var response = await client.GetAsync<Rootobject>(request);
+
             // Obtener la cuenta de origen
             var cuenta = await _context.Cuenta
                 .Where(c => c.Numero == numeroCuenta)
@@ -208,4 +221,18 @@ namespace Services
             }
         }
     }
+
+
+    public class Rootobject
+    {
+        public int id { get; set; }
+        public int monto { get; set; }
+        public DateTime realizacion { get; set; }
+        public int idTipoMotivo { get; set; }
+        public string referencia { get; set; }
+        public int idCuentaOrigen { get; set; }
+        public int idCuentaDestino { get; set; }
+        public int idTipoTransaccion { get; set; }
+    }
+
 }
