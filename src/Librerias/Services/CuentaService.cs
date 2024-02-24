@@ -159,5 +159,17 @@ namespace Services
 
         }
 
+        //obtener cbu por numero de cuenta
+        public async Task<string?> GetCbuByNumeroCuenta(long numeroCuenta)
+        {
+            var cbu = await _context.Cuenta
+                .Where(c => c.Numero == numeroCuenta)
+                .Select(c => c.Cbu)
+                .SingleOrDefaultAsync();
+
+            return cbu;
+        }
+
+
     }
 }
