@@ -13,7 +13,7 @@ namespace Services
         Task<ContactoDtoOut?> GetDtoById(int id);
         Task Update(int id, ContactoDtoIn contacto);
 
-        Task<ContactoIdDtoOut?> GetIdByCbu(string cbu);
+        Task<ContactoIdDtoOut?> GetIdByCbu(string cbu, int idCuenta);
 
     }
 }
