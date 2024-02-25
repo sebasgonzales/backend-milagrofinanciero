@@ -1,10 +1,12 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
 namespace backend_milagrofinanciero.Controllers
 {
+    
     [ApiController]
     [Route("[controller]")]
     public class ClienteCuentaController : ControllerBase
@@ -16,6 +18,7 @@ namespace backend_milagrofinanciero.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<ClienteCuentaDtoOut>> Get()
         {
             return await _service.GetAll();
@@ -41,8 +44,9 @@ namespace backend_milagrofinanciero.Controllers
             return CreatedAtAction(nameof(GetById), new { id = newClienteCuenta.Id }, newClienteCuenta);
         }
 
+        
         [HttpPut("{id}")]
-
+        [Authorize]
         public async Task<IActionResult> Update(int id, ClienteCuentaDtoIn clienteCuenta)
         {
 
@@ -62,8 +66,9 @@ namespace backend_milagrofinanciero.Controllers
             }
 
         }
-
+        
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var clienteCuentaToDelete = await _service.GetById(id);

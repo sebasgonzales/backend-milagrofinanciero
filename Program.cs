@@ -1,5 +1,8 @@
 using Data.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +56,20 @@ builder.Services.AddScoped<Hashing.Hashear>();
 builder.Services.AddScoped<GeneradorNumeros.AlgoritmoGenerador>();
 builder.Services.AddScoped<Services.IHomeService, Services.HomeService>();
 
+//autenticacion
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
+    ;
 
 
 var app = builder.Build();
@@ -75,6 +92,8 @@ app.UseHttpsRedirection();
 
 //CORS
 app.UseCors(MyAllowSpecificOrigins);
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

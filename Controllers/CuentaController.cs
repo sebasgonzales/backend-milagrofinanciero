@@ -1,9 +1,11 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
 namespace backend_milagrofinanciero.Controllers;
+
 
 [ApiController]
 [Route("[controller]")]
@@ -16,12 +18,14 @@ public class CuentaController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IEnumerable<CuentaDtoOut>> GetAll()
     {
         return await _service.GetAll();
     }
 
-    [HttpGet("{id}")] 
+    [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<CuentaDtoOut>> GetByIdDto(int id)
     {
         var cuenta = await _service.GetByIdDto(id);
@@ -38,6 +42,7 @@ public class CuentaController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> Update(int id, CuentaDtoIn cuenta)
     {
         if (id != cuenta.Id) return BadRequest(new { message = $"El ID ({id}) de la URL no coincide con el ID ({cuenta.Id}) del cuerpo de la solicitud." });
@@ -56,6 +61,7 @@ public class CuentaController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task <IActionResult> Delete (int id)
     {
         var cuentaToDelete = await _service.GetById(id);
@@ -143,6 +149,7 @@ public class CuentaController : ControllerBase
 
     //obtener ID x CBU
     [HttpGet("IdxCbu/{cbu}")]
+    [Authorize]
     public async Task<ActionResult<CuentaIdDtoOut>> ObtenerIdPorCbu(string cbu)
     {
         try
@@ -163,6 +170,7 @@ public class CuentaController : ControllerBase
 
     //obtener ID x NumeroCuenta
     [HttpGet("IdxNumeroCuenta/{numeroCuenta}")]
+//no autorizo se usa en el registrar
     public async Task<ActionResult<CuentaIdDtoOut>> ObtenerIdPorNumeroCuenta(long numeroCuenta)
     {
         try
@@ -182,6 +190,7 @@ public class CuentaController : ControllerBase
     }
     //cuentaId es un parametro dinamico en la ruta
     [HttpGet("cuentas/Numero/{numeroCuenta}/Contacto")] // Modificación en la ruta del endpoint
+    [Authorize]
     public async Task<ActionResult<ContactoDtoOut>> GetContactos(long numeroCuenta)
     {
         var contactos = await _service.GetContactos(numeroCuenta);
@@ -196,6 +205,7 @@ public class CuentaController : ControllerBase
 
     //obtener Cbu x NumeroCuenta
     [HttpGet("CbuxNumeroCuenta/{numeroCuenta}")]
+    [Authorize]
     public async Task<ActionResult<string?>> ObtenerCbuPorNumeroCuenta(long numeroCuenta)
     {
         try

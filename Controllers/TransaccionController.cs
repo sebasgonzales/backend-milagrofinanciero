@@ -1,5 +1,6 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using System.Xml.Linq;
 
 namespace backend_milagrofinanciero.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class TransaccionController: ControllerBase

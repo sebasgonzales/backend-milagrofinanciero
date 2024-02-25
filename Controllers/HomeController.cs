@@ -1,4 +1,5 @@
 ﻿//HomeController
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using System;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace YourNamespace.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class HomeController : ControllerBase

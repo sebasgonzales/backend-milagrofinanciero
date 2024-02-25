@@ -1,5 +1,6 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Services;
@@ -17,13 +18,16 @@ public class ClienteController : ControllerBase
     private readonly IClienteService _service;
     public ClienteController(IClienteService cliente)
     { _service = cliente; }
+
     [HttpGet]
+    [Authorize]
     public async Task<IEnumerable<ClienteDtoOut>> Get()
     {
         return await _service.GetAll();
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<ClienteDtoOut>>? GetById(int id)
     {
         var cliente = await _service.GetByIdDto(id);
@@ -44,6 +48,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> Update(int id, ClienteDtoIn cliente)
     {
         if (id != cliente.Id)
@@ -60,6 +65,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> Delete(int id)
     {
         var clienteToDelete = await _service.GetById(id);
@@ -75,6 +81,7 @@ public class ClienteController : ControllerBase
 
     //clienteId es un parametro dinamico en la ruta
     [HttpGet("clientes/CuitCuil/{cuitCuil}/ClienteCuenta")] // Modificación en la ruta del endpoint
+    [Authorize]
     public async Task<ActionResult<CuentaDtoOut>> GetCuentasByCuitCuil(string cuitCuil)
     {
         var cuentas = await _service.GetCuentasByCuitCuil(cuitCuil);
@@ -87,7 +94,8 @@ public class ClienteController : ControllerBase
         return Ok(cuentas);
     }
 
-    [HttpGet("clientes/Nombre/{cuitCuil}/Cliente")] 
+    [HttpGet("clientes/Nombre/{cuitCuil}/Cliente")]
+    [Authorize]
     public async Task<ActionResult<string>> GetNombreByCuitCuil(string cuitCuil)
     {
         var cliente = await _service.GetNombre(cuitCuil);
@@ -102,6 +110,7 @@ public class ClienteController : ControllerBase
 
     //clienteId es un parametro dinamico en la ruta
     [HttpGet("cliente/{cuitCuil}")] // Modificación en la ruta del endpoint
+    [Authorize]
     public async Task<ActionResult<ClienteDtoOut>> GetClienteByCuitCuil(string cuitCuil)
     {
         var cliente = await _service.GetClienteByCuitCuil(cuitCuil);
@@ -115,6 +124,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpGet("IdxCuitCuil/{cuitCuil}")]
+    //no autorizo se usa en el registrar
     public async Task<ActionResult<ClienteIdDtoOut>> GetIdByCuitCuil(string cuitCuil)
     {
         try

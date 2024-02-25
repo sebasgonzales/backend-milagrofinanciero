@@ -1,9 +1,11 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 namespace backend_milagrofinanciero.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ContactoController : ControllerBase
