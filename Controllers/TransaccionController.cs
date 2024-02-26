@@ -62,7 +62,7 @@ namespace backend_milagrofinanciero.Controllers
             if (numeroCuentaOrigen == 111396740353)
             {
                 Debug.WriteLine("La cuenta de origen es 111396740353, asignando saldo de 10000.");
-                saldoDisponible = 11000;
+                saldoDisponible = 110000;
                 Debug.WriteLine(saldoDisponible);
             }
             else
