@@ -7,6 +7,6 @@ namespace Services
 {
     public interface ILoginService
     {
-        Task<string?> AuthenticateClientAndGetCuitCuil(string username, string password);
+        Task<ClienteDtoOut?> AuthenticateCliente(string username, string password);
     }
 }

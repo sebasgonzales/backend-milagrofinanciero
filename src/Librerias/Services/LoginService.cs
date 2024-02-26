@@ -18,19 +18,25 @@ namespace Services
             _context = context;
         }
 
-        public async Task<string?> AuthenticateClientAndGetCuitCuil(string username, string password)
+        public async Task<ClienteDtoOut?> AuthenticateCliente(string username, string password)
         {
             // Buscar el cliente por nombre de usuario y contraseña
-            var client = await _context.Cliente.FirstOrDefaultAsync(c => c.Username == username && c.Password == password);
-
-            // Si el cliente es nulo, no se encontró ningún cliente con el usuario y contraseña proporcionados
-            if (client == null)
-            {
-                return null;
-            }
-
-            // Si se encontró un cliente, devolver su ID
-            return client.CuitCuil;
+            return await _context.Cliente.
+                Where(c => c.Username == username && c.Password == password)
+                .Select(c => new ClienteDtoOut
+                {
+                    Nombre = c.Nombre,
+                    Apellido = c.Apellido,
+                    CuitCuil = c.CuitCuil,
+                    Alta = c.Alta,
+                    Calle = c.Calle,
+                    Departamento = c.Departamento,
+                    AlturaCalle = c.AlturaCalle,
+                    Username = c.Username,
+                    Localidad = c.Localidad.Nombre
+                }).SingleOrDefaultAsync();
+            ;
+            
         }
 
     }
