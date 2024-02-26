@@ -60,7 +60,7 @@ namespace backend_milagrofinanciero.Controllers
             if (numeroCuentaOrigen == 111396740353)
             {
                 Debug.WriteLine("La cuenta de origen es 111396740353, asignando saldo de 10000.");
-                saldoDisponible = 10000;
+                saldoDisponible = 11000;
                 Debug.WriteLine(saldoDisponible);
             }
             else
@@ -75,7 +75,7 @@ namespace backend_milagrofinanciero.Controllers
                 // Manejar el caso en que los montos no coinciden
                 return BadRequest("El monto en el cuerpo JSON no coincide con el parámetro 'monto' en la solicitud.");
             }
-            if (saldoDisponible > monto)
+            if (saldoDisponible >= monto)
             {
                 // Obtener el ID de la cuenta de destino a partir del CBU
                 CuentaIdDtoOut cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
