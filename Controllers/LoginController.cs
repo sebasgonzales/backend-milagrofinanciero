@@ -38,14 +38,14 @@ namespace backend_milagrofinanciero.Controllers
 
             // Si el cliente no pudo ser autenticado, devolver un error
             if (cliente == null)
-            
+
                 return BadRequest("Usuario o contraseña incorrectos");
 
             string jwtToken = GenerarToken(cliente);
-            
+
 
             // Si el cliente fue autenticado correctamente, devolver su CuitCuil
-            return Ok(new { token = jwtToken});
+            return Ok(new { token = jwtToken });
         }
 
         private string GenerarToken(ClienteDtoOut cliente)
@@ -54,7 +54,7 @@ namespace backend_milagrofinanciero.Controllers
             {
                 new Claim(ClaimTypes.Name, cliente.Nombre)
             };
-           
+
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("JWT:Key").Value));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
@@ -68,6 +68,22 @@ namespace backend_milagrofinanciero.Controllers
             string token = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
             return token;
+        }
+
+        [HttpPost("GetCuitCuil")]
+        public async Task<IActionResult> ObtenerCuitCuilLogin([FromBody] LoginRequest request)
+        {
+            // Llamar al servicio de autenticación con el usuario y contraseña proporcionados
+            var cuitCuil = await _loginService.LoginAndGetCuitCuil(request.Username, request.Password);
+
+            // Si el cliente no pudo ser autenticado, devolver un error
+            if (cuitCuil == null)
+            {
+                return Unauthorized("Usuario o contraseña incorrectos");
+            }
+
+            // Si el cliente fue autenticado correctamente, devolver su CuitCuil
+            return Ok(cuitCuil);
         }
 
 

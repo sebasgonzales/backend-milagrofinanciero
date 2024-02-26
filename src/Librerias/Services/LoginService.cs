@@ -39,5 +39,20 @@ namespace Services
             
         }
 
+        public async Task<string?> LoginAndGetCuitCuil(string username, string password)
+        {
+            // Buscar el cliente por nombre de usuario y contraseña
+            var client = await _context.Cliente.FirstOrDefaultAsync(c => c.Username == username && c.Password == password);
+
+            // Si el cliente es nulo, no se encontró ningún cliente con el usuario y contraseña proporcionados
+            if (client == null)
+            {
+                return null;
+            }
+
+            // Si se encontró un cliente, devolver su ID
+            return client.CuitCuil;
+        }
+
     }
 }
