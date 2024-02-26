@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace backend_milagrofinanciero.Controllers
 {
-    [Authorize]
+    
     [ApiController]
     [Route("[controller]")]
     public class TransaccionController: ControllerBase
@@ -27,8 +27,8 @@ namespace backend_milagrofinanciero.Controllers
      
         // GET /Transaciones
         [EnableCors]
-
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<TransaccionDtoOut>> Get()
         {
             return await _service.GetAll();
@@ -36,6 +36,7 @@ namespace backend_milagrofinanciero.Controllers
 
         // GET /Transaciones/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<TransaccionDtoOut>> GetById(int id)
         {
             var transaccion = await _service.GetDtoById(id);
@@ -57,12 +58,12 @@ namespace backend_milagrofinanciero.Controllers
         [HttpPost]
         public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long numeroCuentaOrigen, string cbuDestino, float monto)
         {
-            var saldoDisponible = 0;
+            var saldoDisponible = 0; // 1 = Tiene saldo Disponible | 0 = No
             Debug.WriteLine("Saldo disponible: " + saldoDisponible);
             if (numeroCuentaOrigen == 111396740353)
             {
                 Debug.WriteLine("La cuenta de origen es 111396740353, asignando saldo de 10000.");
-                saldoDisponible = 110000;
+                saldoDisponible = 1; 
                 Debug.WriteLine(saldoDisponible);
             }
             else
@@ -77,7 +78,7 @@ namespace backend_milagrofinanciero.Controllers
                 // Manejar el caso en que los montos no coinciden
                 return BadRequest("El monto en el cuerpo JSON no coincide con el parámetro 'monto' en la solicitud.");
             }
-            if (saldoDisponible >= monto)
+            if (saldoDisponible == 1)
             {
                 // Obtener el ID de la cuenta de destino a partir del CBU
                 CuentaIdDtoOut cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
@@ -113,44 +114,6 @@ namespace backend_milagrofinanciero.Controllers
                 return BadRequest("Saldo insuficiente para realizar la transferencia.");
             }
         }
-
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> Update(int id, TransaccionDtoIn transaccion)
-        //{
-
-        //    if (id != transaccion.Id)
-        //        return BadRequest(new { message = $"El ID({id}) de la URL no coincide con el ID({transaccion.Id}) del cuerpo de la solicitud.  " });
-
-        //    var transaccionToUpdate = await _service.GetById(id);
-
-        //    if (transaccionToUpdate is not null)
-        //    {
-        //        await _service.Update(transaccion);
-        //        return NoContent();
-        //    }
-        //    else 
-        //    {
-        //        return TransaccionNotFound(id);
-        //    }
-
-        //}
-
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var transaccionToDelete= await _service.GetById(id);
-
-        //    if (transaccionToDelete is not null)
-        //    {
-        //        await _service.Delete(id);
-        //        return Ok();
-        //    }
-        //    else
-        //    {
-        //        return TransaccionNotFound(id);
-        //    }
-        //}
-
 
         [HttpGet("HistorialTransacciones/{numeroCuenta}")]
         public async Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta)
