@@ -1,6 +1,7 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
 using Data.Models;
+using System.Threading.Tasks;
 namespace Services
 {
     public interface IProvinciaService
@@ -11,5 +12,6 @@ namespace Services
         Task<Provincia?> GetById(int id);
         Task<ProvinciaDtoOut?> GetDtoById(int id);
         Task Update(int id, ProvinciaDtoIn provincia);
+        Task<IEnumerable<string>> GetProvinciasNombre();
     }
 }

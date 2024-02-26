@@ -85,5 +85,23 @@ namespace Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<string>> GetProvinciasNombre()
+        {
+            try
+            {
+                var provincias = await _context.Provincia
+                    .Select(p => p.Nombre)
+                    .Distinct()
+                    .ToListAsync();
+
+                return provincias;
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores, como loguearlos o lanzar excepciones
+                throw new Exception("Error al obtener las provincias", ex);
+            }
+        }
     }
 }

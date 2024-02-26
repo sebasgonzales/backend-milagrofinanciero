@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Services;
+using System.Diagnostics;
 using System.Xml.Linq;
 
 namespace backend_milagrofinanciero.Controllers
@@ -56,16 +57,27 @@ namespace backend_milagrofinanciero.Controllers
         [HttpPost]
         public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long numeroCuentaOrigen, string cbuDestino, float monto)
         {
-            //verifico el saldo
-            var saldoDisponible = await _service.VerificadorSaldo(numeroCuentaOrigen, monto);
-
+            var saldoDisponible = 0;
+            Debug.WriteLine("Saldo disponible: " + saldoDisponible);
+            if (numeroCuentaOrigen == 111396740353)
+            {
+                Debug.WriteLine("La cuenta de origen es 111396740353, asignando saldo de 10000.");
+                saldoDisponible = 11000;
+                Debug.WriteLine(saldoDisponible);
+            }
+            else
+            {
+                //verifico el saldo si no es de la cuenta del banco
+                Debug.WriteLine("Ingrese en el else. " + saldoDisponible);
+                saldoDisponible = await _service.VerificadorSaldo(numeroCuentaOrigen, monto);
+            }
             // Verificar que el monto en el cuerpo JSON sea igual al parámetro 'monto'
             if (transaccion.Monto != monto)
             {
                 // Manejar el caso en que los montos no coinciden
                 return BadRequest("El monto en el cuerpo JSON no coincide con el parámetro 'monto' en la solicitud.");
             }
-            if (saldoDisponible == 1)
+            if (saldoDisponible >= monto)
             {
                 // Obtener el ID de la cuenta de destino a partir del CBU
                 CuentaIdDtoOut cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
@@ -74,10 +86,10 @@ namespace backend_milagrofinanciero.Controllers
                 //var cuentaOrigenId = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
                 CuentaIdDtoOut cuentaOrigenDto = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
 
-                if (cuentaDestinoId!=null && cuentaOrigenDto!=null)
+                if (cuentaDestinoId != null && cuentaOrigenDto != null)
                 {
                     // Configurar la información de la transacción
-                    
+
                     transaccion.IdCuentaOrigen = cuentaOrigenDto.Id;
                     transaccion.IdCuentaDestino = cuentaDestinoId.Id;
                     //transaccion.IdTipoTransaccion = ;
@@ -96,9 +108,9 @@ namespace backend_milagrofinanciero.Controllers
             }
             else
             {
-             
+
                 // Manejar el caso en que no hay saldo suficiente
-                    return BadRequest("Saldo insuficiente para realizar la transferencia.");
+                return BadRequest("Saldo insuficiente para realizar la transferencia.");
             }
         }
 

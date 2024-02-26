@@ -91,5 +91,19 @@ namespace Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<LocalidadDtoOut>> GetLocalidades(string nombreProvincia)
+        {
+            return await _context.Localidad
+                 .Where(l => l.Provincia.Nombre == nombreProvincia)
+                 .Select(l => new LocalidadDtoOut
+                 {
+                     Nombre = l.Nombre,
+                     CodigoPostal = l.CodigoPostal,
+                     NombreProvincia = l.Provincia.Nombre
+                 })
+                 .ToListAsync();
+        }
+
     }
 }
