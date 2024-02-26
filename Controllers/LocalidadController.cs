@@ -1,7 +1,9 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace backend_milagrofinanciero.Controllers;
 [ApiController]
@@ -10,7 +12,7 @@ public class LocalidadController : ControllerBase
 {
     private readonly ILocalidadService _service;
 
-    public LocalidadController (ILocalidadService localidad)
+    public LocalidadController(ILocalidadService localidad)
     {
         _service = localidad;
     }
@@ -41,11 +43,11 @@ public class LocalidadController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id,LocalidadDtoIn localidad)
+    public async Task<IActionResult> Update(int id, LocalidadDtoIn localidad)
     {
         var localidadToUpdate = await _service.GetById(id);
 
-        if(localidadToUpdate is not null)
+        if (localidadToUpdate is not null)
         {
             await _service.Update(id, localidad);
             return NoContent();
@@ -57,7 +59,7 @@ public class LocalidadController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete (int id)
+    public async Task<IActionResult> Delete(int id)
     {
         var localidadToDelete = await _service.GetById(id);
         if (localidadToDelete is not null)
@@ -69,5 +71,19 @@ public class LocalidadController : ControllerBase
         {
             return NotFound(id);
         }
+    }
+
+    [HttpGet]
+    [Route("provincia/{nombreProvincia}")]
+    public async Task<IEnumerable<LocalidadDtoOut>> GetLocalidades(string nombreProvincia)
+    {
+        var localidades = await _service.GetLocalidades(nombreProvincia);
+
+        if (localidades == null || !localidades.Any())
+        {
+            return (IEnumerable<LocalidadDtoOut>)NotFound();
+        }
+
+        return localidades;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services;
 
 namespace backend_milagrofinanciero.Controllers
@@ -83,6 +84,23 @@ namespace backend_milagrofinanciero.Controllers
         public NotFoundObjectResult ProvinciaNotFound(int id)
         {
             return NotFound(new { message = $"la Provincia con ID = {id} no existe. " });
+        }
+
+        [HttpGet]
+        [Route("provinciasNombre")]
+
+        public async Task<ActionResult<IEnumerable<string>>> GetProvincias()
+        {
+            try
+            {
+                var provincias = await _service.GetProvinciasNombre();
+
+                return Ok(provincias);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener las provincias: {ex.Message}");
+            }
         }
 
     }
