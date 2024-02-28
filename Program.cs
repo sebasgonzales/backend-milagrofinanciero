@@ -16,7 +16,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:3000", "https://colosal.duckdns.org:15001/BancoMilagroFinanciero/")
+                          policy.WithOrigins("http://localhost:3000", 
+                              "https://colosal.duckdns.org:15001/BancoMilagroFinanciero", 
+                              "https://colosal.duckdns.org:15001/BancoMilagroFinanciero/", 
+                              "https://colosal.duckdns.org:15001",
+                              "https://colosal.duckdns.org:15001/")
                           .AllowAnyMethod()
                           .AllowAnyHeader()
                           .AllowCredentials();
