@@ -76,76 +76,6 @@ public class CuentaController : ControllerBase
             return NotFound(id);
         }
     }
-    /*
-     * 
-    //obtener cuenta x CBU
-    [HttpGet("CuentaxCbu/{cbu}")]
-    public async Task<IActionResult> ObtenerCuentaPorCbu(long cbu)
-    {
-        try
-        {
-            var cuenta = await _service.GetCuentaByCbu(cbu);
-
-            if (cuenta != null)
-            {
-                //// Mapea la cuenta a un DTO u objeto de respuesta según sea necesario
-                //var cuentaDto = new CuentaDto
-                //{
-                //    // Mapea las propiedades de cuenta según sea necesario
-                //  Id = cuenta.Id,
-                //    Numero = cuenta.Numero,
-                //    Saldo = cuenta.Saldo,
-                //    // ...
-                //};
-
-                return Ok(cuenta);
-            }
-            else
-            {
-                return NotFound("No se encontró ninguna cuenta con el CBU proporcionado.");
-            }
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Error interno del servidor: {ex.Message}");
-        }
-    }
-   
-
-    //obtener cuenta x NumerodeCuenta
-    [HttpGet("cuenta/{numeroCuenta}")]
-    public async Task<IActionResult> ObtenerCuentaPorNumero(long numeroCuenta)
-    {
-        try
-        {
-            var cuenta = await _service.GetCuentaByNumero(numeroCuenta);
-
-            if (cuenta != null)
-            {
-                //// Mapea la cuenta a un DTO u objeto de respuesta según sea necesario
-                //var cuentaDto = new CuentaDto
-                //{
-                //    // Mapea las propiedades de cuenta según sea necesario
-                //    Id = cuenta.Id,
-                //    Numero = cuenta.Numero,
-                //    Saldo = cuenta.Saldo,
-                //    // ...
-                //};
-
-                return Ok(cuenta);
-            }
-            else
-            {
-                return NotFound("No se encontró ninguna cuenta con el NumeroDeCuente proporcionado.");
-            }
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Error interno del servidor: {ex.Message}");
-        }
-    }
-
-    */
 
     //obtener ID x CBU
     [HttpGet("IdxCbu/{cbu}")]
@@ -224,5 +154,11 @@ public class CuentaController : ControllerBase
         }
     }
 
+    [HttpPost("Auth/")]
+    public async Task<string?> AutenticacionSRVP(string authorizationCode)
+    {
+        var datosDesencriptadosJSON = await _service.AutenticacionSRVP(authorizationCode);
+        return datosDesencriptadosJSON == null ? null : datosDesencriptadosJSON.ToString();
+    }
 }
 
