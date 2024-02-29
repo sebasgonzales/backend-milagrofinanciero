@@ -60,7 +60,8 @@ namespace Services
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<Cuenta> Create(CuentaDtoIn newCuentaDto)
+        //CREATE CUENTA INTERNA
+        public async Task<Cuenta> CreateCuentaInterna(CuentaDtoIn newCuentaDto)
         {
             var newCuenta = new Cuenta();
             int numFijo = 111;
@@ -91,6 +92,32 @@ namespace Services
 
             return newCuenta;
         }
+
+
+        //CREATE CUENTA EXTERNA
+        public async Task<Cuenta> CreateCuentaExterna(CuentaDtoIn newCuentaDto)
+        {
+            string numCuentaString = newCuentaDto.Cbu.Substring(Math.Max(0, newCuentaDto.Cbu.Length - 12));
+            long numCuenta = long.Parse(numCuentaString);
+
+            var newCuenta = new Cuenta();
+            newCuenta.Numero = numCuenta;
+            newCuenta.Cbu = newCuentaDto.Cbu;
+            newCuenta.IdTipoCuenta = 3;
+
+            // Obtenemos el carácter en la posición 10 del CBU
+            char codigoBanco = newCuenta.Cbu[9];
+            // Convertimos el carácter a su valor numérico
+            int idBanco = int.Parse(codigoBanco.ToString());
+
+            newCuenta.IdBanco = idBanco;
+            newCuenta.IdSucursal = 1;
+            _context.Cuenta.Add(newCuenta);
+            await _context.SaveChangesAsync();
+
+            return newCuenta;
+        }
+
 
         public async Task Update(int id, CuentaDtoIn cuenta)
         {

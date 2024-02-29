@@ -34,11 +34,21 @@ public class CuentaController : ControllerBase
             return NotFound(id);
         return cuenta;
     }
-    [HttpPost]
-    public async Task<IActionResult> Create(CuentaDtoIn cuenta)
+
+    //cuenta interna
+    [HttpPost("CuentaInterna")]
+    public async Task<IActionResult> CreateCuentaInterna(CuentaDtoIn cuenta)
     {
-        var newCuenta = await _service.Create(cuenta);
+        var newCuenta = await _service.CreateCuentaInterna(cuenta);
         return CreatedAtAction(nameof(GetByIdDto),new {id = cuenta.Id}, newCuenta);
+    }
+
+    //cuenta externa
+    [HttpPost("CuentaExterna")]
+    public async Task<IActionResult> CreateCuentaExterna(CuentaDtoIn cuenta)
+    {
+        var newCuenta = await _service.CreateCuentaExterna(cuenta);
+        return CreatedAtAction(nameof(GetByIdDto), new { id = cuenta.Id }, newCuenta);
     }
 
     [HttpPut("{id}")]

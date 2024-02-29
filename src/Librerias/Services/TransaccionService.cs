@@ -71,8 +71,6 @@ namespace Services
                     Realizacion = newTransaccionDTO.Realizacion,
                     IdTipoMotivo = newTransaccionDTO.idTipoMotivo,
                     Referencia = newTransaccionDTO.Referencia,
-                    //IdCuentaOrigen = newTransaccionDTO.IdCuentaOrigen,
-                    //IdCuentaDestino = newTransaccionDTO.IdCuentaDestino,
                     IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion
                 };
 
@@ -110,37 +108,7 @@ namespace Services
             }
         }
         
-        //NO SE DEBERIA ACTUALIZAR UNA TRANSACCION
-        //public async Task Update(TransaccionDtoIn transaccion)
-        //{
-        //    var existingTransaccion = await GetById(transaccion.Id);
-
-        //    if (existingTransaccion is not null)
-        //    {
-        //        existingTransaccion.Monto = transaccion.Monto;
-        //        existingTransaccion.Realizacion = transaccion.Realizacion;
-        //        existingTransaccion.Motivo = transaccion.Motivo;
-        //        existingTransaccion.Referencia = transaccion.Referencia;
-        //        existingTransaccion.IdCuentaOrigen = transaccion.IdCuentaOrigen;
-        //        existingTransaccion.IdCuentaDestino = transaccion.IdCuentaDestino;
-        //        existingTransaccion.IdTipoTransaccion = transaccion.IdTipoTransaccion;
-
-        //        await _context.SaveChangesAsync();
-        //    }
-
-        //}
-
-        //NO SE DEBERIA ELIMINAR UNA TRANSACCION
-
-        //public async Task Delete(int id)
-        //{
-        //    var transaccionToDelete = await GetById(id);
-        //    if (transaccionToDelete is not null)
-        //    {
-        //        _context.Transaccion.Remove(transaccionToDelete);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //}
+       
 
         public async Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta)
         {

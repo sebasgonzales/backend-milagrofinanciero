@@ -5,7 +5,7 @@ namespace Services
 {
     public interface ICuentaService
     {
-        Task<Cuenta> Create(CuentaDtoIn newCuentaDto);
+        Task<Cuenta> CreateCuentaInterna(CuentaDtoIn newCuentaDto);
         Task Delete(int id);
         Task<IEnumerable<CuentaDtoOut>> GetAll();
         Task<Cuenta?> GetById(int id);
@@ -21,6 +21,8 @@ namespace Services
         Task<List<ContactoDtoOut>> GetContactos(long numeroCuenta);
 
         Task<string?> GetCbuByNumeroCuenta(long numeroCuenta);
+
+        Task<Cuenta> CreateCuentaExterna(CuentaDtoIn newCuentaDto);
 
     }
 
