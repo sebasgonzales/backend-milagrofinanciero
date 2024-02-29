@@ -9,6 +9,17 @@ using Core.DTO.response;
 using Microsoft.EntityFrameworkCore;
 using GeneradorNumeros;
 using System.Diagnostics;
+using RestSharp;
+using RestSharp.Authenticators;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
+using static System.IdentityModel.Tokens.Jwt.JwtSecurityToken;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace Services
 {
@@ -231,7 +242,5 @@ namespace Services
 
             return cbu;
         }
-
-
     }
 }
