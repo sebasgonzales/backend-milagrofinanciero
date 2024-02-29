@@ -23,6 +23,7 @@ namespace Services
         Task<string?> GetCbuByNumeroCuenta(long numeroCuenta);
 
         Task<Cuenta> CreateCuentaExterna(string cbuCuentaOrigen);
+        Task<string?> GetCbuById(int id);
 
     }
 

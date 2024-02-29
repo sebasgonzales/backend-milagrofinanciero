@@ -1,4 +1,4 @@
-﻿using Core.DTO.request;
+using Core.DTO.request;
 using Core.DTO.response;
 using Data.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -152,6 +152,25 @@ public class CuentaController : ControllerBase
         try
         {
             var cuentaCbu = await _service.GetCbuByNumeroCuenta(numeroCuenta);
+
+            if (cuentaCbu is null)
+            {
+                return NotFound("No se encontró una cuenta con el numeroCuenta proporcionado.");
+            }
+            return cuentaCbu;
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+        }
+    }
+
+    [HttpGet("CbuxId/{id}")]
+    public async Task<ActionResult<string?>> ObtenerCbuPorId(int id)
+    {
+        try
+        {
+            var cuentaCbu = await _service.GetCbuById(id);
 
             if (cuentaCbu is null)
             {
