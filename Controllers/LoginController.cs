@@ -21,31 +21,43 @@ namespace backend_milagrofinanciero.Controllers
     {
 
         private readonly ILoginService _loginService;
-
+        private readonly IClienteService _clienteService;
         // Inyecta la configuración de tu app para generar el JWT
         private IConfiguration _config;
 
-        public LoginController(ILoginService loginService, IConfiguration config) {
+        public LoginController(ILoginService loginService, IConfiguration config, IClienteService clienteService)
+        {
             _loginService = loginService;
+            _clienteService = clienteService;
             _config = config;
         }
 
-        [HttpPost("authenticate")]
-        public async Task<IActionResult> Login(LoginRequest request) //saque el front body
+        [HttpPost("authenticate/{authorizationCode}")]
+        public async Task<IActionResult> Login(LoginRequest request, string authorizationCode)
         {
-            // Llamar al servicio de autenticación con el usuario y contraseña proporcionados
-            var cliente = await _loginService.AuthenticateCliente(request.Username, request.Password);
+             var authCode = await _clienteService.AutenticacionSRVP(authorizationCode);
 
-            // Si el cliente no pudo ser autenticado, devolver un error
-            if (cliente == null)
+            if (authCode.Datos.Estado == true)
+            {
 
-                return BadRequest("Usuario o contraseña incorrectos");
+                // Llamar al servicio de autenticación con el usuario y contraseña proporcionados
+                var cliente = await _loginService.AuthenticateCliente(request.Username, request.Password);
 
-            string jwtToken = GenerarToken(cliente);
+                // Si el cliente no pudo ser autenticado, devolver un error
+                if (cliente == null)
+
+                    return BadRequest("Usuario o contraseña incorrectos");
+
+                string clienteRespuestaJWT = GenerarToken(cliente);
 
 
-            // Si el cliente fue autenticado correctamente, devolver su CuitCuil
-            return Ok(new { token = jwtToken });
+                // Si el cliente fue autenticado correctamente, devolver su CuitCuil
+                return Ok(new { token = clienteRespuestaJWT });
+            }
+            else
+            {
+                return BadRequest("No existe el token proporcionado");
+            }
         }
 
         private string GenerarToken(ClienteDtoOut cliente)
