@@ -32,12 +32,12 @@ namespace backend_milagrofinanciero.Controllers
         }
 
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Login(LoginRequest request, string authorizationCode) //saque el front body
+        public async Task<IActionResult> Login(LoginRequest request) //saque el front body
         {
-            var authCode = await _clienteService.AutenticacionSRVP(authorizationCode);
+            //RespuestaInterna<ClienteRenaper> authCode = await _clienteService.AutenticacionSRVP(authorizationCode);
 
-            if (authCode.Exito == true)
-            {
+            //if (authCode.Exito == true)
+            //{
 
                 // Llamar al servicio de autenticación con el usuario y contraseña proporcionados
                 var cliente = await _loginService.AuthenticateCliente(request.Username, request.Password);
@@ -52,11 +52,11 @@ namespace backend_milagrofinanciero.Controllers
 
                 // Si el cliente fue autenticado correctamente, devolver su CuitCuil
                 return Ok(new { token = clienteRespuestaJWT });
-            }
+            /*}
             else
             {
                 return BadRequest("No existe el token proporcionado");
-            }
+            }*/
         }
 
         private string GenerarToken(ClienteDtoOut cliente)
