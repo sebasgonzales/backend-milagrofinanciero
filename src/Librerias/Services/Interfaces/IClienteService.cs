@@ -17,7 +17,8 @@ namespace Services
         Task<List<CuentaDtoOut>> GetCuentasByCuitCuil(string cuitCuil);
         Task<List<ClienteDtoOut>> GetClienteByCuitCuil(string cuitCuil);
         Task<ClienteIdDtoOut> GetIdByCuitCuil(string cuitCuil);
-        Task<ClienteRenaper> AutenticacionSRVP(string authorizationCode);
+        //Task<ClienteRenaper> AutenticacionSRVP(string authorizationCode);
+        Task<RespuestaInterna<ClienteRenaper>> AutenticacionSRVP(string authorizationCode);
 
 
 

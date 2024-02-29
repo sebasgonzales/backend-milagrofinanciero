@@ -143,10 +143,10 @@ public class ClienteController : ControllerBase
         }
     }
     [HttpPost("Auth/")]
-    public async Task<string?> AutenticacionSRVP(string authorizationCode)
+    public async Task<RespuestaInterna<ClienteRenaper>> AutenticacionSRVP(string authorizationCode)
     {
         var datosDesencriptadosJSON = await _service.AutenticacionSRVP(authorizationCode);
-        return datosDesencriptadosJSON == null ? null : datosDesencriptadosJSON.ToString();
+        return datosDesencriptadosJSON;
     }
 }
 
