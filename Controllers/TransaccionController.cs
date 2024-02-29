@@ -47,16 +47,17 @@ namespace backend_milagrofinanciero.Controllers
             return transaccion;
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Create(TransaccionDtoIn transaccion) 
-        //{
-        //    var newTransaccion = await _service.Create(transaccion);
+        [HttpPost ("TransaccionDesdeExterior")]
+        public async Task<IActionResult> CreateTransaccionExterna(TransaccionExternaDtoIn transaccion) 
+        {
+            var newTransaccion = await _service.CreateTransaccionExterna(transaccion);
 
-        //    return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
-        //}
+            return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+        }
 
-        [HttpPost]
-        public async Task<IActionResult> Crear(TransaccionDtoIn transaccion, long numeroCuentaOrigen, string cbuDestino, float monto)
+        //TRANSACCION INTERNA
+        [HttpPost("TransaccionInterna")]
+        public async Task<IActionResult> CrearTransaccionInterna(TransaccionDtoIn transaccion, long numeroCuentaOrigen, string cbuDestino, float monto)
         {
             var saldoDisponible = 0; // 1 = Tiene saldo Disponible | 0 = No
             Debug.WriteLine("Saldo disponible: " + saldoDisponible);
@@ -97,7 +98,7 @@ namespace backend_milagrofinanciero.Controllers
                     // transaccion.IdTipoTransaccion = /* IdTipoTransaccion según sea necesario */;
 
                     // Crear la transacción
-                    var newTransaccion = await _service.Create(transaccion);
+                    var newTransaccion = await _service.CreateTransaccionInterna(transaccion);
 
                     return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
                 }

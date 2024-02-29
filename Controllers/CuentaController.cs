@@ -1,5 +1,6 @@
 ﻿using Core.DTO.request;
 using Core.DTO.response;
+using Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
@@ -34,12 +35,23 @@ public class CuentaController : ControllerBase
             return NotFound(id);
         return cuenta;
     }
-    [HttpPost]
-    public async Task<IActionResult> Create(CuentaDtoIn cuenta)
+
+    //cuenta interna
+    [HttpPost("CuentaInterna")]
+    public async Task<IActionResult> CreateCuentaInterna(CuentaDtoIn cuenta)
     {
-        var newCuenta = await _service.Create(cuenta);
+        var newCuenta = await _service.CreateCuentaInterna(cuenta);
         return CreatedAtAction(nameof(GetByIdDto),new {id = cuenta.Id}, newCuenta);
     }
+
+    //cuenta externa
+    [HttpPost("CuentaExterna")]
+    public async Task<ActionResult<Cuenta>> CreateCuentaExterna(string cbuCuentaOrigen)
+    {
+        var newCuenta = await _service.CreateCuentaExterna(cbuCuentaOrigen);
+        return newCuenta;
+    }
+
 
     [HttpPut("{id}")]
     [Authorize]
@@ -149,7 +161,6 @@ public class CuentaController : ControllerBase
 
     //obtener ID x CBU
     [HttpGet("IdxCbu/{cbu}")]
-    [Authorize]
     public async Task<ActionResult<CuentaIdDtoOut>> ObtenerIdPorCbu(string cbu)
     {
         try
