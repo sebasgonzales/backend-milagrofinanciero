@@ -153,12 +153,5 @@ public class CuentaController : ControllerBase
             return StatusCode(500, $"Error interno del servidor: {ex.Message}");
         }
     }
-
-    [HttpPost("Auth/")]
-    public async Task<string?> AutenticacionSRVP(string authorizationCode)
-    {
-        var datosDesencriptadosJSON = await _service.AutenticacionSRVP(authorizationCode);
-        return datosDesencriptadosJSON == null ? null : datosDesencriptadosJSON.ToString();
-    }
 }
 

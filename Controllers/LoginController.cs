@@ -41,11 +41,11 @@ namespace backend_milagrofinanciero.Controllers
 
                 return BadRequest("Usuario o contraseña incorrectos");
 
-            string jwtToken = GenerarToken(cliente);
+            string clienteRespuestaJWT = GenerarToken(cliente);
 
 
             // Si el cliente fue autenticado correctamente, devolver su CuitCuil
-            return Ok(new { token = jwtToken });
+            return Ok(new { token = clienteRespuestaJWT });
         }
 
         private string GenerarToken(ClienteDtoOut cliente)

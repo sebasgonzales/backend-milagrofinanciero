@@ -21,8 +21,6 @@ namespace Services
         Task<List<ContactoDtoOut>> GetContactos(long numeroCuenta);
 
         Task<string?> GetCbuByNumeroCuenta(long numeroCuenta);
-        //Task<ClienteRenaperDtoOut> AutenticarRenaper(string codigo);
-        Task<string?> AutenticacionSRVP(string authorizationCode);
 
     }
 

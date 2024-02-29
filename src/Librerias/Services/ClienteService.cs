@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Core.DTO.request;
@@ -8,6 +11,8 @@ using Core.DTO.response;
 using Data.Models;
 using Hashing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using RestSharp;
 
 namespace Services
 {
@@ -204,14 +209,121 @@ namespace Services
 
         public async Task<ClienteIdDtoOut> GetIdByCuitCuil(string cuitCuil)
         {
-            var clienteId= await _context.Cliente
-                .Where(c => c.CuitCuil== cuitCuil)
+            var clienteId = await _context.Cliente
+                .Where(c => c.CuitCuil == cuitCuil)
                 .Select(c => new ClienteIdDtoOut { Id = c.Id })
                 .SingleOrDefaultAsync();
 
             return clienteId;
         }
 
+        public async Task<ClienteRenaper> AutenticacionSRVP(string authorizationCode)
+        {
+            var respuesta = new ClienteRenaper();
+            
+                const string clientId = "a73b2d37-c304-431d-8817-26f3c5b2254a";
+                const string clientSecret = "deamon16";
+
+                var options = new RestClientOptions("https://colosal.duckdns.org:15001")
+                {
+                    MaxTimeout = -1,
+                };
+                var client = new RestClient(options);
+                var request = new RestRequest("/renaper/api/Auth/loguearJWT", Method.Post);
+                request.AddHeader("Content-Type", "application/json");
+                var body =
+                @"{
+                    " + "\n" +
+                                @"    ""clientId"" : """ + clientId + @""",
+                    " + "\n" +
+                                @"    ""clientSecret"" : """ + clientSecret + @""",
+                    " + "\n" +
+                                @"    ""authorizationCode"" : """ + authorizationCode + @"""
+                    " + "\n" +
+                @"}";
+                request.AddStringBody(body, DataFormat.Json);
+                RestResponse response = await client.ExecuteAsync<string>(request);
+
+                Console.WriteLine("El response.Content de tipo RestResponse: " + response.Content + "\n");
+
+            // JWT
+                var clienteRespuestaJWT = System.Text.Json.JsonSerializer.Deserialize<ClienteRenaperDtoOut>(response.Content);
+                Console.WriteLine("El response.Content deserealizado json: " + clienteRespuestaJWT + "\n");
+
+                var datosEncriptados = clienteRespuestaJWT.datos;
+                Console.WriteLine("Datos encriptados, esto debería ser un JWT: " + datosEncriptados + "\n");
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+
+                // Cargar la clave pública RSA desde el XML
+                RSA rsaPublicKey = RSA.Create();
+                rsaPublicKey.FromXmlString(@"<RSAKeyValue><Modulus>9BJ0WxXATSJ6KtiSHhglSd3kgc6j5kXLp8sx5hm5KN2Y8H1uygVrPAJGBqPEIgRpMHG8yMFyKh2hXLSnZNLtZ+7c+fMIUYJYARS8f4yxF3CpkMtVW4wJ5Sbg99vIyi8Hi/134QuwU9ghYKiGgaYEvsQo5P9R+y/MiJrclETu5mkUdazs0Sua5+WdnsmJqykVxrfHtgvlavtmhF2B8zUWWOb8zdPgWqzxULt4RHWIasdf6GxzG+XGK+6jyNfb4DpUJQBlHssVGgflNEukoYefTcqx865JeGMeIBJzmxceiD2PrEnDsHHYk8w5/2dAWbnf8Pk19T3CXDDd73MLiPR5xQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>");
+
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new RsaSecurityKey(rsaPublicKey),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+
+                ClaimsPrincipal principal = tokenHandler.ValidateToken(datosEncriptados, validationParameters, out SecurityToken validatedToken);
+
+                var jwtPayload = ((JwtSecurityToken)validatedToken).Payload;
+
+                var clienteRenaper = new ClienteRenaper
+                {
+                    Nombre = jwtPayload["Nombre"].ToString(),
+                    Rol = jwtPayload["Rol"].ToString(),
+                    Apellido = jwtPayload["Apellido"].ToString(),
+                    Email = jwtPayload["Email"].ToString(),
+                    Cuil = jwtPayload["Cuil"].ToString(),
+                    Estado = Convert.ToBoolean(jwtPayload["Estado"]),
+                    EstadoCrediticio = Convert.ToBoolean(jwtPayload["EstadoCrediticio"])
+                };
+
+                Console.WriteLine("Se decodificó el JWT con éxito :-)");
+
+                //clienteRespuestaJWT.datos = datosEncriptados;
+                clienteRespuestaJWT.exito = true;
+                clienteRespuestaJWT.mensaje = "Cliente validado correctamente";
+                clienteRespuestaJWT.Nombre = clienteRenaper.Nombre;
+                clienteRespuestaJWT.Rol = clienteRenaper.Rol;
+                clienteRespuestaJWT.Email = clienteRenaper.Email;
+                clienteRespuestaJWT.Cuil = clienteRenaper.Cuil;
+                clienteRespuestaJWT.Estado = clienteRenaper.Estado;
+                clienteRespuestaJWT.EstadoCrediticio = clienteRenaper.EstadoCrediticio;
+                Console.WriteLine("Datos: \n" +clienteRespuestaJWT);
+
+            }
+            catch (Exception e)
+            { Console.WriteLine(e.ToString());
+                return respuesta;
+            }
+
+            if (clienteRespuestaJWT.exito = false)
+            {
+                return respuesta;
+            }
+            else
+            {
+                return respuesta;
+            }
+        }
+
+        // Asegurar que la cadena Base64 tenga la longitud adecuada
+        static string PadBase64String(string base64)
+        {
+            switch (base64.Length % 4)
+            {
+                case 2: return base64 + "==";
+                case 3: return base64 + "=";
+                default: return base64;
+            }
+        }
+        
     }
+
 }
 
