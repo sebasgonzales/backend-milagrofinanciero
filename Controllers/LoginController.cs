@@ -35,29 +35,36 @@ namespace backend_milagrofinanciero.Controllers
         [HttpPost("authenticate/{authorizationCode}")]
         public async Task<IActionResult> Login(LoginRequest request, string authorizationCode)
         {
-             var authCode = await _clienteService.AutenticacionSRVP(authorizationCode);
-
-            if (authCode.Datos.Estado == true)
+            var authCode = await _clienteService.AutenticacionSRVP(authorizationCode);
+            if (authCode.Datos != null)
             {
+                if (authCode.Datos.Estado == true)
+                {
 
-                // Llamar al servicio de autenticación con el usuario y contraseña proporcionados
-                var cliente = await _loginService.AuthenticateCliente(request.Username, request.Password);
+                    // Llamar al servicio de autenticación con el usuario y contraseña proporcionados
+                    var cliente = await _loginService.AuthenticateCliente(request.Username, request.Password);
 
-                // Si el cliente no pudo ser autenticado, devolver un error
-                if (cliente == null)
+                    // Si el cliente no pudo ser autenticado, devolver un error
+                    if (cliente == null)
 
-                    return BadRequest("Usuario o contraseña incorrectos");
+                        return BadRequest("Usuario o contraseña incorrectos");
 
-                string clienteRespuestaJWT = GenerarToken(cliente);
+                    string clienteRespuestaJWT = GenerarToken(cliente);
 
 
-                // Si el cliente fue autenticado correctamente, devolver su CuitCuil
-                return Ok(new { token = clienteRespuestaJWT });
+                    // Si el cliente fue autenticado correctamente, devolver su CuitCuil
+                    return Ok(new { token = clienteRespuestaJWT });
+                }
+                else
+                {
+                    return BadRequest("El cliente no está vivo");
+                }
             }
-            else
-            {
-                return BadRequest("No existe el token proporcionado");
-            }
+
+
+            return BadRequest("El token ingresado es incorrecto");
+
+
         }
 
         private string GenerarToken(ClienteDtoOut cliente)
