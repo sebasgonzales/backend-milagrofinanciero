@@ -232,6 +232,16 @@ namespace Services
             return cbu;
         }
 
+        public async Task<string?> GetCbuById(int id)
+        {
+            var cbu = await _context.Cuenta
+                .Where(c => c.Id == id)
+                .Select(c => c.Cbu)
+                .SingleOrDefaultAsync();
+
+            return cbu;
+        }
+
 
     }
 }

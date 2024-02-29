@@ -63,32 +63,78 @@ namespace Services
 
         public async Task<Transaccion> CreateTransaccionInterna(TransaccionDtoIn newTransaccionDTO)
         {
-            try { 
-                // Crear una nueva instancia de Transaccion y asignar los valores del DTO
-                var newTransaccion = new Transaccion
+            try
+            {
+                // Obtener el CBU de la cuenta destino por su ID
+                string cbuDestino = await _cuentaService.GetCbuById(newTransaccionDTO.IdCuentaDestino);
+
+                // Verificar si los primeros 10 caracteres del CBU son "0000000001"
+                if (cbuDestino.Substring(0, 10) == "0000000001")
                 {
-                    Monto = newTransaccionDTO.Monto,
-                    Realizacion = newTransaccionDTO.Realizacion,
-                    IdTipoMotivo = newTransaccionDTO.idTipoMotivo,
-                    Referencia = newTransaccionDTO.Referencia,
-                    IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion
-                };
+                    // Crear una nueva instancia de Transaccion y asignar los valores del DTO
+                    var newTransaccion = new Transaccion
+                    {
+                        Monto = newTransaccionDTO.Monto,
+                        Realizacion = newTransaccionDTO.Realizacion,
+                        IdTipoMotivo = newTransaccionDTO.idTipoMotivo,
+                        Referencia = newTransaccionDTO.Referencia,
+                        IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion
+                    };
 
-                // Obtener la cuenta de destino a partir del CBU
-                Cuenta cuentaDestino = await _context.Cuenta
-                    .Where(c => c.Id == newTransaccionDTO.IdCuentaDestino)
-                    .FirstOrDefaultAsync();
+                    // Obtener la cuenta de origen y destino a partir de sus IDs
+                    Cuenta cuentaOrigen = await _context.Cuenta
+                        .Where(c => c.Id == newTransaccionDTO.IdCuentaOrigen)
+                        .FirstOrDefaultAsync();
 
-                Cuenta cuentaOrigen = await _context.Cuenta
-                    .Where(c => c.Id == newTransaccionDTO.IdCuentaOrigen)
-                    .FirstOrDefaultAsync();
+                    Cuenta cuentaDestino = await _context.Cuenta
+                        .Where(c => c.Id == newTransaccionDTO.IdCuentaDestino)
+                        .FirstOrDefaultAsync();
 
-                //CuentaIdDtoOut cuentaOrigenDto = await GetCuenIdDtoByNumeroCuenta(numeroCuentaOrigen);
-                if (cuentaDestino != null && cuentaOrigen != null)
+                    if (cuentaDestino != null && cuentaOrigen != null)
+                    {
+                        // Configurar la cuenta de origen y destino, y guardar los cambios
+                        newTransaccion.IdCuentaOrigen = cuentaOrigen.Id;
+                        newTransaccion.IdCuentaDestino = cuentaDestino.Id;
+                        _context.Transaccion.Add(newTransaccion);
+                        await _context.SaveChangesAsync();
+
+                        return newTransaccion;
+                    }
+                    else
+                    {
+                        // Manejar el caso en que la cuenta de destino o la cuenta origen no existe
+                        throw new Exception("La cuenta de destino o la cuenta origen no existe.");
+                    }
+                }
+                else if (cbuDestino.Substring(0, 10) == "0000000002" || cbuDestino.Substring(0, 10) == "0000000003")
                 {
-                    // Configurar la cuenta de destino y guardar los cambios
-                    newTransaccion.IdCuentaOrigen = cuentaOrigen.Id;
-                    newTransaccion.IdCuentaDestino = cuentaDestino.Id;
+                    // Si el CBU corresponde a otro banco, verificar si la cuenta destino ya existe
+                    Cuenta cuentaDestino = await _context.Cuenta
+                        .Where(c => c.Cbu == cbuDestino)
+                        .FirstOrDefaultAsync();
+
+                    CuentaIdDtoOut cuentaDestinoIdDto = await _cuentaService.GetIdByCbu(cbuDestino);
+
+                    if (cuentaDestinoIdDto == null)
+                    {
+                        // Si la cuenta de destino no existe, crear una cuenta externa para ese banco
+                        cuentaDestino = await _cuentaService.CreateCuentaExterna(cbuDestino);
+                        cuentaDestinoIdDto = new CuentaIdDtoOut { Id = cuentaDestino.Id };
+                    }
+
+                    // Crear la transacción con la cuenta de origen y la cuenta destino externa
+                    var newTransaccion = new Transaccion
+                    {
+                        Monto = newTransaccionDTO.Monto,
+                        Realizacion = newTransaccionDTO.Realizacion,
+                        IdTipoMotivo = newTransaccionDTO.idTipoMotivo,
+                        Referencia = newTransaccionDTO.Referencia,
+                        IdTipoTransaccion = newTransaccionDTO.IdTipoTransaccion,
+                        IdCuentaOrigen = newTransaccionDTO.IdCuentaOrigen,
+                        IdCuentaDestino = cuentaDestinoIdDto.Id
+                    };
+
+                    // Guardar la transacción en la base de datos
                     _context.Transaccion.Add(newTransaccion);
                     await _context.SaveChangesAsync();
 
@@ -96,20 +142,21 @@ namespace Services
                 }
                 else
                 {
-                    // Manejar el caso en que la cuenta de destino no existe
-                    // Puedes lanzar una excepci�n, devolver un c�digo de error, etc.
-                    throw new Exception("La cuenta de destino o la cuenta origen no existe.");
+                    // Manejar el caso en que los primeros 10 caracteres del CBU no son "0000000001", "0000000002" ni "0000000003"
+                    throw new Exception("El CBU de la cuenta destino no cumple con el formato requerido.");
                 }
             }
             catch (Exception ex)
             {
-                // Manejar la excepci�n seg�n tus necesidades
-                throw new Exception("error",ex);
+                // Manejar la excepción según tus necesidades
+                throw new Exception("Error al crear la transacción", ex);
             }
         }
 
+
+
         //TRANSACCION ORIGEN EXTENRO
-      public async Task<Transaccion> CreateTransaccionExterna(TransaccionExternaDtoIn newTransaccionExternaDTO)
+        public async Task<Transaccion> CreateTransaccionExterna(TransaccionExternaDtoIn newTransaccionExternaDTO)
         {
             try
             {

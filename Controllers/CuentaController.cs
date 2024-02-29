@@ -235,5 +235,23 @@ public class CuentaController : ControllerBase
         }
     }
 
+    [HttpGet("CbuxId/{id}")]
+    public async Task<ActionResult<string?>> ObtenerCbuPorId(int id)
+    {
+        try
+        {
+            var cuentaCbu = await _service.GetCbuById(id);
+
+            if (cuentaCbu is null)
+            {
+                return NotFound("No se encontró una cuenta con el numeroCuenta proporcionado.");
+            }
+            return cuentaCbu;
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+        }
+    }
 }
 

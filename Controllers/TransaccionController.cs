@@ -64,7 +64,7 @@ namespace backend_milagrofinanciero.Controllers
             if (numeroCuentaOrigen == 111396740353)
             {
                 Debug.WriteLine("La cuenta de origen es 111396740353, asignando saldo de 10000.");
-                saldoDisponible = 1; 
+                saldoDisponible = 1;
                 Debug.WriteLine(saldoDisponible);
             }
             else
@@ -81,40 +81,46 @@ namespace backend_milagrofinanciero.Controllers
             }
             if (saldoDisponible == 1)
             {
-                // Obtener el ID de la cuenta de destino a partir del CBU
-                CuentaIdDtoOut cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
-
-                // Obtener el ID de la cuenta de origen a partir del Numero
-                //var cuentaOrigenId = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
-                CuentaIdDtoOut cuentaOrigenDto = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
-
-                if (cuentaDestinoId != null && cuentaOrigenDto != null)
+                try
                 {
-                    // Configurar la información de la transacción
+                    // Obtener el ID de la cuenta de destino a partir del CBU
+                    CuentaIdDtoOut cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
 
-                    transaccion.IdCuentaOrigen = cuentaOrigenDto.Id;
-                    transaccion.IdCuentaDestino = cuentaDestinoId.Id;
-                    //transaccion.IdTipoTransaccion = ;
-                    // transaccion.IdTipoTransaccion = /* IdTipoTransaccion según sea necesario */;
+                    // Obtener el ID de la cuenta de origen a partir del Numero
+                    //var cuentaOrigenId = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
+                    CuentaIdDtoOut cuentaOrigenDto = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
 
-                    // Crear la transacción
-                    var newTransaccion = await _service.CreateTransaccionInterna(transaccion);
+                    if (cuentaDestinoId != null && cuentaOrigenDto != null)
+                    {
+                        // Configurar la información de la transacción
 
-                    return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+                        transaccion.IdCuentaOrigen = cuentaOrigenDto.Id;
+                        transaccion.IdCuentaDestino = cuentaDestinoId.Id;
+                        //transaccion.IdTipoTransaccion = ;
+                        // transaccion.IdTipoTransaccion = /* IdTipoTransaccion según sea necesario */;
+
+                        // Crear la transacción
+                        var newTransaccion = await _service.CreateTransaccionInterna(transaccion);
+
+                        return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+                    }
+                    else
+                    {
+                        return NotFound("La cuenta de destino o la cuenta origen no existe.");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    return Error();
-
+                    return StatusCode(500, $"Error interno del servidor: {ex.Message}");
                 }
             }
             else
             {
-
                 // Manejar el caso en que no hay saldo suficiente
                 return BadRequest("Saldo insuficiente para realizar la transferencia.");
             }
         }
+
 
         [HttpGet("HistorialTransacciones/{numeroCuenta}")]
         public async Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta)
