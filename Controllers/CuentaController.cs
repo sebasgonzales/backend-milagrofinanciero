@@ -161,7 +161,6 @@ public class CuentaController : ControllerBase
 
     //obtener ID x CBU
     [HttpGet("IdxCbu/{cbu}")]
-    [Authorize]
     public async Task<ActionResult<CuentaIdDtoOut>> ObtenerIdPorCbu(string cbu)
     {
         try

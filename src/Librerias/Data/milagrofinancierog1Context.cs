@@ -347,13 +347,13 @@ public partial class milagrofinancierog1Context : DbContext
             entity.Property(e => e.IdTipoMotivo).HasColumnName("idTipoMotivo");
             entity.Property(e => e.IdTipoTransaccion).HasColumnName("idTipoTransaccion");
             entity.Property(e => e.Monto).HasColumnName("monto");
+            entity.Property(e => e.Numero)
+                .HasDefaultValueSql("nextval('\"Transaccion_numero_operacion_seq\"'::regclass)")
+                .HasColumnName("numero");
             entity.Property(e => e.Realizacion).HasColumnName("realizacion");
             entity.Property(e => e.Referencia)
                 .HasMaxLength(45)
                 .HasColumnName("referencia");
-            entity.Property(e => e.Numero)
-                .HasDefaultValueSql("nextval('\"Transaccion_numero_seq\"'::regclass)")
-                .HasColumnName("numero");
 
             entity.HasOne(d => d.CuentaDestino).WithMany(p => p.TransaccionCuentaDestinos)
                 .HasForeignKey(d => d.IdCuentaDestino)
