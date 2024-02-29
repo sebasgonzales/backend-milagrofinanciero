@@ -6,7 +6,7 @@ namespace Services
 {
     public interface ITransaccionService
     {
-        Task<Transaccion> Create(TransaccionDtoIn newTransaccionDTO);
+        Task<Transaccion> CreateTransaccionInterna(TransaccionDtoIn newTransaccionDTO);
         //Task Delete(int id);
         Task<IEnumerable<TransaccionDtoOut>> GetAll();
         Task<Transaccion?> GetById(int id);
@@ -15,6 +15,7 @@ namespace Services
         Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta);
         //Task Update(TransaccionDtoIn transaccion);
         Task<float> ObtenerSaldo(long numeroCuenta);
-        
+
+       /* Task<Transaccion> CreateTransaccionExterna(TransaccionDtoIn newTransaccionDTO);*/
     }
 }

@@ -9,13 +9,14 @@ using Core.DTO.response;
 using Microsoft.EntityFrameworkCore;
 using GeneradorNumeros;
 using System.Diagnostics;
+using Microsoft.OpenApi.Writers;
 
 namespace Services
 {
     public class CuentaService : ICuentaService
     {
         private readonly milagrofinancierog1Context _context;
-       
+
 
         public CuentaService(milagrofinancierog1Context context)
         {
@@ -65,8 +66,8 @@ namespace Services
         {
             var newCuenta = new Cuenta();
             int numFijo = 111;
-            long numAleatorio= Array.ConvertAll(AlgoritmoGenerador.GenerarNumerosAleatorios(), x => (int)x)[0];
-            long numCuenta= long.Parse(numFijo.ToString() + numAleatorio.ToString());
+            long numAleatorio = Array.ConvertAll(AlgoritmoGenerador.GenerarNumerosAleatorios(), x => (int)x)[0];
+            long numCuenta = long.Parse(numFijo.ToString() + numAleatorio.ToString());
 
             // Obtengo el código del banco (string)
             var codigoBanco = await _context.Banco
@@ -85,7 +86,7 @@ namespace Services
             newCuenta.IdBanco = newCuentaDto.IdBanco;
             newCuenta.IdSucursal = newCuentaDto.IdSucursal;
 
-            
+
 
             _context.Cuenta.Add(newCuenta);
             await _context.SaveChangesAsync();
@@ -95,28 +96,43 @@ namespace Services
 
 
         //CREATE CUENTA EXTERNA
-        public async Task<Cuenta> CreateCuentaExterna(CuentaDtoIn newCuentaDto)
+        public async Task<Cuenta> CreateCuentaExterna(CuentaDtoIn newCuentaDto, string cbuCuentaOrigen)
         {
-            string numCuentaString = newCuentaDto.Cbu.Substring(Math.Max(0, newCuentaDto.Cbu.Length - 12));
-            long numCuenta = long.Parse(numCuentaString);
+            // Intentamos obtener el ID de la cuenta origen usando el endpoint
+            var cuentaOrigenIdDto = await GetIdByCbu(cbuCuentaOrigen);
 
-            var newCuenta = new Cuenta();
-            newCuenta.Numero = numCuenta;
-            newCuenta.Cbu = newCuentaDto.Cbu;
-            newCuenta.IdTipoCuenta = 3;
+            // Si no se encontró la cuenta origen, creamos una nueva
+            if (cuentaOrigenIdDto == null)
+            {
+                var newCuenta = new Cuenta();
 
-            // Obtenemos el carácter en la posición 10 del CBU
-            char codigoBanco = newCuenta.Cbu[9];
-            // Convertimos el carácter a su valor numérico
-            int idBanco = int.Parse(codigoBanco.ToString());
+                string numCuentaString = newCuentaDto.Cbu.Substring(Math.Max(0, newCuentaDto.Cbu.Length - 12));
+                long numCuenta = long.Parse(numCuentaString);
+                newCuenta.Numero = numCuenta;
+                newCuenta.Cbu = newCuentaDto.Cbu;
+                newCuenta.IdTipoCuenta = 3;
 
-            newCuenta.IdBanco = idBanco;
-            newCuenta.IdSucursal = 1;
-            _context.Cuenta.Add(newCuenta);
-            await _context.SaveChangesAsync();
+                // Obtenemos el carácter en la posición 10 del CBU
+                char codigoBanco = newCuenta.Cbu[9];
+                // Convertimos el carácter a su valor numérico
+                int idBanco = int.Parse(codigoBanco.ToString());
 
-            return newCuenta;
+                newCuenta.IdBanco = idBanco;
+                newCuenta.IdSucursal = 1;
+                _context.Cuenta.Add(newCuenta);
+                await _context.SaveChangesAsync();
+
+                return newCuenta;
+            }
+            else
+            {
+                // Si ya existe una cuenta con el CBU proporcionado, podrías lanzar una excepción o manejarlo de acuerdo a tus necesidades
+                // Aquí te muestro cómo lanzar una excepción
+                throw new Exception("Ya existe una cuenta con este CBU.");
+            }
         }
+
+
 
 
         public async Task Update(int id, CuentaDtoIn cuenta)

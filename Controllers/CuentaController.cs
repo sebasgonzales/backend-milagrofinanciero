@@ -45,9 +45,9 @@ public class CuentaController : ControllerBase
 
     //cuenta externa
     [HttpPost("CuentaExterna")]
-    public async Task<IActionResult> CreateCuentaExterna(CuentaDtoIn cuenta)
+    public async Task<IActionResult> CreateCuentaExterna(CuentaDtoIn cuenta, string cbuCuentaOrigen)
     {
-        var newCuenta = await _service.CreateCuentaExterna(cuenta);
+        var newCuenta = await _service.CreateCuentaExterna(cuenta,cbuCuentaOrigen);
         return CreatedAtAction(nameof(GetByIdDto), new { id = cuenta.Id }, newCuenta);
     }
 
