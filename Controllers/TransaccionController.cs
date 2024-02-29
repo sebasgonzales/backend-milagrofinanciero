@@ -84,11 +84,30 @@ namespace backend_milagrofinanciero.Controllers
                 try
                 {
                     // Obtener el ID de la cuenta de destino a partir del CBU
-                    CuentaIdDtoOut cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
+                    var cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
+                    //SI DEVUELVE NULL ES PQ NO EXISTE LA CUENTA Y HAY QUE CREARLA
+                    if (cuentaDestinoId == null)
+                    {
+                        var NuevaCuentaExterna = await _cuentaService.CreateCuentaExterna(cbuDestino);
 
+                        Console.WriteLine("Esta es la cuenta nueva"+NuevaCuentaExterna);
+                        cuentaDestinoId = await _cuentaService.GetIdByCbu(cbuDestino);
+                        Console.WriteLine("Esta es el ide de la cuenta nueva:" + cuentaDestinoId.Id);
+                        var nuevaTransaccion = await _service.CreateTransaccionInterna(transaccion, cuentaDestinoId.Id);
+
+                        return CreatedAtAction(nameof(GetById), new { id = nuevaTransaccion.Id }, nuevaTransaccion);
+                    }
+                    else
+                    {
+                        var nuevaTransaccion = await _service.CreateTransaccionInterna(transaccion, cuentaDestinoId.Id);
+                        return CreatedAtAction(nameof(GetById), new { id = nuevaTransaccion.Id }, nuevaTransaccion);
+                    }
+                    /*
                     // Obtener el ID de la cuenta de origen a partir del Numero
                     //var cuentaOrigenId = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
                     CuentaIdDtoOut cuentaOrigenDto = await _cuentaService.GetIdByNumeroCuenta(numeroCuentaOrigen);
+
+                    var newTransaccion = await _service.CreateTransaccionInterna(transaccion);
 
                     if (cuentaDestinoId != null && cuentaOrigenDto != null)
                     {
@@ -100,14 +119,14 @@ namespace backend_milagrofinanciero.Controllers
                         // transaccion.IdTipoTransaccion = /* IdTipoTransaccion según sea necesario */;
 
                         // Crear la transacción
-                        var newTransaccion = await _service.CreateTransaccionInterna(transaccion);
 
-                        return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+                    /*    return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
                     }
                     else
                     {
                         return NotFound("La cuenta de destino o la cuenta origen no existe.");
-                    }
+                    }*/
+
                 }
                 catch (Exception ex)
                 {

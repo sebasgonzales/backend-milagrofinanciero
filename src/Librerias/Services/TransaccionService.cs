@@ -61,12 +61,12 @@ namespace Services
             return await _context.Transaccion.FindAsync(id);
         }
 
-        public async Task<Transaccion> CreateTransaccionInterna(TransaccionDtoIn newTransaccionDTO)
+        public async Task<Transaccion> CreateTransaccionInterna(TransaccionDtoIn newTransaccionDTO, int idCuentaDestino)
         {
             try
             {
                 // Obtener el CBU de la cuenta destino por su ID
-                string cbuDestino = await _cuentaService.GetCbuById(newTransaccionDTO.IdCuentaDestino);
+                string cbuDestino = await _cuentaService.GetCbuById(idCuentaDestino);
 
                 // Verificar si los primeros 10 caracteres del CBU son "0000000001"
                 if (cbuDestino.Substring(0, 10) == "0000000001")
@@ -115,12 +115,12 @@ namespace Services
 
                     CuentaIdDtoOut cuentaDestinoIdDto = await _cuentaService.GetIdByCbu(cbuDestino);
 
-                    if (cuentaDestinoIdDto == null)
+                    /*if (cuentaDestinoIdDto == null)
                     {
                         // Si la cuenta de destino no existe, crear una cuenta externa para ese banco
                         cuentaDestino = await _cuentaService.CreateCuentaExterna(cbuDestino);
                         cuentaDestinoIdDto = new CuentaIdDtoOut { Id = cuentaDestino.Id };
-                    }
+                    }*/
 
                     // Crear la transacción con la cuenta de origen y la cuenta destino externa
                     var newTransaccion = new Transaccion
@@ -152,6 +152,9 @@ namespace Services
                 throw new Exception("Error al crear la transacción", ex);
             }
         }
+
+        
+
 
 
 
