@@ -16,6 +16,6 @@ namespace Services
         //Task Update(TransaccionDtoIn transaccion);
         Task<float> ObtenerSaldo(long numeroCuenta);
 
-       /* Task<Transaccion> CreateTransaccionExterna(TransaccionDtoIn newTransaccionDTO);*/
+        Task<Transaccion> CreateTransaccionExterna(TransaccionExternaDtoIn newTransaccionExternaDTO);
     }
 }

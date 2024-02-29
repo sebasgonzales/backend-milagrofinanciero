@@ -109,10 +109,31 @@ namespace Services
         }
 
         //TRANSACCION ORIGEN EXTENRO
-       /* public async Task<Transaccion> CreateTransaccionExterna(TransaccionDtoIn newTransaccionDTO, TransaccionExternaDtoIn newTransaccionExternaDTO)
+      public async Task<Transaccion> CreateTransaccionExterna(TransaccionExternaDtoIn newTransaccionExternaDTO)
         {
             try
             {
+                // Verificar si el monto es mayor que cero
+                if (newTransaccionExternaDTO.Monto <= 0)
+                {
+                    throw new ArgumentException("El monto de la transacción debe ser mayor que cero.");
+                }
+
+                // Obtener el ID de la cuenta de origen a partir del CBU proporcionado
+                CuentaIdDtoOut cuentaOrigenIdDto = await _cuentaService.GetIdByCbu(newTransaccionExternaDTO.CbuCuentaOrigen);
+                if (cuentaOrigenIdDto == null)
+                {
+                    // Si la cuenta de origen no existe, la creo
+                   await _cuentaService.CreateCuentaExterna(newTransaccionExternaDTO.CbuCuentaOrigen);
+                }
+
+                // Obtener el ID de la cuenta de destino a partir del CBU proporcionado
+                CuentaIdDtoOut cuentaDestinoIdDto = await _cuentaService.GetIdByCbu(newTransaccionExternaDTO.CbuCuentaDestino);
+                if (cuentaDestinoIdDto == null)
+                {
+                    // Si la cuenta de destino no existe, lanzar una excepción o manejar el error según sea necesario
+                    throw new Exception("La cuenta de destino no existe.");
+                }
                 // Crear una nueva instancia de Transaccion y asignar los valores del json externo recibido
                 var newTransaccion = new Transaccion
                 {
@@ -120,28 +141,10 @@ namespace Services
                     Realizacion = newTransaccionExternaDTO.Realizacion,
                     IdTipoMotivo = 1,
                     Referencia = "varios",
-                    IdTipoTransaccion = 2 //inmediata
-                };
-
-                // Obtener el ID de la cuenta de origen a partir del CBU proporcionado
-                CuentaIdDtoOut cuentaOrigenIdDto = await _cuentaService.GetIdByCbu(newTransaccionExternaDTO.CbuCuentaOrigen);
-                if (cuentaOrigenIdDto == null)
-                {
-                    // Si la cuenta de origen no existe, la creo
-                    _cuentaService.CreateCuentaExterna();
-                }
-
-                // Obtener el ID de la cuenta de destino a partir del CBU proporcionado
-                CuentaIdDtoOut cuentaDestinoIdDto = await _cuentaService.GetIdByCbu(newTransaccionDTO.CbuCuentaDestino);
-                if (cuentaDestinoIdDto == null)
-                {
-                    // Si la cuenta de destino no existe, lanzar una excepción o manejar el error según sea necesario
-                    throw new Exception("La cuenta de destino no existe.");
-                }
-
-                // Asignar los IDs de las cuentas de origen y destino a la transacción
-                newTransaccion.IdCuentaOrigen = cuentaOrigenIdDto.Id;
-                newTransaccion.IdCuentaDestino = cuentaDestinoIdDto.Id;
+                    IdTipoTransaccion = 2, //inmediata
+                    IdCuentaOrigen = cuentaOrigenIdDto.Id,
+                    IdCuentaDestino = cuentaDestinoIdDto.Id
+                 };
 
                 // Guardar la transacción en la base de datos
                 _context.Transaccion.Add(newTransaccion);
@@ -157,7 +160,7 @@ namespace Services
         }
 
 
-        */
+        
 
 
         public async Task<IEnumerable<TransaccionDtoOut>> GetTransacciones(long numeroCuenta)

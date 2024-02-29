@@ -47,13 +47,13 @@ namespace backend_milagrofinanciero.Controllers
             return transaccion;
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Create(TransaccionDtoIn transaccion) 
-        //{
-        //    var newTransaccion = await _service.Create(transaccion);
+        [HttpPost ("TransaccionDesdeExterior")]
+        public async Task<IActionResult> CreateTransaccionExterna(TransaccionExternaDtoIn transaccion) 
+        {
+            var newTransaccion = await _service.CreateTransaccionExterna(transaccion);
 
-        //    return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
-        //}
+            return CreatedAtAction(nameof(GetById), new { id = newTransaccion.Id }, newTransaccion);
+        }
 
         //TRANSACCION INTERNA
         [HttpPost("TransaccionInterna")]
