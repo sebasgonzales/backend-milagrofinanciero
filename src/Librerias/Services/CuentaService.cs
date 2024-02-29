@@ -9,7 +9,6 @@ using Core.DTO.response;
 using Microsoft.EntityFrameworkCore;
 using GeneradorNumeros;
 using System.Diagnostics;
-using Microsoft.OpenApi.Writers;
 
 namespace Services
 {
@@ -95,8 +94,8 @@ namespace Services
         }
 
 
-        //CREATE CUENTA EXTERNA
-        public async Task<Cuenta> CreateCuentaExterna(CuentaDtoIn newCuentaDto, string cbuCuentaOrigen)
+        //CREATE CUENTA EXTERNA   NO NECESITA NINGUN DATO MAS QUE EL CBU, TODO SE CONSIGUE
+        public async Task<Cuenta> CreateCuentaExterna(string cbuCuentaOrigen)
         {
             // Intentamos obtener el ID de la cuenta origen usando el endpoint
             var cuentaOrigenIdDto = await GetIdByCbu(cbuCuentaOrigen);
@@ -106,10 +105,11 @@ namespace Services
             {
                 var newCuenta = new Cuenta();
 
-                string numCuentaString = newCuentaDto.Cbu.Substring(Math.Max(0, newCuentaDto.Cbu.Length - 12));
+                newCuenta.Id = 0;
+                string numCuentaString = cbuCuentaOrigen.Substring(Math.Max(0, cbuCuentaOrigen.Length - 12));
                 long numCuenta = long.Parse(numCuentaString);
                 newCuenta.Numero = numCuenta;
-                newCuenta.Cbu = newCuentaDto.Cbu;
+                newCuenta.Cbu = cbuCuentaOrigen;
                 newCuenta.IdTipoCuenta = 3;
 
                 // Obtenemos el carácter en la posición 10 del CBU

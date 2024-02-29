@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Data.Models;
 
@@ -19,16 +20,24 @@ public partial class Cuenta
 
     public int IdSucursal { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<ClienteCuenta> ClienteCuenta { get; set; } = new List<ClienteCuenta>();
+
+    [JsonIgnore]
     public virtual ICollection<Contacto> Contacto { get; set; } = new List<Contacto>();
 
+    [JsonIgnore]
     public virtual Banco Banco { get; set; }
 
+    [JsonIgnore]
     public virtual Sucursal Sucursal { get; set; }
 
+    [JsonIgnore]
     public virtual TipoCuenta TipoCuenta { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Transaccion> TransaccionCuentaDestinos { get; set; } = new List<Transaccion>();
 
+    [JsonIgnore]
     public virtual ICollection<Transaccion> TransaccionCuentaOrigenes { get; set; } = new List<Transaccion>();
 }
